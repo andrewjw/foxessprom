@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     concurrency: release
     environment: Production
-    if: github.repository == 'andrewjw/foxessprom' && github.ref == 'refs/heads/master'
+    if: github.repository == 'andrewjw/foxessprom' && github.ref == 'refs/heads/main'
     needs: build
     steps:
       - uses: actions/checkout@v3
