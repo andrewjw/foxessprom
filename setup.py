@@ -34,7 +34,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/andrewjw/foxessprom",
     packages=setuptools.find_packages(),
-    scripts=["bin/glowprom"],
+    scripts=["bin/foxessprom"],
     classifiers=[
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
