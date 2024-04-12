@@ -1,1 +1,1 @@
-# foxessprom
+Prometheus exporter for Fox ESS Inverters (using the Fox Cloud API)
