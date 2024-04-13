@@ -4,3 +4,4 @@ python-semantic-release==8.0.8
 packaging==23.1
 wheel==0.41.2
 twine==4.0.2
+requests==2.31.0
