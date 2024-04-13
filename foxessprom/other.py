@@ -14,44 +14,43 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Plant:    
-    @staticmethod
-    def plant_list():
-        path = '/op/v0/plant/list'
-        request_param = {'currentPage': 1, 'pageSize': 10}
-        response = fr_requests('post', path, request_param)
-        save_response_data(response, 'plant_list_response.json')
-        return response
+# class Plant:
+#     @staticmethod
+#     def plant_list():
+#         path = '/op/v0/plant/list'
+#         request_param = {'currentPage': 1, 'pageSize': 10}
+#         response = fr_requests('post', path, request_param)
+#         save_response_data(response, 'plant_list_response.json')
+#         return response
 
-    @staticmethod
-    def plant_detail():
-        path = '/op/v0/plant/detail'
-        request_param = {'id': 'abc'}
-        response = fr_requests('get', path, request_param)
-        save_response_data(response, 'plant_detail_response.json')
-        return response
-    
+#     @staticmethod
+#     def plant_detail():
+#         path = '/op/v0/plant/detail'
+#         request_param = {'id': 'abc'}
+#         response = fr_requests('get', path, request_param)
+#         save_response_data(response, 'plant_detail_response.json')
+#         return response
 
-class Module:
-    @staticmethod
-    def module_list():
-        path = '/op/v0/module/list'
+# class Module:
+#     @staticmethod
+#     def module_list():
+#         path = '/op/v0/module/list'
 
-        request_param = {'currentPage': 1, 'pageSize': 10}
+#         request_param = {'currentPage': 1, 'pageSize': 10}
 
-        response = fr_requests('post', path, request_param)
+#         response = fr_requests('post', path, request_param)
 
-        save_response_data(response, 'module_list_response.json')
+#         save_response_data(response, 'module_list_response.json')
 
-        return response
+#         return response
 
-class User:
-    @staticmethod
-    def user_get_access_count():
-        path = '/op/v0/user/getAccessCount'
+# class User:
+#     @staticmethod
+#     def user_get_access_count():
+#         path = '/op/v0/user/getAccessCount'
 
-        response = fr_requests('get', path)
+#         response = fr_requests('get', path)
 
-        save_response_data(response, 'user_get_access_count_response.json')
+#         save_response_data(response, 'user_get_access_count_response.json')
 
-        return response
+#         return response

@@ -17,10 +17,13 @@
 import hashlib
 import time
 
+
 class GetAuth:
     def get_signature(self, token, path, lang='en'):
         """
-        This function is used to generate a signature consisting of URL, token, and timestamp, and return a dictionary containing the signature and other information.
+        This function is used to generate a signature consisting of URL, token,
+        and timestamp, and return a dictionary containing the signature
+        and other information.
             :param token: your key
             :param path:  your request path
             :param lang: language, default is English.
@@ -34,8 +37,9 @@ class GetAuth:
             'lang': lang,
             'timestamp': str(timestamp),
             'signature': self.md5c(text=signature),
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/117.0.0.0 Safari/537.36'
+            'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                '(KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36'
         }
         return result
 

@@ -20,9 +20,11 @@ DEVICES = Device.device_list()
 
 PREFIX = "foxess_"
 
-IGNORE_DATA = {"runningState", "batStatus", "batStatusV2", "currentFault", "currentFaultCount"}
+IGNORE_DATA = {"runningState", "batStatus", "batStatusV2",
+               "currentFault", "currentFaultCount"}
 
 COUNTER_DATA = {"generation"}
+
 
 def metrics():
     metric_text = []
@@ -32,9 +34,14 @@ def metrics():
             if data["variable"] in IGNORE_DATA:
                 continue
             if data["variable"] not in seen:
-                metric_text.append(f"# TYPE {PREFIX + data['variable']} {'counter' if data['variable'] in COUNTER_DATA else 'gauge'}")
+                is_counter = data['variable'] in COUNTER_DATA
+                metric_text.append(
+                    f"# TYPE {PREFIX + data['variable']} "
+                    f"{'counter' if is_counter else 'gauge'}")
                 seen.add(data["variable"])
 
-            metric_text.append(f"{PREFIX}{data['variable']}{{device=\"{device.deviceSN}\"}} {data['value']}")
+            metric_text.append(
+                f"{PREFIX}{data['variable']}{{device=\"{device.deviceSN}\"}} "
+                f"{data['value']}")
 
     return "\n".join(metric_text)

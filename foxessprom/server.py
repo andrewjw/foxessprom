@@ -47,7 +47,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
     def send_metrics(self):
         global STATS, LAST_UPDATE
-        if STATS is None or (datetime.utcnow() - LAST_UPDATE).total_seconds() > 120:
+        if LAST_UPDATE is None or \
+           (datetime.utcnow() - LAST_UPDATE).total_seconds() > 120:
             STATS = metrics()
             LAST_UPDATE = datetime.utcnow()
 

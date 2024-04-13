@@ -19,20 +19,26 @@ import os
 
 from .auth import GetAuth
 
-domain = 'https://www.foxesscloud.com'
-key = os.environ["FOX_CLOUD_API_KEY"]
+DOMAIN = 'https://www.foxesscloud.com'
+KEY = os.environ["FOX_CLOUD_API_KEY"]
 
-def fr_requests(method, path, param=None):
-    url = domain + path
-    headers = GetAuth().get_signature(token=key, path=path)
+
+def make_request(method, path, param=None):
+    url = DOMAIN + path
+    headers = GetAuth().get_signature(token=KEY, path=path)
 
     if method == 'get':
-        response = requests.get(url=url, params=param, headers=headers, verify=False)
+        response = requests.get(url=url,
+                                params=param,
+                                headers=headers,
+                                verify=False)
 
     elif method == 'post':
-        response = requests.post(url=url, json=param, headers=headers, verify=False)
+        response = requests.post(url=url,
+                                 json=param,
+                                 headers=headers,
+                                 verify=False)
     else:
         raise Exception('request method error')
 
     return response
-    
