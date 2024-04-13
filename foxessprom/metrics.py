@@ -29,6 +29,8 @@ def metrics():
     seen = set()
     for device in DEVICES:
         for data in device.real_query():
+            if data["variable"] in IGNORE_DATA:
+                continue
             if data["variable"] not in seen:
                 metric_text.append(f"# TYPE {PREFIX + data['variable']} {'counter' if data['variable'] in COUNTER_DATA else 'gauge'}")
                 seen.add(data["variable"])
