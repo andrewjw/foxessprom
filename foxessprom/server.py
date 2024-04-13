@@ -46,7 +46,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 </html>""".encode("utf8"))
 
     def send_metrics(self):
-        global STATS
+        global STATS, LAST_UPDATE
         if STATS is None or (datetime.utcnow() - LAST_UPDATE).total_seconds() > 120:
             STATS = metrics()
             LAST_UPDATE = datetime.utcnow()
