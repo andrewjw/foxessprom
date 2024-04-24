@@ -38,9 +38,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write("""
 <html>
-<head><title>Fox ESS Could Prometheus</title></head>
+<head><title>Fox ESS Cloud Prometheus</title></head>
 <body>
-<h1>Fox ESS Could Prometheus/h1>
+<h1>Fox ESS Cloud Prometheus</h1>
 <p><a href="/metrics">Metrics</a></p>
 </body>
 </html>""".encode("utf8"))
