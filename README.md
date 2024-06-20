@@ -1,10 +1,12 @@
 [![Pipeline](https://github.com/andrewjw/foxessprom/actions/workflows/build.yaml/badge.svg)](https://github.com/andrewjw/foxessprom/actions/workflows/build.yaml)
 [![PyPI version](https://badge.fury.io/py/foxessprom.svg)](https://pypi.org/project/foxessprom/)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/foxessprom)](https://pypi.org/project/foxessprom/)
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/andrewjw/foxessprom)](https://hub.docker.com/r/andrewjw/foxessprom)
+[![Docker Pulls](https://img.shields.io/docker/pulls/andrewjw/foxessprom)](https://hub.docker.com/r/andrewjw/foxessprom)
 
 Prometheus exporter for Fox ESS Inverters (using the Fox Cloud API)
 
-= Example Metrics =
+## Example Metrics
 
 ```
 # TYPE foxess_pvPower gauge
