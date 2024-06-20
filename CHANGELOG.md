@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.2.0 (2024-06-20)
+
+### Feature
+
+* feat: Move loading metrics from Fox cloud to a thread so we respond in time for Prometheus. ([`a0cf490`](https://github.com/andrewjw/foxessprom/commit/a0cf490c034ddcfb5b02d33d2a5018cba288d955))
+
 ## v0.1.3 (2024-06-20)
 
 ### Fix
