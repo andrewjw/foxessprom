@@ -49,8 +49,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
         global STATS, LAST_UPDATE
         if LAST_UPDATE is None or \
            (datetime.utcnow() - LAST_UPDATE).total_seconds() > 120:
+            start = datetime.utcnow()
             STATS = metrics()
             LAST_UPDATE = datetime.utcnow()
+            print("Updated metrics in {LAST_UPDATE - start)")
 
         self.send_response(200)
         self.end_headers()
