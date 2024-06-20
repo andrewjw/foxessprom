@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.1.3 (2024-06-20)
+
+### Fix
+
+* fix: Add hashbang to main script. ([`180a0a3`](https://github.com/andrewjw/foxessprom/commit/180a0a33aef84263240c6377fb562abb56c8202d))
+
 ## v0.1.2 (2024-06-20)
 
 ### Chore
