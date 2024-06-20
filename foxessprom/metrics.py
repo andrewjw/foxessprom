@@ -14,6 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
+from threading import Thread
+from typing import Union
+
 from .device import Device
 
 DEVICES = Device.device_list()
@@ -26,22 +30,50 @@ IGNORE_DATA = {"runningState", "batStatus", "batStatusV2",
 COUNTER_DATA = {"generation"}
 
 
-def metrics():
-    metric_text = []
-    seen = set()
-    for device in DEVICES:
-        for data in device.real_query():
-            if data["variable"] in IGNORE_DATA:
-                continue
-            if data["variable"] not in seen:
-                is_counter = data['variable'] in COUNTER_DATA
+class MetricsLoader:
+    def __init__(self) -> None:
+        self.last_update: Union[datetime, None] = None
+        self.stats = None
+        self.loading = False
+
+    def metrics(self) -> None:
+        if self.last_update is None or \
+           (datetime.utcnow() - self.last_update).total_seconds() >= 120:
+            if not self.loading:
+                self.loading = True
+                Thread(target=self._set_metrics).start()
+
+            if self.last_update is not None and \
+               (datetime.utcnow() - self.last_update).total_seconds() > 600:
+                return None
+        return self.stats
+
+    def _set_metrics(self):
+        try:
+            start = datetime.utcnow()
+            self.stats = self._get_metrics()
+            self.last_update = start
+            print(f"Loaded metrics in {datetime.utcnow() - start}")
+        finally:
+            self.loading = False
+
+    def _get_metrics(self):
+        metric_text = []
+        seen = set()
+        for device in DEVICES:
+            for data in device.real_query():
+                if data["variable"] in IGNORE_DATA:
+                    continue
+                if data["variable"] not in seen:
+                    is_counter = data['variable'] in COUNTER_DATA
+                    metric_text.append(
+                        f"# TYPE {PREFIX + data['variable']} "
+                        f"{'counter' if is_counter else 'gauge'}")
+                    seen.add(data["variable"])
+
                 metric_text.append(
-                    f"# TYPE {PREFIX + data['variable']} "
-                    f"{'counter' if is_counter else 'gauge'}")
-                seen.add(data["variable"])
+                    f"{PREFIX}{data['variable']}"
+                    f"{{device=\"{device.deviceSN}\"}} "
+                    f"{data['value']}")
 
-            metric_text.append(
-                f"{PREFIX}{data['variable']}{{device=\"{device.deviceSN}\"}} "
-                f"{data['value']}")
-
-    return "\n".join(metric_text)
+        return "\n".join(metric_text)

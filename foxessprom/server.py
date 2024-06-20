@@ -14,14 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
 import http.server
 
-from .metrics import metrics
+from .metrics import MetricsLoader
 
-
-LAST_UPDATE = None
-STATS = None
+METRICS = MetricsLoader()
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -46,17 +43,13 @@ class Handler(http.server.BaseHTTPRequestHandler):
 </html>""".encode("utf8"))
 
     def send_metrics(self):
-        global STATS, LAST_UPDATE
-        if LAST_UPDATE is None or \
-           (datetime.utcnow() - LAST_UPDATE).total_seconds() > 120:
-            start = datetime.utcnow()
-            STATS = metrics()
-            LAST_UPDATE = datetime.utcnow()
-            print("Updated metrics in {LAST_UPDATE - start)")
-
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(STATS.encode("utf8"))
+        stats = METRICS.metrics()
+        if stats is None:
+            self.send_error(404)
+        else:
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(stats.encode("utf8"))
 
 
 def serve():  # pragma: no cover
