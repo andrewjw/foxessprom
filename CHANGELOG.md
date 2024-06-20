@@ -1,6 +1,52 @@
 # CHANGELOG
 
+## v0.1.2 (2024-06-20)
 
+### Chore
+
+* chore(deps): update dependency packaging to v24 ([`b77fc33`](https://github.com/andrewjw/foxessprom/commit/b77fc330205279c46a3ac251ea8b4036351d9b54))
+
+* chore(deps): update dependency coveralls to v4 ([`aefc78b`](https://github.com/andrewjw/foxessprom/commit/aefc78b719345f5ba105d276c784e645d4c8b024))
+
+* chore(deps): update dependency python-semantic-release to v9.8.3 ([`b63ce17`](https://github.com/andrewjw/foxessprom/commit/b63ce17b01b0fd6d30e2be3120742ef758ba625c))
+
+* chore(deps): update dependency python-semantic-release to v9.8.2 ([`78df2ca`](https://github.com/andrewjw/foxessprom/commit/78df2ca27cc0f6c4bec292d523972067203e758f))
+
+* chore(deps): update dependency pycodestyle to v2.12.0 ([`9e0f26b`](https://github.com/andrewjw/foxessprom/commit/9e0f26b7b5a46077752cccaca4eeaf197e85fbe5))
+
+* chore(deps): update dependency python-semantic-release to v9.8.1 ([`bafb0c2`](https://github.com/andrewjw/foxessprom/commit/bafb0c26bf16852b94b507ca6035660260f288a4))
+
+* chore(deps): update dependency requests to v2.32.3 ([`215ad32`](https://github.com/andrewjw/foxessprom/commit/215ad32b4fa7d9a0446e24b5347dd5f5ab9be6fd))
+
+* chore(deps): update dependency python-semantic-release to v9.8.0 ([`1edafb0`](https://github.com/andrewjw/foxessprom/commit/1edafb04d6ae9b37a2bf1ceacbda6b8edfac5206))
+
+* chore(deps): update dependency requests to v2.32.2 ([`2721ebd`](https://github.com/andrewjw/foxessprom/commit/2721ebd59d8d615937f9e457bdcb51ce6dd06b39))
+
+* chore(deps): update dependency twine to v5.1.0 ([`4971664`](https://github.com/andrewjw/foxessprom/commit/49716646ae536ea6d618a72946efc315d8e89830))
+
+* chore(deps): update dependency python-semantic-release to v9.7.3 ([`ac7dbc9`](https://github.com/andrewjw/foxessprom/commit/ac7dbc90ec4ba0e2c71aed731c58c71f9e0bda16))
+
+* chore(deps): update dependency python-semantic-release to v9.7.2 ([`56f88ae`](https://github.com/andrewjw/foxessprom/commit/56f88aeefb0bbb961a1f81bd58c6cf3375ab0e73))
+
+* chore(deps): update dependency python-semantic-release to v9.7.1 ([`2f1ead1`](https://github.com/andrewjw/foxessprom/commit/2f1ead1fbabf5a958a971bba5eb06f6bb627e0c4))
+
+* chore(deps): update dependency python-semantic-release to v9.7.0 ([`79797af`](https://github.com/andrewjw/foxessprom/commit/79797afc72c6f3565435cc636ba5a9b21c22c02a))
+
+* chore(deps): update dependency python-semantic-release to v9.6.0 ([`698100c`](https://github.com/andrewjw/foxessprom/commit/698100c680952f6058d6644f8caf2d14a012e8f9))
+
+### Fix
+
+* fix: Add debug line to track time taken to update metrics. ([`0ecaa42`](https://github.com/andrewjw/foxessprom/commit/0ecaa4240e84192cbd48ae17fa0f4aa30658c334))
+
+### Unknown
+
+* Merge pull request #10 from andrewjw/renovate/packaging-24.x
+
+chore(deps): update dependency packaging to v24 ([`96c9a52`](https://github.com/andrewjw/foxessprom/commit/96c9a521459be850066c25b7dfb473466783e7db))
+
+* Merge pull request #16 from andrewjw/renovate/coveralls-4.x
+
+chore(deps): update dependency coveralls to v4 ([`51c7f1a`](https://github.com/andrewjw/foxessprom/commit/51c7f1a01538382657fdea5a98d66b108d3f8ac8))
 
 ## v0.1.1 (2024-04-24)
 
@@ -52,7 +98,6 @@ chore(deps): update dependency python-semantic-release to v9 ([`2d99094`](https:
 
 chore(deps): update dependency twine to v5 ([`34877c6`](https://github.com/andrewjw/foxessprom/commit/34877c6a8ccbfb680b705f9e68dd6d069477d29a))
 
-
 ## v0.1.0 (2024-04-13)
 
 ### Chore
@@ -70,7 +115,6 @@ chore(deps): update dependency twine to v5 ([`34877c6`](https://github.com/andre
 * fix: Add requirement for requests library. ([`db46599`](https://github.com/andrewjw/foxessprom/commit/db465997aac1acfb7f0f077541b4c0b791b53d98))
 
 * fix: Ignore correct variables. ([`97c1f35`](https://github.com/andrewjw/foxessprom/commit/97c1f35dcab40438802e8eea7cf51e65ae75f07d))
-
 
 ## v0.0.0 (2024-04-12)
 
