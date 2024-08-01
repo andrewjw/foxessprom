@@ -29,5 +29,5 @@ class TestDevice(unittest.TestCase):
 
             devices = Device.device_list()
 
-            self.assertEquals(1, len(devices))
-            self.assertEquals("StationName", devices[0].stationName)
+            self.assertEqual(1, len(devices))
+            self.assertEqual("StationName", devices[0].stationName)
