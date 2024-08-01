@@ -14,11 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from typing import Any, List
+
 from .request import make_request
 
 
 class Device:
-    def __init__(self, data) -> None:
+    def __init__(self, data: Any) -> None:
         self.deviceType = data["deviceType"]
         self.hasBattery = data["hasBattery"]
         self.hasPV = data["hasPV"]
@@ -29,14 +31,14 @@ class Device:
         self.stationID = data["stationID"]
         self.status = data["status"]
 
-    def real_query(self):
+    def real_query(self) -> Any:
         path = '/op/v0/device/real/query'
         request_param = {'sn': self.deviceSN, 'variables': []}
         response = make_request('post', path, request_param)
         return response.json()["result"][0]["datas"]
 
     @staticmethod
-    def device_list():
+    def device_list() -> List["Device"]:
         path = '/op/v0/device/list'
 
         request_param = {'currentPage': 1, 'pageSize': 500}

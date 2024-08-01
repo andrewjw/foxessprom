@@ -22,7 +22,7 @@ METRICS = MetricsLoader()
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
-    def do_GET(self):
+    def do_GET(self) -> None:
         if self.path == "/":
             self.send_index()
         elif self.path == "/metrics":
@@ -82,7 +82,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
 </body>
 </html>""".encode("utf8"))
 
-    def send_metrics(self):
+    def send_metrics(self) -> None:
         stats = METRICS.metrics()
         if stats is None:
             self.send_error(404)
@@ -92,6 +92,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(stats.encode("utf8"))
 
 
-def serve():  # pragma: no cover
+def serve() -> None:  # pragma: no cover
     server = http.server.HTTPServer(("0.0.0.0", 9100), Handler)
     server.serve_forever()
