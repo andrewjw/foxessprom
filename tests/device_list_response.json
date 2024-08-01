@@ -1,0 +1,1 @@
+{"errno": 0, "msg": "success", "result": {"total": 1, "data": [{"deviceType": "H1-3.7-E", "hasBattery": true, "hasPV": true, "stationName": "StationName", "moduleSN": "ModuleSN", "deviceSN": "DeviceSN", "productType": "H", "stationID": "StationID", "status": 1}], "pageSize": 500, "currentPage": 1}}

@@ -14,5 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .test_auth import TestAuth
-from .test_device import TestDevice
+import unittest
+
+from foxessprom.auth import GetAuth
+
+class TestAuth(unittest.TestCase):
+    def test_signature(self):
+        auth = GetAuth().get_signature("token", "path")
+
+        self.assertIn("token", auth)
