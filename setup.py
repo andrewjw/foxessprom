@@ -14,14 +14,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 import setuptools
 
 from foxessprom import __version__
 
+try:
+    from foxessprom import __version__
+except ImportError:
+    import re
+
+    with open('foxessprom.egg-info/PKG-INFO') as f:
+        __version__ = re.search("^Version: (.*)$", f.read(), re.MULTILINE).group(1)
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open('requirements.txt') as f:
+with open('requirements.txt' if os.path.exists('requirements.txt') else 'foxessprom.egg-info/requires.txt') as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
