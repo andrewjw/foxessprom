@@ -20,10 +20,12 @@ import requests_mock
 
 from foxessprom.device import Device
 
+
 class TestDevice(unittest.TestCase):
     def test_device_list(self):
         with requests_mock.Mocker() as m:
-            m.post('https://www.foxesscloud.com/op/v0/device/list', text=open("tests/device_list_response.json", "r").read())
+            m.post('https://www.foxesscloud.com/op/v0/device/list',
+                   text=open("tests/device_list_response.json", "r").read())
 
             devices = Device.device_list()
 

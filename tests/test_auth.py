@@ -18,6 +18,7 @@ import unittest
 
 from foxessprom.auth import GetAuth
 
+
 class TestAuth(unittest.TestCase):
     def test_signature(self):
         auth = GetAuth().get_signature("token", "path")
