@@ -16,7 +16,7 @@
 
 from datetime import datetime
 from threading import Thread
-from typing import Union
+from typing import Optional, Union
 
 from .device import Device
 
@@ -33,10 +33,10 @@ COUNTER_DATA = {"generation"}
 class MetricsLoader:
     def __init__(self) -> None:
         self.last_update: Union[datetime, None] = None
-        self.stats = None
+        self.stats: Optional[str] = None
         self.loading = False
 
-    def metrics(self) -> None:
+    def metrics(self) -> Optional[str]:
         if self.last_update is None or \
            (datetime.utcnow() - self.last_update).total_seconds() >= 120:
             if not self.loading:
@@ -48,7 +48,7 @@ class MetricsLoader:
                 return None
         return self.stats
 
-    def _set_metrics(self):
+    def _set_metrics(self) -> None:
         try:
             start = datetime.utcnow()
             self.stats = self._get_metrics()
@@ -57,7 +57,7 @@ class MetricsLoader:
         finally:
             self.loading = False
 
-    def _get_metrics(self):
+    def _get_metrics(self) -> str:
         metric_text = []
         seen = set()
         for device in DEVICES:

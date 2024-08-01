@@ -22,7 +22,7 @@ from foxessprom.device import Device
 
 
 class TestDevice(unittest.TestCase):
-    def test_device_list(self):
+    def test_device_list(self) -> None:
         with requests_mock.Mocker() as m:
             m.post('https://www.foxesscloud.com/op/v0/device/list',
                    text=open("tests/device_list_response.json", "r").read())
