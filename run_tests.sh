@@ -1,11 +1,11 @@
 #!/bin/bash
 
-coverage run test.py
+FOX_CLOUD_API_KEY=xyz ${COVERAGE:-coverage} run test.py
 
 let R=$?
 
-coverage report
+${COVERAGE:-coverage} report
 
-coverage html
+${COVERAGE:-coverage} html
 
 exit $R

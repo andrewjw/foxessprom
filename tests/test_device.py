@@ -14,5 +14,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .test_auth import TestAuth
-from .test_device import TestDevice
+import unittest
+
+import requests_mock
+
+from foxessprom.device import Device
+
+class TestDevice(unittest.TestCase):
+    def test_device_list(self):
+        with requests_mock.Mocker() as m:
+            m.post('https://www.foxesscloud.com/op/v0/device/list', text=open("tests/device_list_response.json", "r").read())
+
+            devices = Device.device_list()
+
+            self.assertEquals(1, len(devices))
+            self.assertEquals("StationName", devices[0].stationName)
