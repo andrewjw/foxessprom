@@ -16,10 +16,12 @@
 
 import hashlib
 import time
+from typing import Dict
 
 
 class GetAuth:
-    def get_signature(self, token, path, lang='en'):
+    def get_signature(self, token: str, path: str, lang: str = 'en') \
+                     -> Dict[str, str]:
         """
         This function is used to generate a signature consisting of URL, token,
         and timestamp, and return a dictionary containing the signature
@@ -44,7 +46,7 @@ class GetAuth:
         return result
 
     @staticmethod
-    def md5c(text="", _type="lower"):
+    def md5c(text: str = "", _type: str = "lower") -> str:
         res = hashlib.md5(text.encode(encoding='UTF-8')).hexdigest()
         if _type.__eq__("lower"):
             return res

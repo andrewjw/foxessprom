@@ -16,14 +16,19 @@
 
 import requests
 import os
+from typing import Dict, Literal, Optional
 
 from .auth import GetAuth
 
 DOMAIN = 'https://www.foxesscloud.com'
 KEY = os.environ["FOX_CLOUD_API_KEY"]
 
+REQUEST_TYPES = Literal["get", "post"]
 
-def make_request(method, path, param=None):
+
+def make_request(method: REQUEST_TYPES,
+                 path: str,
+                 param: Optional[Dict[str, str]] = None) -> requests.Response:
     url = DOMAIN + path
     headers = GetAuth().get_signature(token=KEY, path=path)
 
