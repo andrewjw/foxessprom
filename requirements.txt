@@ -1,4 +1,4 @@
-pycodestyle==2.12.0
+pycodestyle==2.12.1
 coveralls==4.0.1
 python-semantic-release==9.8.6
 packaging==24.1
