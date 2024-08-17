@@ -28,7 +28,7 @@ REQUEST_TYPES = Literal["get", "post"]
 
 def make_request(method: REQUEST_TYPES,
                  path: str,
-                 param: Optional[Dict[str, str]] = None) -> requests.Response:
+                 param: Optional[Dict[str, int]] = None) -> requests.Response:
     url = DOMAIN + path
     headers = GetAuth().get_signature(token=KEY, path=path)
 

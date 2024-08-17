@@ -20,7 +20,7 @@ from foxessprom.auth import GetAuth
 
 
 class TestAuth(unittest.TestCase):
-    def test_signature(self):
+    def test_signature(self) -> None:
         auth = GetAuth().get_signature("token", "path")
 
         self.assertIn("token", auth)
