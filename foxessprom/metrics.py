@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
+import datetime
 from threading import Thread
 from typing import Optional, Union
 
@@ -22,38 +22,41 @@ from .device import Device
 
 DEVICES = Device.device_list()
 
-PREFIX = "foxess_"
 
-IGNORE_DATA = {"runningState", "batStatus", "batStatusV2",
-               "currentFault", "currentFaultCount"}
-
-COUNTER_DATA = {"generation"}
+if hasattr(datetime, "UTC"):
+    def utcnow() -> datetime.datetime:
+        return datetime.datetime.now(
+                   datetime.UTC  # noqa
+        )
+else:
+    def utcnow() -> datetime.datetime:
+        return datetime.datetime.utcnow()
 
 
 class MetricsLoader:
     def __init__(self) -> None:
-        self.last_update: Union[datetime, None] = None
+        self.last_update: Union[datetime.datetime, None] = None
         self.stats: Optional[str] = None
         self.loading = False
 
     def metrics(self) -> Optional[str]:
         if self.last_update is None or \
-           (datetime.utcnow() - self.last_update).total_seconds() >= 120:
+           (utcnow() - self.last_update).total_seconds() >= 120:
             if not self.loading:
                 self.loading = True
                 Thread(target=self._set_metrics).start()
 
             if self.last_update is not None and \
-               (datetime.utcnow() - self.last_update).total_seconds() > 600:
+               (utcnow() - self.last_update).total_seconds() > 600:
                 return None
         return self.stats
 
     def _set_metrics(self) -> None:
         try:
-            start = datetime.utcnow()
+            start = utcnow()
             self.stats = self._get_metrics()
             self.last_update = start
-            print(f"Loaded metrics in {datetime.utcnow() - start}")
+            print(f"Loaded metrics in {utcnow() - start}")
         finally:
             self.loading = False
 
