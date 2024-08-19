@@ -7,6 +7,24 @@
 
 Prometheus exporter for Fox ESS Inverters (using the Fox Cloud API)
 
+## Command Line
+
+```
+usage: foxessprom [-h] [-q] [--bind [BIND]] [--mqtt [MQTT]] [--update-limit [UPDATE_LIMIT]] [--max-update-gap [MAX_UPDATE_GAP]]
+
+Reads data from a Fox ESS inverter and PV system, and exposes it as prometheus metrics and MQTT messages.
+
+options:
+  -h, --help            show this help message and exit
+  -q, --quiet           don't log HTTP requests
+  --bind [BIND]         the ip address and port to bind to. Default: *:9100
+  --mqtt [MQTT]         the mqtt host to connect to.
+  --update-limit [UPDATE_LIMIT]
+                        (seconds) Limit on how frequently we can request updates. If --mqtt updates will be sent this often.
+  --max-update-gap [MAX_UPDATE_GAP]
+                        (seconds) Limit on how long the gap between successful updates can be. If it is more than this the Prometheus metrics are not exposed and a null MQTT message will be sent.
+```
+
 ## Example Metrics
 
 ```

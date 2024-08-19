@@ -14,8 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
 import http.server
+import sys
 
+from .arguments import get_arguments
 from .metrics import MetricsLoader
 
 METRICS = MetricsLoader()
@@ -92,6 +95,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(stats.encode("utf8"))
 
 
-def serve() -> None:  # pragma: no cover
-    server = http.server.HTTPServer(("0.0.0.0", 9100), Handler)
+def serve(args: argparse.Namespace) -> None:  # pragma: no cover
+    server = http.server.HTTPServer(args.bind, Handler)
     server.serve_forever()

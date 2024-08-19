@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # foxessprom
 # Copyright (C) 2020 Andrew Wilkinson
 #
@@ -15,10 +14,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
+import os
+import unittest
+
+import requests_mock
 
 from foxessprom.arguments import get_arguments
-from foxessprom.server import serve
-    
-if __name__ == '__main__':
-    serve(get_arguments(sys.argv[1:]))
+
+
+class TestArguments(unittest.TestCase):
+    def test_bind_ip_only(self) -> None:
+        args = get_arguments(["--bind", "192.168.1.2"])
+
+        self.assertEqual(("192.168.1.2", 9100), args.bind)
+
+    def test_bind_with_port(self) -> None:
+        args = get_arguments(["--bind", "192.168.1.2:9102"])
+
+        self.assertEqual(("192.168.1.2", 9102), args.bind)
+
+    def test_mqtt_variable(self) -> None:
+        os.environ["MQTT_HOST"] = "mqtt_host"
+        try:
+            args = get_arguments([])
+
+            self.assertEqual("mqtt_host", args.mqtt)
+        finally:
+            del os.environ["MQTT_HOST"]
