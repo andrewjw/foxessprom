@@ -33,17 +33,13 @@ def make_request(method: REQUEST_TYPES,
     headers = GetAuth().get_signature(token=KEY, path=path)
 
     if method == 'get':
-        response = requests.get(url=url,
-                                params=param,
-                                headers=headers,
-                                verify=False)
+        return requests.get(url=url,
+                            params=param,
+                            headers=headers)
 
     elif method == 'post':
-        response = requests.post(url=url,
-                                 json=param,
-                                 headers=headers,
-                                 verify=False)
+        return requests.post(url=url,
+                             json=param,
+                             headers=headers)
     else:
-        raise Exception('request method error')
-
-    return response
+        raise ValueError('Unsupported request method')

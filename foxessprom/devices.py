@@ -1,5 +1,5 @@
 # foxessprom
-# Copyright (C) 2020 Andrew Wilkinson
+# Copyright (C) 2024 Andrew Wilkinson
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,20 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
+from typing import List
 
-import requests_mock
+from .device import Device
+from .fox_device import FoxDevice
 
-from foxessprom.fox_device import FoxDevice
 
-
-class TestDevice(unittest.TestCase):
-    def test_device_list(self) -> None:
-        with requests_mock.Mocker() as m:
-            m.post('https://www.foxesscloud.com/op/v0/device/list',
-                   text=open("tests/device_list_response.json", "r").read())
-
-            devices = FoxDevice.device_list()
-
-            self.assertEqual(1, len(devices))
-            self.assertEqual("StationName", devices[0].stationName)
+class Devices:
+    def __init__(self) -> None:
+        self.devices: List[Device] = [
+            Device(fox_device) for fox_device
+            in FoxDevice.device_list()
+        ]

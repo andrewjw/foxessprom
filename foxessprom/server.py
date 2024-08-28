@@ -16,15 +16,23 @@
 
 import argparse
 import http.server
-import sys
+from typing import List, Set, cast
 
-from .arguments import get_arguments
-from .metrics import MetricsLoader
+from .devices import Devices
 
-METRICS = MetricsLoader()
+PREFIX = "foxess_"
+
+
+class Server(http.server.HTTPServer):
+    def __init__(self, args: argparse.Namespace, devices: Devices):
+        super().__init__(args.bind, Handler)
+        self.args = args
+        self.devices = devices
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
+    server: "Server"
+
     def do_GET(self) -> None:
         if self.path == "/":
             self.send_index()
@@ -86,15 +94,34 @@ class Handler(http.server.BaseHTTPRequestHandler):
 </html>""".encode("utf8"))
 
     def send_metrics(self) -> None:
-        stats = METRICS.metrics()
-        if stats is None:
+        metrics_text: List[str] = []
+
+        seen: Set[str] = set()
+        for device in self.server.devices.devices:
+            metrics = device.get_metrics()
+            if metrics is None:
+                continue
+            for metric, value, is_counter in metrics.get_prometheus_metrics():
+                if metric not in seen:
+                    metrics_text.append(
+                        f"# TYPE {PREFIX + metric} "
+                        f"{'counter' if is_counter else 'gauge'}")
+                    seen.add(metric)
+
+                metrics_text.append(
+                    f"{PREFIX}{metric}"
+                    f"{{device=\"{device.deviceSN}\"}} "
+                    f"{value}")
+
+        if len(metrics_text) == 0:
             self.send_error(404)
         else:
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(stats.encode("utf8"))
+            self.wfile.write(("\n".join(metrics_text)).encode("utf8"))
 
 
-def serve(args: argparse.Namespace) -> None:  # pragma: no cover
-    server = http.server.HTTPServer(args.bind, Handler)
+def serve(args: argparse.Namespace,
+          devices: Devices) -> None:  # pragma: no cover
+    server = Server(args, devices)
     server.serve_forever()
