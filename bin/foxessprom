@@ -18,7 +18,8 @@
 import sys
 
 from foxessprom.arguments import get_arguments
+from foxessprom.devices import Devices
 from foxessprom.server import serve
     
 if __name__ == '__main__':
-    serve(get_arguments(sys.argv[1:]))
+    serve(get_arguments(sys.argv[1:]), Devices())
