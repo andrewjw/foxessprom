@@ -15,12 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
+from datetime import time
 import http.server
-from typing import List, Set, cast
+import json
+import re
+from typing import List, Set
 
 from .devices import Devices
 
 PREFIX = "foxess_"
+
+PATH_DEVICE_FORCE_CHARGE = re.compile(r"/devices/([^/]+)/force_charge")
 
 
 class Server(http.server.HTTPServer):
@@ -36,6 +41,12 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         if self.path == "/":
             self.send_index()
+        elif self.path == "/devices":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps([d.deviceSN for d
+                                         in self.server.devices])
+                             .encode("utf8"))
         elif self.path == "/metrics":
             self.send_metrics()
         else:

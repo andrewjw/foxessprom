@@ -32,13 +32,18 @@ class Device:
         self.loading = False
         self.lock = Lock()
 
-    def get_metrics(self) -> Optional[DeviceMetrics]:
+    def get_metrics(self, block: bool = False) -> Optional[DeviceMetrics]:
         if self.last_update is None or \
            (utcnow() - self.last_update).total_seconds() >= 120:
             with self.lock:
+                thread: Optional[Thread] = None
                 if not self.loading:
                     self.loading = True
-                    Thread(target=self._set_metrics).start()
+                    thread = Thread(target=self._set_metrics)
+                    thread.start()
+
+            if block and thread is not None:
+                thread.join()
 
             if self.last_update is not None and \
                (utcnow() - self.last_update).total_seconds() > 600:
@@ -54,6 +59,7 @@ class Device:
             self.last_update = start
             print(f"Loaded metrics in {utcnow() - start}")
         finally:
-            self.loading = False
+            with self.lock:
+                self.loading = False
 
     deviceSN = property(lambda self: self.fox_device.deviceSN)

@@ -46,3 +46,6 @@ class DeviceMetrics:
                 yield (metric.variable,
                        metric.value,
                        metric.variable in COUNTER_DATA)
+
+    def to_json(self) -> Dict[str, Union[str, float]]:
+        return {m.variable: m.value for m in self.data}

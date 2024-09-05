@@ -25,12 +25,12 @@ parser.add_argument('-q', '--quiet', action="store_true",
                     help="don't log HTTP requests")
 parser.add_argument('--bind', type=str, nargs='?', default="0.0.0.0:9100",
                     help='the ip address and port to bind to. Default: *:9100')
-parser.add_argument('--mqtt', type=str, nargs='?', default="mqtt",
+parser.add_argument('--mqtt', type=str, nargs='?', default=None,
                     help="the mqtt host to connect to.")
 parser.add_argument('--update-limit', type=int, nargs='?', default=120,
                     help="(seconds) Limit on how frequently we can request "
-                         + "updates. If --mqtt updates will be sent this "
-                         + "often.")
+                         + "updates. If --mqtt is set updates will be sent "
+                         + "this often.")
 parser.add_argument('--max-update-gap', type=int, nargs='?', default=600,
                     help="(seconds) Limit on how long the gap between "
                          + "successful updates can be. If it is more than "

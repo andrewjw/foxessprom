@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import List
+from typing import Iterator, List
 
 from .device import Device
 from .fox_device import FoxDevice
@@ -26,3 +26,14 @@ class Devices:
             Device(fox_device) for fox_device
             in FoxDevice.device_list()
         ]
+
+    def __iter__(self) -> Iterator[Device]:
+        for device in self.devices:
+            yield device
+
+    def __getitem__(self, key: str) -> Device:
+        d = [d for d in self.devices if d.deviceSN == key]
+        if len(d) == 0:
+            raise IndexError(f"No device with serial {key}.")
+        else:
+            return d[0]
