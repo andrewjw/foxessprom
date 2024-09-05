@@ -30,6 +30,46 @@ class Handler(http.server.BaseHTTPRequestHandler):
         else:
             self.send_error(404)
 
+    def do_POST(self) -> None:
+        raw_content_len = self.headers.get('Content-Length')
+        if raw_content_len is None:
+            self.send_error(400)
+            return
+        content_len = int(raw_content_len)
+        post_body = self.rfile.read(content_len)
+
+        m = PATH_DEVICE_FORCE_CHARGE.match(self.path)
+        if m is not None:
+            try:
+                device = self.server.devices[m.group(1)]
+            except IndexError:
+                self.send_error(404)
+            else:
+                j = json.loads(post_body)
+                start = time(int(j["start"].split(":")[0]),
+                             int(j["start"].split(":")[1]))
+                end = time(int(j["end"].split(":")[0]),
+                           int(j["end"].split(":")[1]))
+                device.fox_device.set_force_charge_time(start, end)
+                self.send_response(201)
+                self.end_headers()
+        else:
+            self.send_error(404)
+
+    def do_DELETE(self) -> None:
+        m = PATH_DEVICE_FORCE_CHARGE.match(self.path)
+        if m is not None:
+            try:
+                device = self.server.devices[m.group(1)]
+            except IndexError:
+                self.send_error(404)
+            else:
+                r = device.fox_device.disable_force_charge()
+                self.send_response(201)
+                self.end_headers()
+        else:
+            self.send_error(404)
+
     def send_index(self):
         self.send_response(200)
         self.end_headers()
