@@ -1,5 +1,53 @@
 # CHANGELOG
 
+## v0.3.1 (2024-09-05)
+
+### Chore
+
+* chore(deps): update dependency setuptools to v74 ([`7b6ac31`](https://github.com/andrewjw/foxessprom/commit/7b6ac31d0ad96e8859a3e1c0bd7edf8e55141172))
+
+* chore(deps): update dependency python-semantic-release to v9.8.8 ([`309da64`](https://github.com/andrewjw/foxessprom/commit/309da64ab42fd4872b439a53610e3623cb85fbec))
+
+* chore(deps): update dependency python-semantic-release to v9.8.7 ([`5282268`](https://github.com/andrewjw/foxessprom/commit/52822686edb28f83dbed502ff18b3d85b404067f))
+
+* chore(deps): update dependency pycodestyle to v2.12.1 ([`8645709`](https://github.com/andrewjw/foxessprom/commit/8645709975b7664635d393103722803f2621dd8f))
+
+* chore(deps): update dependency wheel to v0.44.0 ([`95bebb5`](https://github.com/andrewjw/foxessprom/commit/95bebb5ecd2cbb6691785da77e0f104fcbdf1402))
+
+* chore: Fix typing on Python before 3.11. ([`af5f496`](https://github.com/andrewjw/foxessprom/commit/af5f496f9121c207a3ab956cacde378616dca82b))
+
+* chore: Refactoring and improving MQTT messasges. ([`ec87f52`](https://github.com/andrewjw/foxessprom/commit/ec87f5228891cab7951ac10ebfeb45302accbb43))
+
+* chore: Refactor to allow mqtt messages to be added. ([`0a06a38`](https://github.com/andrewjw/foxessprom/commit/0a06a389d1441377abe3e745dab70649e47b2bee))
+
+* chore: Add commandline argument handling. ([`7216102`](https://github.com/andrewjw/foxessprom/commit/721610270d72e7b1f62db141472c9f490a53c2d2))
+
+* chore: Start adding typing. ([`52d171e`](https://github.com/andrewjw/foxessprom/commit/52d171ebdc35ee1c9aedb20ed6d727696cbdcd6d))
+
+* chore: Fix tests on Python 3.12. ([`a8dcdc8`](https://github.com/andrewjw/foxessprom/commit/a8dcdc84240c87aea437ddde01987ffc306302b3))
+
+* chore: Test on Python 3.12. ([`1757319`](https://github.com/andrewjw/foxessprom/commit/1757319aec485ec26936535052af0dae7f9d53ad))
+
+* chore: Fix style. ([`219fd56`](https://github.com/andrewjw/foxessprom/commit/219fd56b911a60774fd6251de9f706d01110c198))
+
+* chore: Add gitignore file. ([`ae58033`](https://github.com/andrewjw/foxessprom/commit/ae58033c2a5d22b0e18af6277de54f7bda500403))
+
+* chore: Start adding tests. ([`e8095bd`](https://github.com/andrewjw/foxessprom/commit/e8095bdd47841d07603797862913cd40052c5438))
+
+* chore: Stop building a binary wheel. ([`c02f4c8`](https://github.com/andrewjw/foxessprom/commit/c02f4c803b7befb38425b0f42170185690e56733))
+
+### Fix
+
+* fix: Remove deprecated usage of datetime.utcnow. ([`a7202c4`](https://github.com/andrewjw/foxessprom/commit/a7202c4cc069e825a60f6150ee79ec8104890029))
+
+### Unknown
+
+* Merge pull request #43 from andrewjw/mqtt
+
+feat: Add MQTT support. ([`dc43e5c`](https://github.com/andrewjw/foxessprom/commit/dc43e5cdfb887e9e5b93cfbe5639eeee66894b2b))
+
+* Merge branch &#39;main&#39; into mqtt ([`565f83a`](https://github.com/andrewjw/foxessprom/commit/565f83a000bebbefa971acad5005b0198a31ae1b))
+
 ## v0.3.0 (2024-08-01)
 
 ### Chore
