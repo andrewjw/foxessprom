@@ -16,29 +16,30 @@
 
 import requests
 import os
+from typing import Any, Literal, Optional
 
 from .auth import GetAuth
 
 DOMAIN = 'https://www.foxesscloud.com'
 KEY = os.environ["FOX_CLOUD_API_KEY"]
 
+REQUEST_TYPES = Literal["get", "post"]
 
-def make_request(method, path, param=None):
+
+def make_request(method: REQUEST_TYPES,
+                 path: str,
+                 param: Optional[Any] = None) -> requests.Response:
     url = DOMAIN + path
     headers = GetAuth().get_signature(token=KEY, path=path)
 
     if method == 'get':
-        response = requests.get(url=url,
-                                params=param,
-                                headers=headers,
-                                verify=False)
+        return requests.get(url=url,
+                            params=param,
+                            headers=headers)
 
     elif method == 'post':
-        response = requests.post(url=url,
-                                 json=param,
-                                 headers=headers,
-                                 verify=False)
+        return requests.post(url=url,
+                             json=param,
+                             headers=headers)
     else:
-        raise Exception('request method error')
-
-    return response
+        raise ValueError('Unsupported request method')

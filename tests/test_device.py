@@ -18,16 +18,16 @@ import unittest
 
 import requests_mock
 
-from foxessprom.device import Device
+from foxessprom.fox_device import FoxDevice
 
 
 class TestDevice(unittest.TestCase):
-    def test_device_list(self):
+    def test_device_list(self) -> None:
         with requests_mock.Mocker() as m:
             m.post('https://www.foxesscloud.com/op/v0/device/list',
                    text=open("tests/device_list_response.json", "r").read())
 
-            devices = Device.device_list()
+            devices = FoxDevice.device_list()
 
             self.assertEqual(1, len(devices))
             self.assertEqual("StationName", devices[0].stationName)

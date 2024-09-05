@@ -1,6 +1,5 @@
-#!/usr/bin/python3
 # foxessprom
-# Copyright (C) 2020 Andrew Wilkinson
+# Copyright (C) 2024 Andrew Wilkinson
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,16 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
+import datetime
 
-from foxessprom.arguments import get_arguments
-from foxessprom.devices import Devices
-from foxessprom.mqtt import mqtt_updates
-from foxessprom.server import serve
-    
-if __name__ == '__main__':
-    args = get_arguments(sys.argv[1:])
-    devices = Devices()
-
-    mqtt_updates(args, devices)
-    serve(args, devices)
+# TODO: Remove when Python 3.11 is the minimum version.
+if hasattr(datetime, "UTC"):
+    def utcnow() -> datetime.datetime:
+        return datetime.datetime.now(getattr(datetime, "UTC"))
+else:
+    def utcnow() -> datetime.datetime:
+        return datetime.datetime.utcnow()

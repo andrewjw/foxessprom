@@ -1,5 +1,5 @@
 # foxessprom
-# Copyright (C) 2020 Andrew Wilkinson
+# Copyright (C) 2024 Andrew Wilkinson
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,13 +14,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import unittest
+from typing import Iterator, List
 
-from foxessprom.auth import GetAuth
+from .device import Device
+from .fox_device import FoxDevice
 
 
-class TestAuth(unittest.TestCase):
-    def test_signature(self) -> None:
-        auth = GetAuth().get_signature("token", "path")
+class Devices:
+    def __init__(self) -> None:
+        self.devices: List[Device] = [
+            Device(fox_device) for fox_device
+            in FoxDevice.device_list()
+        ]
 
-        self.assertIn("token", auth)
+    def __iter__(self) -> Iterator[Device]:
+        for device in self.devices:
+            yield device
+
+    def __getitem__(self, key: str) -> Device:
+        d = [d for d in self.devices if d.deviceSN == key]
+        if len(d) == 0:
+            raise IndexError(f"No device with serial {key}.")
+        else:
+            return d[0]

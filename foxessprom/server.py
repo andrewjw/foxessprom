@@ -14,23 +14,45 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
+from datetime import time
 import http.server
+import json
+import re
+from typing import List, Set
 
-from .metrics import MetricsLoader
+from .devices import Devices
 
-METRICS = MetricsLoader()
+PREFIX = "foxess_"
+
+PATH_DEVICE_FORCE_CHARGE = re.compile(r"/devices/([^/]+)/force_charge")
+
+
+class Server(http.server.HTTPServer):
+    def __init__(self, args: argparse.Namespace, devices: Devices):
+        super().__init__(args.bind, Handler)
+        self.args = args
+        self.devices = devices
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
-    def do_GET(self):
+    server: "Server"
+
+    def do_GET(self) -> None:
         if self.path == "/":
             self.send_index()
+        elif self.path == "/devices":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps([d.deviceSN for d
+                                         in self.server.devices])
+                             .encode("utf8"))
         elif self.path == "/metrics":
             self.send_metrics()
         else:
             self.send_error(404)
 
-    def send_index(self):
+    def send_index(self) -> None:
         self.send_response(200)
         self.end_headers()
         self.wfile.write("""
@@ -42,16 +64,35 @@ class Handler(http.server.BaseHTTPRequestHandler):
 </body>
 </html>""".encode("utf8"))
 
-    def send_metrics(self):
-        stats = METRICS.metrics()
-        if stats is None:
+    def send_metrics(self) -> None:
+        metrics_text: List[str] = []
+
+        seen: Set[str] = set()
+        for device in self.server.devices.devices:
+            metrics = device.get_metrics()
+            if metrics is None:
+                continue
+            for metric, value, is_counter in metrics.get_prometheus_metrics():
+                if metric not in seen:
+                    metrics_text.append(
+                        f"# TYPE {PREFIX + metric} "
+                        f"{'counter' if is_counter else 'gauge'}")
+                    seen.add(metric)
+
+                metrics_text.append(
+                    f"{PREFIX}{metric}"
+                    f"{{device=\"{device.deviceSN}\"}} "
+                    f"{value}")
+
+        if len(metrics_text) == 0:
             self.send_error(404)
         else:
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(stats.encode("utf8"))
+            self.wfile.write(("\n".join(metrics_text)).encode("utf8"))
 
 
-def serve():  # pragma: no cover
-    server = http.server.HTTPServer(("0.0.0.0", 9100), Handler)
+def serve(args: argparse.Namespace,
+          devices: Devices) -> None:  # pragma: no cover
+    server = Server(args, devices)
     server.serve_forever()
