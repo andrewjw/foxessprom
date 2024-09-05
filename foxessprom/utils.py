@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from datetime import datetime
-try:
-    from datetime import UTC
-except ImportError:
-    def utcnow() -> datetime:
-        return datetime.utcnow()
+import datetime
+
+# TODO: Remove when Python 3.11 is the minimum version.
+if hasattr(datetime, "UTC"):
+    def utcnow() -> datetime.datetime:
+        return datetime.datetime.now(getattr(datetime, "UTC"))
 else:
-    def utcnow() -> datetime:
-        return datetime.now(UTC)
+    def utcnow() -> datetime.datetime:
+        return datetime.datetime.utcnow()
