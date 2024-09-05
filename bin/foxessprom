@@ -19,7 +19,12 @@ import sys
 
 from foxessprom.arguments import get_arguments
 from foxessprom.devices import Devices
+from foxessprom.mqtt import mqtt_updates
 from foxessprom.server import serve
     
 if __name__ == '__main__':
-    serve(get_arguments(sys.argv[1:]), Devices())
+    args = get_arguments(sys.argv[1:])
+    devices = Devices()
+
+    mqtt_updates(args, devices)
+    serve(args, devices)

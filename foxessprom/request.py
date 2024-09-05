@@ -16,7 +16,7 @@
 
 import requests
 import os
-from typing import Dict, Literal, Optional
+from typing import Any, Literal, Optional
 
 from .auth import GetAuth
 
@@ -28,7 +28,7 @@ REQUEST_TYPES = Literal["get", "post"]
 
 def make_request(method: REQUEST_TYPES,
                  path: str,
-                 param: Optional[Dict[str, int]] = None) -> requests.Response:
+                 param: Optional[Any] = None) -> requests.Response:
     url = DOMAIN + path
     headers = GetAuth().get_signature(token=KEY, path=path)
 
