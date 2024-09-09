@@ -25,7 +25,7 @@ from .devices import Devices
 
 PREFIX = "foxess_"
 
-PATH_DEVICE_FORCE_CHARGE = re.compile(r"/devices/([^/]+)/force_charge")
+PATH_DEVICE = re.compile(r"/devices/([^/]+)/(force_charge|work_mode)")
 
 
 class Server(http.server.HTTPServer):
@@ -47,6 +47,16 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(json.dumps([d.deviceSN for d
                                          in self.server.devices])
                              .encode("utf8"))
+        elif self.path.startswith("/devices/"):
+            print(self.path.split("/"))
+            sn = self.path.split("/")[2]
+            if sn not in self.server.devices:
+                self.send_error(404)
+            elif self.path.endswith("/scheduler"):
+                r = self.server.devices[sn].fox_device.get_scheduler()
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(json.dumps(r).encode("utf8"))
         elif self.path == "/metrics":
             self.send_metrics()
         else:
@@ -60,8 +70,10 @@ class Handler(http.server.BaseHTTPRequestHandler):
         content_len = int(raw_content_len)
         post_body = self.rfile.read(content_len)
 
-        m = PATH_DEVICE_FORCE_CHARGE.match(self.path)
-        if m is not None:
+        m = PATH_DEVICE.match(self.path)
+        if m is None:
+            self.send_error(404)
+        elif m.group(2) == "force_charge":
             try:
                 device = self.server.devices[m.group(1)]
             except IndexError:
@@ -75,18 +87,30 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 device.fox_device.set_force_charge_time(start, end)
                 self.send_response(201)
                 self.end_headers()
-        else:
-            self.send_error(404)
-
-    def do_DELETE(self) -> None:
-        m = PATH_DEVICE_FORCE_CHARGE.match(self.path)
-        if m is not None:
+        elif m.group(2) == "work_mode":
             try:
                 device = self.server.devices[m.group(1)]
             except IndexError:
                 self.send_error(404)
             else:
-                r = device.fox_device.disable_force_charge()
+                r = device.fox_device.set_work_mode(post_body.decode("utf8"))
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(json.dumps(r).encode("utf8"))
+        else:
+            self.send_error(404)
+
+    def do_DELETE(self) -> None:
+        m = PATH_DEVICE.match(self.path)
+        if m is None:
+            self.send_error(404)
+        elif m.group(2) == "force_charge":
+            try:
+                device = self.server.devices[m.group(1)]
+            except IndexError:
+                self.send_error(404)
+            else:
+                device.fox_device.disable_force_charge()
                 self.send_response(201)
                 self.end_headers()
         else:

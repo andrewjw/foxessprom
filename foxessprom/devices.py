@@ -37,3 +37,6 @@ class Devices:
             raise IndexError(f"No device with serial {key}.")
         else:
             return d[0]
+
+    def __contains__(self, key: str) -> bool:
+        return len([d for d in self.devices if d.deviceSN == key]) > 0

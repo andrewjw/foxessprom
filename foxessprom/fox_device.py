@@ -37,6 +37,12 @@ class FoxDevice:
         response = make_request('post', path, request_param)
         return response.json()["result"][0]["datas"]
 
+    def get_scheduler(self) -> Any:
+        path = '/op/v0/device/scheduler/get'
+        request_param = {'deviceSN': self.deviceSN}
+        response = make_request('post', path, request_param)
+        return response.json()
+
     @staticmethod
     def device_list() -> List["FoxDevice"]:
         path = '/op/v0/device/list'
