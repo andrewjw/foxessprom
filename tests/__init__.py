@@ -16,4 +16,5 @@
 
 from .test_arguments import TestArguments
 from .test_auth import TestAuth
+from .test_custom_metrics import TestCustomMetrics
 from .test_device import TestDevice

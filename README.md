@@ -100,4 +100,18 @@ foxess_generation{device="ABCDEFG01234567"} 826.5
 foxess_ResidualEnergy{device="ABCDEFG01234567"} 471.0
 # TYPE foxess_energyThroughput gauge
 foxess_energyThroughput{device="ABCDEFG01234567"} 692.866
+# TYPE foxess_pv_generation counter
+foxess_pv_generation{device="60BH37202BFA097"} 0.0
+# TYPE foxess_battery_charge counter
+foxess_battery_charge{device="60BH37202BFA097"} 0.0
+# TYPE foxess_battery_discharge counter
+foxess_battery_charge{device="60BH37202BFA097"} 0.0
+# TYPE foxess_grid_usage counter
+foxess_grid_usage{device="60BH37202BFA097"} 0.0
 ```
+
+In addition to reporting the metrics that are provided by the Fox ESS API, `foxessprom` also
+calculates four additional metrics - `foxess_pv_generation`, `foxess_battery_charge`,
+`foxess_battery_charge` and `foxess_grid_usage`. These attempt to measure the total amount
+of energy generated or used. As we can only get the information about the current power every
+two minutes these are only estimates.
