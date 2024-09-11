@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v0.4.1 (2024-09-11)
+
+### Chore
+
+* chore: Fix tests. ([`7e3d112`](https://github.com/andrewjw/foxessprom/commit/7e3d112506bb8a1fa44636815a6983f3b7f698e0))
+
+### Fix
+
+* fix: Add total feed in custom metric. ([`3bf72b6`](https://github.com/andrewjw/foxessprom/commit/3bf72b622daae1abf65b51ec2dbb186f91c551c6))
+
+* fix: Fix custom metric names to match Prometheus standards. ([`4e1c13f`](https://github.com/andrewjw/foxessprom/commit/4e1c13f64c06a6d7486661689f510e38f7a017ff))
+
 ## v0.4.0 (2024-09-11)
 
 ### Chore
