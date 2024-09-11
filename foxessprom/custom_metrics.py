@@ -58,17 +58,17 @@ class CustomMetrics:
         self.last = metrics
 
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
-        yield ("pv_generation", self.pv_generation, True)
-        yield ("battery_charge", self.battery_charge, True)
-        yield ("battery_discharge", self.battery_discharge, True)
-        yield ("grid_usage", self.grid_usage, True)
+        yield ("pv_generation_total", self.pv_generation, True)
+        yield ("battery_charge_total", self.battery_charge, True)
+        yield ("battery_discharge_total", self.battery_discharge, True)
+        yield ("grid_usage_total", self.grid_usage, True)
 
     def to_json(self) -> Dict[str, Union[str, float]]:
         return {
-            "pv_generation": self.pv_generation,
-            "battery_charge": self.battery_charge,
-            "battery_discharge": self.battery_discharge,
-            "grid_usage": self.grid_usage
+            "pv_generation_total": self.pv_generation,
+            "battery_charge_total": self.battery_charge,
+            "battery_discharge_total": self.battery_discharge,
+            "grid_usage_total": self.grid_usage
         }
 
     def _update_metric(self,
