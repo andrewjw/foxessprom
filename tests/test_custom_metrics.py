@@ -40,8 +40,9 @@ class TestCustomMetrics(unittest.TestCase):
 
         metrics = cast(Dict[str, float], custom.to_json())
 
-        self.assertAlmostEqual(metrics["pv_generation"], 0.0)
-        self.assertAlmostEqual(metrics["battery_charge"], 0.0)
-        self.assertAlmostEqual(metrics["battery_discharge"],
+        self.assertAlmostEqual(metrics["pv_generation_total"], 0.0)
+        self.assertAlmostEqual(metrics["battery_charge_total"], 0.0)
+        self.assertAlmostEqual(metrics["battery_discharge_total"],
                                0.015766666666666665)
-        self.assertAlmostEqual(metrics["grid_usage"], 0.0003666666666666666)
+        self.assertAlmostEqual(metrics["grid_usage_total"],
+                               0.0003666666666666666)
