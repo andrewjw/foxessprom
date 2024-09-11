@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## v0.4.0 (2024-09-11)
+
+### Chore
+
+* chore: Remove dictionary union to restore Python 3.8 compatibility. ([`fccd5b1`](https://github.com/andrewjw/foxessprom/commit/fccd5b18fac3d7f8aefaeff10088dcf1016b8105))
+
+* chore(deps): update dependency types-requests to v2.32.0.20240907 ([`5544bb1`](https://github.com/andrewjw/foxessprom/commit/5544bb1be235d7db9cbfcee3c406351f6294fc85))
+
+* chore(deps): update dependency types-requests to v2.32.0.20240905 ([`781260a`](https://github.com/andrewjw/foxessprom/commit/781260ab3d37b9aae471d670b46676eda5c8812b))
+
+* chore(deps): update dependency mypy to v1.11.2 ([`70d3579`](https://github.com/andrewjw/foxessprom/commit/70d3579d028be333b33f1fd06380d4ef5c7d8b76))
+
+### Feature
+
+* feat: Add four new custom metrics to measure the total amount of energy generated or used. ([`2d0cc8f`](https://github.com/andrewjw/foxessprom/commit/2d0cc8fdffe9e7e0548a9cf90496ba0c5d49d04d))
+
 ## v0.3.1 (2024-09-05)
 
 ### Chore
