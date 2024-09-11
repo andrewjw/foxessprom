@@ -35,5 +35,8 @@ class CombinedMetrics:
             yield metric
 
     def to_json(self) -> Dict[str, Union[str, float]]:
-        return self.device.to_json() if self.device is not None \
-               else {} | self.custom.to_json()
+        # TODO: Use when Python 3.9 is the minimum version
+        # return self.device.to_json() if self.device is not None \
+        #       else {} | self.custom.to_json()
+        return {**(self.device.to_json() if self.device is not None else {}),
+                **self.custom.to_json()}
