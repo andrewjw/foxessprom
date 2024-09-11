@@ -46,3 +46,5 @@ class TestCustomMetrics(unittest.TestCase):
                                0.015766666666666665)
         self.assertAlmostEqual(metrics["grid_usage_total"],
                                0.0003666666666666666)
+        self.assertAlmostEqual(metrics["feed_in_total"],
+                               0.0)

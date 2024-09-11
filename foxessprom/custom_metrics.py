@@ -26,6 +26,7 @@ class CustomMetrics:
         self.battery_charge: float = 0.0
         self.battery_discharge: float = 0.0
         self.grid_usage: float = 0.0
+        self.feed_in: float = 0.0
 
     def update(self, metrics: DeviceMetrics) -> None:
         if self.last is None:
@@ -54,6 +55,10 @@ class CustomMetrics:
                             "grid_usage",
                             metrics,
                             time_since.total_seconds())
+        self._update_metric("feedinPower",
+                            "feed_in",
+                            metrics,
+                            time_since.total_seconds())
 
         self.last = metrics
 
@@ -62,13 +67,15 @@ class CustomMetrics:
         yield ("battery_charge_total", self.battery_charge, True)
         yield ("battery_discharge_total", self.battery_discharge, True)
         yield ("grid_usage_total", self.grid_usage, True)
+        yield ("feed_in_total", self.feed_in, True)
 
     def to_json(self) -> Dict[str, Union[str, float]]:
         return {
             "pv_generation_total": self.pv_generation,
             "battery_charge_total": self.battery_charge,
             "battery_discharge_total": self.battery_discharge,
-            "grid_usage_total": self.grid_usage
+            "grid_usage_total": self.grid_usage,
+            "feed_in_total": self.feed_in
         }
 
     def _update_metric(self,
