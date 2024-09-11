@@ -18,6 +18,8 @@ from datetime import datetime
 from threading import Thread, Lock
 from typing import Optional
 
+from .combined_metrics import CombinedMetrics
+from .custom_metrics import CustomMetrics
 from .fox_device import FoxDevice
 from .device_metrics import DeviceMetrics
 from .utils import utcnow
@@ -28,11 +30,12 @@ class Device:
         self.fox_device = fox_device
 
         self.metrics: Optional[DeviceMetrics] = None
+        self.custom_metrics = CustomMetrics()
         self.last_update: Optional[datetime] = None
         self.loading = False
         self.lock = Lock()
 
-    def get_metrics(self, block: bool = False) -> Optional[DeviceMetrics]:
+    def get_metrics(self, block: bool = False) -> Optional[CombinedMetrics]:
         if self.last_update is None or \
            (utcnow() - self.last_update).total_seconds() >= 120:
             with self.lock:
@@ -48,13 +51,14 @@ class Device:
             if self.last_update is not None and \
                (utcnow() - self.last_update).total_seconds() > 600:
                 return None
-        return self.metrics
+        return CombinedMetrics(self.metrics, self.custom_metrics)
 
     def _set_metrics(self) -> None:
         try:
             start = utcnow()
 
-            self.metrics = DeviceMetrics(self.fox_device.real_query())
+            self.metrics = DeviceMetrics(start, self.fox_device.real_query())
+            self.custom_metrics.update(self.metrics)
 
             self.last_update = start
             print(f"Loaded metrics in {utcnow() - start}")

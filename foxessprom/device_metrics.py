@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from datetime import datetime
 from typing import Dict, Iterator, List, Optional, Tuple, Union, cast
 
 PREFIX = "foxess_"
@@ -22,6 +23,9 @@ IGNORE_DATA = {"runningState", "batStatus", "batStatusV2",
                "currentFault", "currentFaultCount"}
 
 COUNTER_DATA = {"generation"}
+
+
+PVGENERATION = 0.0
 
 
 class Metric:
@@ -36,8 +40,17 @@ class Metric:
 
 
 class DeviceMetrics:
-    def __init__(self, data: List[Dict[str, Union[str, float]]]) -> None:
+    def __init__(self,
+                 update_time: datetime,
+                 data: List[Dict[str, Union[str, float]]]) -> None:
+        self.update_time = update_time
         self.data: List[Metric] = [Metric(d) for d in data]
+
+    def __getitem__(self, key: str) -> Union[str, float]:
+        for metric in self.data:
+            if metric.variable == key:
+                return metric.value
+        raise IndexError(f"No variable with name {key}")
 
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
         for metric in self.data:
