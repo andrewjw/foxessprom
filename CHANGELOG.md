@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.4.2 (2024-09-12)
+
+### Fix
+
+* fix: Add custom total metric for load ([`17bee03`](https://github.com/andrewjw/foxessprom/commit/17bee039d9bf2f5f499563aa7cc460860742efb5))
+
 ## v0.4.1 (2024-09-11)
 
 ### Chore
