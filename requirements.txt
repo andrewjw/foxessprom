@@ -6,7 +6,7 @@ wheel==0.44.0
 twine==5.1.1
 requests==2.32.3
 requests-mock==1.12.1
-types-requests==2.32.0.20240907
+types-requests==2.32.0.20240914
 setuptools==74.1.2
 mypy==1.11.2
 paho-mqtt==2.1.0
