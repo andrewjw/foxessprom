@@ -35,6 +35,7 @@ class FoxDevice:
         path = '/op/v0/device/real/query'
         request_param = {'sn': self.deviceSN, 'variables': []}
         response = make_request('post', path, request_param)
+        response.raise_for_status()
         return response.json()["result"][0]["datas"]
 
     @staticmethod
@@ -44,6 +45,7 @@ class FoxDevice:
         request_param = {'currentPage': 1, 'pageSize': 500}
 
         response = make_request('post', path, request_param)
+        response.raise_for_status()
 
         return [FoxDevice(data) for data in response.json()["result"]["data"]]
 
