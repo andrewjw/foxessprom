@@ -1,26 +1,54 @@
 # CHANGELOG
 
+
+## v0.4.3 (2024-10-14)
+
+### Chores
+
+* chore(deps): update dependency python-semantic-release to v9.11.0 ([`c5a3959`](https://github.com/andrewjw/foxessprom/commit/c5a3959224d2903cc96dd9c2ec83baec2a8a1a33))
+
+* chore(deps): update dependency python-semantic-release to v9.10.1 ([`12761a5`](https://github.com/andrewjw/foxessprom/commit/12761a51cfa3ced32c77d8cc0e0f55f726400eb4))
+
+* chore(deps): update dependency python-semantic-release to v9.10.0 ([`6260a36`](https://github.com/andrewjw/foxessprom/commit/6260a36842dd9b8583b306b9adb34c89e5c4067f))
+
+* chore(deps): update dependency setuptools to v75 ([`ee415e4`](https://github.com/andrewjw/foxessprom/commit/ee415e4d3f83de5eb987660b72f7386e1ebd9825))
+
+* chore(deps): update dependency python-semantic-release to v9.9.0 ([`61a7064`](https://github.com/andrewjw/foxessprom/commit/61a706419f9dbfbc4e9617cc64d39e2a9559246d))
+
+* chore(deps): update dependency python-semantic-release to v9.8.9 ([`6741110`](https://github.com/andrewjw/foxessprom/commit/67411105b6cec61ab475bb69eb672c7269dc7ff2))
+
+* chore(deps): update dependency setuptools to v74.1.3 ([`437d497`](https://github.com/andrewjw/foxessprom/commit/437d497d243f9d48fd8bff1735974769663af1ac))
+
+* chore(deps): update dependency types-requests to v2.32.0.20240914 ([`f339739`](https://github.com/andrewjw/foxessprom/commit/f339739a9834ee1113760e3cfc5ca57e60352f54))
+
+### Fixes
+
+* fix: Raise error if we get a bad status from the API. ([`2064af2`](https://github.com/andrewjw/foxessprom/commit/2064af2af83bc7ba31dba4ee67935b9c9a867d2e))
+
+
 ## v0.4.2 (2024-09-12)
 
-### Fix
+### Fixes
 
 * fix: Add custom total metric for load ([`17bee03`](https://github.com/andrewjw/foxessprom/commit/17bee039d9bf2f5f499563aa7cc460860742efb5))
 
+
 ## v0.4.1 (2024-09-11)
 
-### Chore
+### Chores
 
 * chore: Fix tests. ([`7e3d112`](https://github.com/andrewjw/foxessprom/commit/7e3d112506bb8a1fa44636815a6983f3b7f698e0))
 
-### Fix
+### Fixes
 
 * fix: Add total feed in custom metric. ([`3bf72b6`](https://github.com/andrewjw/foxessprom/commit/3bf72b622daae1abf65b51ec2dbb186f91c551c6))
 
 * fix: Fix custom metric names to match Prometheus standards. ([`4e1c13f`](https://github.com/andrewjw/foxessprom/commit/4e1c13f64c06a6d7486661689f510e38f7a017ff))
 
+
 ## v0.4.0 (2024-09-11)
 
-### Chore
+### Chores
 
 * chore: Remove dictionary union to restore Python 3.8 compatibility. ([`fccd5b1`](https://github.com/andrewjw/foxessprom/commit/fccd5b18fac3d7f8aefaeff10088dcf1016b8105))
 
@@ -30,13 +58,14 @@
 
 * chore(deps): update dependency mypy to v1.11.2 ([`70d3579`](https://github.com/andrewjw/foxessprom/commit/70d3579d028be333b33f1fd06380d4ef5c7d8b76))
 
-### Feature
+### Features
 
 * feat: Add four new custom metrics to measure the total amount of energy generated or used. ([`2d0cc8f`](https://github.com/andrewjw/foxessprom/commit/2d0cc8fdffe9e7e0548a9cf90496ba0c5d49d04d))
 
+
 ## v0.3.1 (2024-09-05)
 
-### Chore
+### Chores
 
 * chore(deps): update dependency setuptools to v74 ([`7b6ac31`](https://github.com/andrewjw/foxessprom/commit/7b6ac31d0ad96e8859a3e1c0bd7edf8e55141172))
 
@@ -70,7 +99,7 @@
 
 * chore: Stop building a binary wheel. ([`c02f4c8`](https://github.com/andrewjw/foxessprom/commit/c02f4c803b7befb38425b0f42170185690e56733))
 
-### Fix
+### Fixes
 
 * fix: Remove deprecated usage of datetime.utcnow. ([`a7202c4`](https://github.com/andrewjw/foxessprom/commit/a7202c4cc069e825a60f6150ee79ec8104890029))
 
@@ -80,11 +109,12 @@
 
 feat: Add MQTT support. ([`dc43e5c`](https://github.com/andrewjw/foxessprom/commit/dc43e5cdfb887e9e5b93cfbe5639eeee66894b2b))
 
-* Merge branch &#39;main&#39; into mqtt ([`565f83a`](https://github.com/andrewjw/foxessprom/commit/565f83a000bebbefa971acad5005b0198a31ae1b))
+* Merge branch 'main' into mqtt ([`565f83a`](https://github.com/andrewjw/foxessprom/commit/565f83a000bebbefa971acad5005b0198a31ae1b))
+
 
 ## v0.3.0 (2024-08-01)
 
-### Chore
+### Chores
 
 * chore(deps): update dependency python-semantic-release to v9.8.6 ([`cf7f93f`](https://github.com/andrewjw/foxessprom/commit/cf7f93f2de2111a5fd98885ac3371efda7f1a90f))
 
@@ -98,25 +128,28 @@ feat: Add MQTT support. ([`dc43e5c`](https://github.com/andrewjw/foxessprom/comm
 
 * chore: Add some badges and example output to README.md ([`692923e`](https://github.com/andrewjw/foxessprom/commit/692923e8dfb4a424a7f0e5e72833e07c8a43e7d3))
 
-### Feature
+### Features
 
 * feat: Build arm docker images, and install a local .tar.gz file. ([`9b22404`](https://github.com/andrewjw/foxessprom/commit/9b224047781d8fe8baa1bad6d1540fa2af5b97c3))
 
+
 ## v0.2.0 (2024-06-20)
 
-### Feature
+### Features
 
 * feat: Move loading metrics from Fox cloud to a thread so we respond in time for Prometheus. ([`a0cf490`](https://github.com/andrewjw/foxessprom/commit/a0cf490c034ddcfb5b02d33d2a5018cba288d955))
 
+
 ## v0.1.3 (2024-06-20)
 
-### Fix
+### Fixes
 
 * fix: Add hashbang to main script. ([`180a0a3`](https://github.com/andrewjw/foxessprom/commit/180a0a33aef84263240c6377fb562abb56c8202d))
 
+
 ## v0.1.2 (2024-06-20)
 
-### Chore
+### Chores
 
 * chore(deps): update dependency packaging to v24 ([`b77fc33`](https://github.com/andrewjw/foxessprom/commit/b77fc330205279c46a3ac251ea8b4036351d9b54))
 
@@ -148,7 +181,7 @@ feat: Add MQTT support. ([`dc43e5c`](https://github.com/andrewjw/foxessprom/comm
 
 * chore(deps): update dependency python-semantic-release to v9.6.0 ([`698100c`](https://github.com/andrewjw/foxessprom/commit/698100c680952f6058d6644f8caf2d14a012e8f9))
 
-### Fix
+### Fixes
 
 * fix: Add debug line to track time taken to update metrics. ([`0ecaa42`](https://github.com/andrewjw/foxessprom/commit/0ecaa4240e84192cbd48ae17fa0f4aa30658c334))
 
@@ -162,9 +195,10 @@ chore(deps): update dependency packaging to v24 ([`96c9a52`](https://github.com/
 
 chore(deps): update dependency coveralls to v4 ([`51c7f1a`](https://github.com/andrewjw/foxessprom/commit/51c7f1a01538382657fdea5a98d66b108d3f8ac8))
 
+
 ## v0.1.1 (2024-04-24)
 
-### Chore
+### Chores
 
 * chore(deps): update dependency python-semantic-release to v9.5.0 ([`9560950`](https://github.com/andrewjw/foxessprom/commit/956095088282554c29c20e2348de5add393b29b3))
 
@@ -190,7 +224,7 @@ chore(deps): update dependency coveralls to v4 ([`51c7f1a`](https://github.com/a
 
 * chore: Add semantic release config. ([`90b0588`](https://github.com/andrewjw/foxessprom/commit/90b0588fe2f004855dd2277d176f915bc8d0f48d))
 
-### Fix
+### Fixes
 
 * fix: Fix typos. ([`150fb75`](https://github.com/andrewjw/foxessprom/commit/150fb752d49e4167c63abfbbecb6ed116af70832))
 
@@ -212,17 +246,18 @@ chore(deps): update dependency python-semantic-release to v9 ([`2d99094`](https:
 
 chore(deps): update dependency twine to v5 ([`34877c6`](https://github.com/andrewjw/foxessprom/commit/34877c6a8ccbfb680b705f9e68dd6d069477d29a))
 
+
 ## v0.1.0 (2024-04-13)
 
-### Chore
+### Chores
 
 * chore: Fix code style. ([`f2a0f5c`](https://github.com/andrewjw/foxessprom/commit/f2a0f5c8bbc1b56dbb286e15596b16c057da4bf8))
 
-### Feature
+### Features
 
 * feat: Add initial implementation. ([`0f5ced8`](https://github.com/andrewjw/foxessprom/commit/0f5ced8d4d011c9395af89b8979beee1fc9b97a6))
 
-### Fix
+### Fixes
 
 * fix: Fix global variables reference. ([`d0d2f0b`](https://github.com/andrewjw/foxessprom/commit/d0d2f0bc8ae277b684facea6337a773461572eea))
 
@@ -230,9 +265,10 @@ chore(deps): update dependency twine to v5 ([`34877c6`](https://github.com/andre
 
 * fix: Ignore correct variables. ([`97c1f35`](https://github.com/andrewjw/foxessprom/commit/97c1f35dcab40438802e8eea7cf51e65ae75f07d))
 
+
 ## v0.0.0 (2024-04-12)
 
-### Chore
+### Chores
 
 * chore: Fix running release step. ([`da195e2`](https://github.com/andrewjw/foxessprom/commit/da195e281fe9bde2bf93f3711c673edeecafe6ed))
 
