@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
 from typing import Any, List
 
 from .request import make_request
@@ -31,20 +32,20 @@ class FoxDevice:
         self.stationID = data["stationID"]
         self.status = data["status"]
 
-    def real_query(self) -> Any:
+    def real_query(self, args: argparse.Namespace) -> Any:
         path = '/op/v0/device/real/query'
         request_param = {'sn': self.deviceSN, 'variables': []}
-        response = make_request('post', path, request_param)
+        response = make_request(args, 'post', path, request_param)
         response.raise_for_status()
         return response.json()["result"][0]["datas"]
 
     @staticmethod
-    def device_list() -> List["FoxDevice"]:
+    def device_list(args: argparse.Namespace) -> List["FoxDevice"]:
         path = '/op/v0/device/list'
 
         request_param = {'currentPage': 1, 'pageSize': 500}
 
-        response = make_request('post', path, request_param)
+        response = make_request(args, 'post', path, request_param)
         response.raise_for_status()
 
         return [FoxDevice(data) for data in response.json()["result"]["data"]]

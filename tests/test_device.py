@@ -14,11 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from argparse import Namespace
 import unittest
 
 import requests_mock
 
-from foxessprom.fox_device import FoxDevice
+from foxessprom.cloud.fox_device import FoxDevice
 
 
 class TestDevice(unittest.TestCase):
@@ -27,7 +28,7 @@ class TestDevice(unittest.TestCase):
             m.post('https://www.foxesscloud.com/op/v0/device/list',
                    text=open("tests/device_list_response.json", "r").read())
 
-            devices = FoxDevice.device_list()
+            devices = FoxDevice.device_list(Namespace(cloud_api_key="xyz"))
 
             self.assertEqual(1, len(devices))
             self.assertEqual("StationName", devices[0].stationName)

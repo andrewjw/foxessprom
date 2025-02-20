@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
 from typing import Iterator, List
 
 from .device import Device
@@ -21,10 +22,10 @@ from .fox_device import FoxDevice
 
 
 class Devices:
-    def __init__(self) -> None:
+    def __init__(self, args: argparse.Namespace) -> None:
         self.devices: List[Device] = [
-            Device(fox_device) for fox_device
-            in FoxDevice.device_list()
+            Device(fox_device, args) for fox_device
+            in FoxDevice.device_list(args)
         ]
 
     def __iter__(self) -> Iterator[Device]:

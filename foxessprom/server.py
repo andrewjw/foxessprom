@@ -15,24 +15,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
-from datetime import time
 import http.server
 import json
-import re
 from typing import List, Set
 
-from .devices import Devices
+from .combined_metrics import CombinedMetrics
+from .cloud import CloudMetrics
+from .modbus import ModbusMetrics
 
 PREFIX = "foxess_"
-
-PATH_DEVICE_FORCE_CHARGE = re.compile(r"/devices/([^/]+)/force_charge")
+CLOUD = PREFIX + "cloud_"
+MODBUS = PREFIX + "modbus_"
 
 
 class Server(http.server.HTTPServer):
-    def __init__(self, args: argparse.Namespace, devices: Devices):
+    def __init__(self, args: argparse.Namespace):
         super().__init__(args.bind, Handler)
         self.args = args
-        self.devices = devices
+        self.cloud = CloudMetrics(args) \
+            if args.cloud_api_key is not None else None
+        self.modbus = ModbusMetrics(args) if args.modbus is not None else None
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -44,8 +46,15 @@ class Handler(http.server.BaseHTTPRequestHandler):
         elif self.path == "/devices":
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(json.dumps([d.deviceSN for d
-                                         in self.server.devices])
+
+            if self.server.modbus is not None:
+                devices = [d.sn for d in self.server.modbus.devices]
+            elif self.server.cloud is not None:
+                devices = [d.deviceSN for d in self.server.cloud.devices]
+            else:
+                devices = []
+
+            self.wfile.write(json.dumps(devices)
                              .encode("utf8"))
         elif self.path == "/metrics":
             self.send_metrics()
@@ -67,21 +76,27 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def send_metrics(self) -> None:
         metrics_text: List[str] = []
 
+        self.get_cloud_metrics(metrics_text)
+        self.get_modbus_metrics(metrics_text)
+
+        clouddevices = \
+            {} if self.server.cloud is None \
+            else self.server.cloud.get_metrics()
+        modbusdevices = \
+            {} if self.server.modbus is None \
+            else self.server.modbus.get_metrics()
         seen: Set[str] = set()
-        for device in self.server.devices.devices:
-            metrics = device.get_metrics()
-            if metrics is None:
-                continue
-            for metric, value, is_counter in metrics.get_prometheus_metrics():
+        for sn in set(clouddevices.keys() | set(modbusdevices.keys())):
+            combined = CombinedMetrics(clouddevices[sn], modbusdevices[sn])
+            for metric, value, is_counter in combined.get_prometheus_metrics():
                 if metric not in seen:
                     metrics_text.append(
                         f"# TYPE {PREFIX + metric} "
                         f"{'counter' if is_counter else 'gauge'}")
                     seen.add(metric)
-
                 metrics_text.append(
-                    f"{PREFIX}{metric}"
-                    f"{{device=\"{device.deviceSN}\"}} "
+                    f"{PREFIX}{metric} "
+                    f"{{device=\"{sn}\"}} "
                     f"{value}")
 
         if len(metrics_text) == 0:
@@ -91,8 +106,47 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(("\n".join(metrics_text)).encode("utf8"))
 
+    def get_cloud_metrics(self, metrics_text: List[str]) -> None:
+        if self.server.cloud is None:
+            return
 
-def serve(args: argparse.Namespace,
-          devices: Devices) -> None:  # pragma: no cover
-    server = Server(args, devices)
+        seen: Set[str] = set()
+        for device, cmetrics in self.server.cloud.get_metrics().items():
+            if cmetrics is None:
+                continue
+            for metric, value, counter in cmetrics.get_prometheus_metrics():
+                if metric not in seen:
+                    metrics_text.append(
+                        f"# TYPE {CLOUD + metric} "
+                        f"{'counter' if counter else 'gauge'}")
+                    seen.add(metric)
+
+                metrics_text.append(
+                    f"{CLOUD}{metric}"
+                    f"{{device=\"{device}\"}} "
+                    f"{value}")
+
+    def get_modbus_metrics(self, metrics_text: List[str]) -> None:
+        if self.server.modbus is None:
+            return
+
+        seen: Set[str] = set()
+        for device, mmetrics in self.server.modbus.get_metrics().items():
+            if mmetrics is None:
+                continue
+            for metric, value, is_counter in mmetrics.get_prometheus_metrics():
+                if metric not in seen:
+                    metrics_text.append(
+                        f"# TYPE {MODBUS + metric} "
+                        f"{'counter' if is_counter else 'gauge'}")
+                    seen.add(metric)
+
+                metrics_text.append(
+                    f"{MODBUS}{metric}"
+                    f"{{device=\"{device}\"}} "
+                    f"{value}")
+
+
+def serve(args: argparse.Namespace) -> None:  # pragma: no cover
+    server = Server(args)
     server.serve_forever()

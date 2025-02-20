@@ -16,13 +16,15 @@
 
 from typing import Dict, Iterator, Optional, Tuple, Union
 
-from .device_metrics import DeviceMetrics
+from .cloud.device_metrics import DeviceMetrics
 
 
 class CustomMetrics:
     def __init__(self) -> None:
         self.last: Optional[DeviceMetrics] = None
         self.pv_generation: float = 0.0
+        self.pv1_generation: float = 0.0
+        self.pv2_generation: float = 0.0
         self.battery_charge: float = 0.0
         self.battery_discharge: float = 0.0
         self.grid_usage: float = 0.0
@@ -42,6 +44,14 @@ class CustomMetrics:
 
         self._update_metric("pvPower",
                             "pv_generation",
+                            metrics,
+                            time_since.total_seconds())
+        self._update_metric("pv1Power",
+                            "pv1_generation",
+                            metrics,
+                            time_since.total_seconds())
+        self._update_metric("pv2Power",
+                            "pv2_generation",
                             metrics,
                             time_since.total_seconds())
         self._update_metric("batChargePower",
@@ -69,6 +79,8 @@ class CustomMetrics:
 
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
         yield ("pv_generation_total", self.pv_generation, True)
+        yield ("pv1_generation_total", self.pv1_generation, True)
+        yield ("pv2_generation_total", self.pv2_generation, True)
         yield ("battery_charge_total", self.battery_charge, True)
         yield ("battery_discharge_total", self.battery_discharge, True)
         yield ("grid_usage_total", self.grid_usage, True)
@@ -78,6 +90,8 @@ class CustomMetrics:
     def to_json(self) -> Dict[str, Union[str, float]]:
         return {
             "pv_generation_total": self.pv_generation,
+            "pv1_generation_total": self.pv1_generation,
+            "pv2_generation_total": self.pv2_generation,
             "battery_charge_total": self.battery_charge,
             "battery_discharge_total": self.battery_discharge,
             "grid_usage_total": self.grid_usage,

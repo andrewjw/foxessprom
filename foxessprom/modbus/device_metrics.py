@@ -1,5 +1,5 @@
 # foxessprom
-# Copyright (C) 2024 Andrew Wilkinson
+# Copyright (C) 2025 Andrew Wilkinson
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,10 +17,7 @@
 from datetime import datetime
 from typing import Dict, Iterator, List, Optional, Tuple, Union, cast
 
-PREFIX = "foxess_"
-
-IGNORE_DATA = {"runningState", "batStatus", "batStatusV2",
-               "currentFault", "currentFaultCount"}
+from ..utils import utcnow
 
 COUNTER_DATA = {"generation"}
 
@@ -52,10 +49,13 @@ class DeviceMetrics:
                 return metric.value
         raise IndexError(f"No variable with name {key}")
 
+    def is_valid(self) -> bool:
+        return (utcnow() - self.update_time).total_seconds() < 5 * 60
+
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
+        yield ("last_update", self.update_time.timestamp(), True)
         for metric in self.data:
-            if isinstance(metric.value, float) \
-               and metric.variable not in IGNORE_DATA:
+            if isinstance(metric.value, (int, float)):
                 yield (metric.variable,
                        metric.value,
                        metric.variable in COUNTER_DATA)

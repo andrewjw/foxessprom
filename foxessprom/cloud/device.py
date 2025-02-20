@@ -14,28 +14,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
 from datetime import datetime
 from threading import Thread, Lock
 from typing import Optional
 
-from .combined_metrics import CombinedMetrics
-from .custom_metrics import CustomMetrics
 from .fox_device import FoxDevice
 from .device_metrics import DeviceMetrics
-from .utils import utcnow
+from ..utils import utcnow
 
 
 class Device:
-    def __init__(self, fox_device: FoxDevice) -> None:
+    def __init__(self,
+                 fox_device: FoxDevice,
+                 args: argparse.Namespace) -> None:
         self.fox_device = fox_device
 
+        self._args = args
         self.metrics: Optional[DeviceMetrics] = None
-        self.custom_metrics = CustomMetrics()
         self.last_update: Optional[datetime] = None
         self.loading = False
         self.lock = Lock()
 
-    def get_metrics(self, block: bool = False) -> Optional[CombinedMetrics]:
+    def get_metrics(self, block: bool = False) -> Optional[DeviceMetrics]:
         if self.last_update is None or \
            (utcnow() - self.last_update).total_seconds() >= 120:
             with self.lock:
@@ -51,17 +52,17 @@ class Device:
             if self.last_update is not None and \
                (utcnow() - self.last_update).total_seconds() > 600:
                 return None
-        return CombinedMetrics(self.metrics, self.custom_metrics)
+        return self.metrics
 
     def _set_metrics(self) -> None:
         try:
             start = utcnow()
 
-            self.metrics = DeviceMetrics(start, self.fox_device.real_query())
-            self.custom_metrics.update(self.metrics)
+            self.metrics = \
+                DeviceMetrics(start, self.fox_device.real_query(self._args))
 
             self.last_update = start
-            print(f"Loaded metrics in {utcnow() - start}")
+            print(f"Loaded cloud metrics in {utcnow() - start}")
         finally:
             with self.lock:
                 self.loading = False

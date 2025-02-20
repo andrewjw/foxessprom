@@ -27,21 +27,32 @@ parser.add_argument('--bind', type=str, nargs='?', default="0.0.0.0:9100",
                     help='the ip address and port to bind to. Default: *:9100')
 parser.add_argument('--mqtt', type=str, nargs='?', default=None,
                     help="the mqtt host to connect to.")
-parser.add_argument('--update-limit', type=int, nargs='?', default=120,
-                    help="(seconds) Limit on how frequently we can request "
-                         + "updates. If --mqtt is set updates will be sent "
-                         + "this often.")
 parser.add_argument('--max-update-gap', type=int, nargs='?', default=600,
                     help="(seconds) Limit on how long the gap between "
                          + "successful updates can be. If it is more than "
                          + "this the Prometheus metrics are not exposed and "
                          + "and a null MQTT message will be sent.")
+parser.add_argument('--cloud-api-key', type=str, nargs='?', default=None,
+                    help="The FoxESS Cloud API key to use.")
+parser.add_argument('---cloud-update-freq', type=int, nargs='?', default=120,
+                    help="(seconds) Limit on how frequently we can request "
+                         + "updates. If --mqtt is set updates will be sent "
+                         + "this often.")
+parser.add_argument('--modbus', type=str, nargs='?', default=None,
+                    help="The ModBus address to connect to.")
+parser.add_argument('--modbus-update-freq', type=int, nargs='?', default=30,
+                    help="(seconds) Limit on how frequently we can request "
+                         + "updates. If --mqtt is set updates will be sent "
+                         + "this often.")
 
 
 def get_arguments(args: Sequence[str]) -> argparse.Namespace:
     parsed_args = parser.parse_args(args)
     if "MQTT_HOST" in os.environ:
         parsed_args.mqtt = os.environ["MQTT_HOST"]
+
+    if "CLOUD_API_KEY" in os.environ:
+        parsed_args.cloud_api_key = os.environ["CLOUD_API_KEY"]
 
     if ":" not in parsed_args.bind:
         parsed_args.bind = (parsed_args.bind, 9100)

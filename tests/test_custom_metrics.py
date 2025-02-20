@@ -22,7 +22,7 @@ import unittest
 import requests_mock
 
 from foxessprom.custom_metrics import CustomMetrics
-from foxessprom.device_metrics import DeviceMetrics
+from foxessprom.cloud.device_metrics import DeviceMetrics
 
 
 class TestCustomMetrics(unittest.TestCase):

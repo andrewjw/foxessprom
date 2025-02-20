@@ -21,7 +21,7 @@ import time
 
 import paho.mqtt.publish as publish
 
-from .devices import Devices
+from .cloud.devices import Devices
 
 
 def mqtt_updates(args: argparse.Namespace,
