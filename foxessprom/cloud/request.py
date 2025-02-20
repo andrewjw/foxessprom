@@ -14,23 +14,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
 import requests
-import os
 from typing import Any, Literal, Optional
 
-from .auth import GetAuth
+from ..auth import GetAuth
 
 DOMAIN = 'https://www.foxesscloud.com'
-KEY = os.environ["FOX_CLOUD_API_KEY"]
 
 REQUEST_TYPES = Literal["get", "post"]
 
 
-def make_request(method: REQUEST_TYPES,
+def make_request(args: argparse.Namespace,
+                 method: REQUEST_TYPES,
                  path: str,
                  param: Optional[Any] = None) -> requests.Response:
     url = DOMAIN + path
-    headers = GetAuth().get_signature(token=KEY, path=path)
+    headers = GetAuth().get_signature(token=args.cloud_api_key, path=path)
 
     if method == 'get':
         return requests.get(url=url,

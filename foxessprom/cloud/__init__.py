@@ -1,5 +1,5 @@
 # foxessprom
-# Copyright (C) 2020 Andrew Wilkinson
+# Copyright (C) 2025 Andrew Wilkinson
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,8 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .test_arguments import TestArguments
-from .test_auth import TestAuth
-from .test_custom_metrics import TestCustomMetrics
-from .test_device import TestDevice
-from .test_modbus_register import TestModbusRegister
+from .cloud_metrics import CloudMetrics
+
+__all__ = ["CloudMetrics"]

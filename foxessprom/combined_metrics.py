@@ -16,27 +16,62 @@
 
 from typing import Dict, Iterator, Optional, Tuple, Union
 
-from .custom_metrics import CustomMetrics
-from .device_metrics import DeviceMetrics
+from .cloud.device_metrics import DeviceMetrics as CloudMetrics
+from .modbus.device_metrics import DeviceMetrics as ModbusMetrics
+
+COMBINED_METRIC_NAMES = [
+    "pv1Volt",
+    "pv1Current",
+    "pv1Power",
+    "pv2Volt",
+    "pv2Current",
+    "pv2Power",
+    "epsCurrentR",
+    "epsVoltR",
+    "RCurrent",
+    "RVolt",
+    "RFreq",
+    "ambientTemperation",
+    "invTemperation",
+    "batTemperature",
+    "invBatVolt",
+    "invBatCurrent",
+    "invBatPower",
+    "batVolt",
+    "batCurrent",
+    "meterPower",
+    "SoC",
+    "ResidualEnergy"
+]
 
 
 class CombinedMetrics:
     def __init__(self,
-                 device: Optional[DeviceMetrics],
-                 custom: CustomMetrics) -> None:
-        self.device = device
-        self.custom = custom
+                 cloud: Optional[CloudMetrics],
+                 modbus: Optional[ModbusMetrics]) -> None:
+        self.cloud = cloud
+        self.modbus = modbus
+
+        self._previous: Dict[str, float] = {}
 
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
-        if self.device is not None:
-            for metric in self.device.get_prometheus_metrics():
-                yield metric
-        for metric in self.custom.get_prometheus_metrics():
-            yield metric
+        if self.modbus is not None and self.modbus.is_valid():
+            metrics = self.modbus.get_prometheus_metrics()
+        elif self.cloud is not None and self.cloud.is_valid():
+            metrics = self.cloud.get_prometheus_metrics()
+
+        for metric, value, counter in metrics:
+            if counter:
+                if metric in self._previous and self._previous[metric] > value:
+                    value = self._previous[metric]
+                self._previous[metric] = value
+
+            yield metric, value, counter
 
     def to_json(self) -> Dict[str, Union[str, float]]:
-        # TODO: Use when Python 3.9 is the minimum version
-        # return self.device.to_json() if self.device is not None \
-        #       else {} | self.custom.to_json()
-        return {**(self.device.to_json() if self.device is not None else {}),
-                **self.custom.to_json()}
+        if self.modbus is not None and self.modbus.is_valid():
+            return self.modbus.to_json()
+        elif self.cloud is not None and self.cloud.is_valid():
+            return self.cloud.to_json()
+        else:
+            return {}
