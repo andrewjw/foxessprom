@@ -14,12 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from itertools import chain
 from typing import Dict, Iterator, Optional, Tuple, Union
 
-from .cloud.device_metrics import DeviceMetrics as CloudMetrics
-from .modbus.device_metrics import DeviceMetrics as ModbusMetrics
+from .custom_metrics import CustomMetrics
+from .cloud.cloud_device_metrics import CloudDeviceMetrics
+from .modbus.modbus_device_metrics import ModbusDeviceMetrics
 
 COMBINED_METRIC_NAMES = [
+    "pvPower",
     "pv1Volt",
     "pv1Current",
     "pv1Power",
@@ -41,24 +44,32 @@ COMBINED_METRIC_NAMES = [
     "batCurrent",
     "meterPower",
     "SoC",
-    "ResidualEnergy"
+    "ResidualEnergy",
+    "batChargePower",
+    "batDischargePower",
+    "gridConsumptionPower",
+    "loadsPower",
+    "feedInPower",
 ]
 
 
 class CombinedMetrics:
     def __init__(self,
-                 cloud: Optional[CloudMetrics],
-                 modbus: Optional[ModbusMetrics]) -> None:
+                 cloud: Optional[Tuple[CloudDeviceMetrics, CustomMetrics]],
+                 modbus: Optional[Tuple[ModbusDeviceMetrics,
+                                        CustomMetrics]]) -> None:
         self.cloud = cloud
         self.modbus = modbus
 
         self._previous: Dict[str, float] = {}
 
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
-        if self.modbus is not None and self.modbus.is_valid():
-            metrics = self.modbus.get_prometheus_metrics()
-        elif self.cloud is not None and self.cloud.is_valid():
-            metrics = self.cloud.get_prometheus_metrics()
+        if self.modbus is not None and self.modbus[0].is_valid():
+            metrics = chain(self.modbus[0].get_prometheus_metrics(),
+                            self.modbus[1].get_prometheus_metrics())
+        elif self.cloud is not None and self.cloud[0].is_valid():
+            metrics = chain(self.cloud[0].get_prometheus_metrics(),
+                            self.cloud[1].get_prometheus_metrics())
 
         for metric, value, counter in metrics:
             if counter:
@@ -69,9 +80,10 @@ class CombinedMetrics:
             yield metric, value, counter
 
     def to_json(self) -> Dict[str, Union[str, float]]:
-        if self.modbus is not None and self.modbus.is_valid():
-            return self.modbus.to_json()
-        elif self.cloud is not None and self.cloud.is_valid():
-            return self.cloud.to_json()
+        # TODO: Add support for custom metrics
+        if self.modbus is not None and self.modbus[0].is_valid():
+            return self.modbus[0].to_json()
+        elif self.cloud is not None and self.cloud[0].is_valid():
+            return self.cloud[0].to_json()
         else:
             return {}

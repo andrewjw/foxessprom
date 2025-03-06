@@ -40,7 +40,7 @@ def _mqtt_update_loop(host: str, delay: int, devices: Devices) -> None:
 
             publish.single(f"foxess/{device.deviceSN}",
                            json.dumps(
-                               metrics.to_json() if metrics is not None
+                               metrics[0].to_json() if metrics is not None
                                else None
                             ),
                            hostname=host)

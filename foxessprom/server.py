@@ -16,6 +16,7 @@
 
 import argparse
 import http.server
+from itertools import chain
 import json
 from typing import List, Set
 
@@ -66,9 +67,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write("""
 <html>
-<head><title>Fox ESS Cloud Prometheus</title></head>
+<head><title>Fox ESS Prometheus</title></head>
 <body>
-<h1>Fox ESS Cloud Prometheus</h1>
+<h1>Fox ESS Prometheus</h1>
 <p><a href="/metrics">Metrics</a></p>
 </body>
 </html>""".encode("utf8"))
@@ -114,7 +115,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         for device, cmetrics in self.server.cloud.get_metrics().items():
             if cmetrics is None:
                 continue
-            for metric, value, counter in cmetrics.get_prometheus_metrics():
+            chained = chain(cmetrics[0].get_prometheus_metrics(),
+                            cmetrics[1].get_prometheus_metrics())
+            for metric, value, counter in chained:
                 if metric not in seen:
                     metrics_text.append(
                         f"# TYPE {CLOUD + metric} "
@@ -134,7 +137,9 @@ class Handler(http.server.BaseHTTPRequestHandler):
         for device, mmetrics in self.server.modbus.get_metrics().items():
             if mmetrics is None:
                 continue
-            for metric, value, is_counter in mmetrics.get_prometheus_metrics():
+            chained = chain(mmetrics[0].get_prometheus_metrics(),
+                            mmetrics[1].get_prometheus_metrics())
+            for metric, value, is_counter in chained:
                 if metric not in seen:
                     metrics_text.append(
                         f"# TYPE {MODBUS + metric} "

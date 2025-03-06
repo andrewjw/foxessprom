@@ -17,10 +17,11 @@
 import argparse
 import threading
 import time
-from typing import Dict
+from typing import Dict, Tuple
 
+from ..custom_metrics import CustomMetrics
 from .devices import FoxESSH1
-from .device_metrics import DeviceMetrics
+from .modbus_device_metrics import ModbusDeviceMetrics
 
 
 class ModbusMetrics:
@@ -33,7 +34,8 @@ class ModbusMetrics:
         if args.mqtt is not None:
             threading.Thread(target=self._update_loop).start()
 
-    def get_metrics(self) -> Dict[str, DeviceMetrics | None]:
+    def get_metrics(self) -> \
+            Dict[str, Tuple[ModbusDeviceMetrics, CustomMetrics] | None]:
         with self._lock:
             return {self.device.sn: self.device.get_metrics()}
 

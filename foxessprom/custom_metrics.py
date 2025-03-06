@@ -16,7 +16,7 @@
 
 from typing import Dict, Iterator, Optional, Tuple, Union
 
-from .cloud.device_metrics import DeviceMetrics
+from .device_metrics import DeviceMetrics
 
 
 class CustomMetrics:
