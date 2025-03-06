@@ -17,7 +17,7 @@
 import argparse
 import threading
 import time
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 
 from ..custom_metrics import CustomMetrics
 from .devices import FoxESSH1
@@ -35,7 +35,7 @@ class ModbusMetrics:
             threading.Thread(target=self._update_loop).start()
 
     def get_metrics(self) -> \
-            Dict[str, Tuple[ModbusDeviceMetrics, CustomMetrics] | None]:
+            Dict[str, Optional[Tuple[ModbusDeviceMetrics, CustomMetrics]]]:
         with self._lock:
             return {self.device.sn: self.device.get_metrics()}
 

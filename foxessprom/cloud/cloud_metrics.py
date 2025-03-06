@@ -17,7 +17,7 @@
 import argparse
 import threading
 import time
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Union
 
 from .cloud_device_metrics import CloudDeviceMetrics
 from ..custom_metrics import CustomMetrics
@@ -33,11 +33,11 @@ class CloudMetrics:
         if args.mqtt is not None:
             threading.Thread(target=self._update_loop).start()
 
-    def get_metrics(self) -> Dict[str, Tuple[CloudDeviceMetrics,
-                                             CustomMetrics] | None]:
+    def get_metrics(self) -> Dict[str, Union[Tuple[CloudDeviceMetrics,
+                                             CustomMetrics], None]]:
         with self._lock:
-            metrics: Dict[str, Tuple[CloudDeviceMetrics,
-                                     CustomMetrics] | None] = {}
+            metrics: Dict[str, Union[Tuple[CloudDeviceMetrics,
+                                     CustomMetrics], None]] = {}
             for device in self.devices:
                 metrics[device.deviceSN] = device.get_metrics(block=True)
             return metrics

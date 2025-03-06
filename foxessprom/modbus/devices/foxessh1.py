@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from pymodbus.client import ModbusTcpClient
 
@@ -23,7 +23,8 @@ from ..register import Register
 from ..register_group import RegisterGroup
 
 
-def pvPower(registers: List[Dict[str, str | float]]) -> Dict[str, str | float]:
+def pvPower(registers: List[Dict[str, Union[str, float]]]) \
+        -> Dict[str, Union[str, float]]:
     r1, r2 = registers[2]["value"], registers[5]["value"]
     assert isinstance(r1, float) and isinstance(r2, float), (r1, r2)
     return {
@@ -34,8 +35,8 @@ def pvPower(registers: List[Dict[str, str | float]]) -> Dict[str, str | float]:
     }
 
 
-def batChargePower(registers: List[Dict[str, str | float]]) \
-        -> Dict[str, str | float]:
+def batChargePower(registers: List[Dict[str, Union[str, float]]]) \
+        -> Dict[str, Union[str, float]]:
     r8 = registers[8]["value"]
     assert isinstance(r8, float), r8
     return {
@@ -46,8 +47,8 @@ def batChargePower(registers: List[Dict[str, str | float]]) \
     }
 
 
-def batDischargePower(registers: List[Dict[str, str | float]]) \
-        -> Dict[str, str | float]:
+def batDischargePower(registers: List[Dict[str, Union[str, float]]]) \
+        -> Dict[str, Union[str, float]]:
     r8 = registers[8]["value"]
     assert isinstance(r8, float), r8
     return {
@@ -58,8 +59,8 @@ def batDischargePower(registers: List[Dict[str, str | float]]) \
     }
 
 
-def gridConsumptionPower(registers: List[Dict[str, str | float]]) \
-        -> Dict[str, str | float]:
+def gridConsumptionPower(registers: List[Dict[str, Union[str, float]]]) \
+        -> Dict[str, Union[str, float]]:
     r21, r22 = registers[21]["value"], registers[22]["value"]
     assert isinstance(r21, float) and isinstance(r22, float), (r21, r22)
     return {
@@ -70,8 +71,8 @@ def gridConsumptionPower(registers: List[Dict[str, str | float]]) \
     }
 
 
-def feedinPower(registers: List[Dict[str, str | float]]) \
-        -> Dict[str, str | float]:
+def feedinPower(registers: List[Dict[str, Union[str, float]]]) \
+        -> Dict[str, Union[str, float]]:
     r21, r22 = registers[21]["value"], registers[22]["value"]
     assert isinstance(r21, float) and isinstance(r22, float), (r21, r22)
     return {

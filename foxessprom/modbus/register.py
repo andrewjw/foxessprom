@@ -24,7 +24,7 @@ class Register:
                  name: str,
                  variable: str,
                  data_type: ModbusTcpClient.DATATYPE,
-                 convert: Callable[[int | float], int | float],
+                 convert: Callable[[Union[int, float]], Union[int, float]],
                  unit: str) -> None:
         self.name = name
         self.variable = variable
@@ -36,7 +36,7 @@ class Register:
         return self.data_type.value[1]
 
     def convert(self,
-                value: List[int]) -> Dict[str, Union[str, int | float | str]]:
+                value: List[int]) -> Dict[str, Union[str, int, float]]:
         register_value = \
             ModbusTcpClient.convert_from_registers(value,
                                                    data_type=self.data_type)
