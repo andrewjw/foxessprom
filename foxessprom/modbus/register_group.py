@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Callable, Dict, Optional, List
+from typing import Callable, Dict, Optional, List, Union
 
 from .register import Register
 
-CustomMetricFunc = List[Callable[[List[Dict[str, str | float]]],
-                                 Dict[str, str | float]]]
+CustomMetricFunc = List[Callable[[List[Dict[str, Union[str, float]]]],
+                                 Dict[str, Union[str, float]]]]
 
 
 class RegisterGroup:
@@ -38,8 +38,8 @@ class RegisterGroup:
         return r
 
     def convert(self,
-                registers: List[int]) -> List[Dict[str, str | float]]:
-        r: List[Dict[str, str | float]] = []
+                registers: List[int]) -> List[Dict[str, Union[str, float]]]:
+        r: List[Dict[str, Union[str, float]]] = []
         i = 0
         for register in self.registers:
             r.append(register.convert(registers[i:i+register.size()]))
