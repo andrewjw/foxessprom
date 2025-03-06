@@ -17,10 +17,11 @@
 import argparse
 from datetime import datetime
 from threading import Thread, Lock
-from typing import Optional
+from typing import Optional, Tuple
 
+from ..custom_metrics import CustomMetrics
 from .fox_device import FoxDevice
-from .device_metrics import DeviceMetrics
+from .cloud_device_metrics import CloudDeviceMetrics
 from ..utils import utcnow
 
 
@@ -31,12 +32,14 @@ class Device:
         self.fox_device = fox_device
 
         self._args = args
-        self.metrics: Optional[DeviceMetrics] = None
+        self.custom = CustomMetrics()
+        self.metrics: Optional[CloudDeviceMetrics] = None
         self.last_update: Optional[datetime] = None
         self.loading = False
         self.lock = Lock()
 
-    def get_metrics(self, block: bool = False) -> Optional[DeviceMetrics]:
+    def get_metrics(self, block: bool = False) \
+            -> Optional[Tuple[CloudDeviceMetrics, CustomMetrics]]:
         if self.last_update is None or \
            (utcnow() - self.last_update).total_seconds() >= 120:
             with self.lock:
@@ -52,14 +55,17 @@ class Device:
             if self.last_update is not None and \
                (utcnow() - self.last_update).total_seconds() > 600:
                 return None
-        return self.metrics
+        assert self.metrics is not None
+        return self.metrics, self.custom
 
     def _set_metrics(self) -> None:
         try:
             start = utcnow()
 
             self.metrics = \
-                DeviceMetrics(start, self.fox_device.real_query(self._args))
+                CloudDeviceMetrics(start,
+                                   self.fox_device.real_query(self._args))
+            self.custom.update(self.metrics)
 
             self.last_update = start
             print(f"Loaded cloud metrics in {utcnow() - start}")

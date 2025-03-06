@@ -23,6 +23,65 @@ from ..register import Register
 from ..register_group import RegisterGroup
 
 
+def pvPower(registers: List[Dict[str, str | float]]) -> Dict[str, str | float]:
+    r1, r2 = registers[2]["value"], registers[5]["value"]
+    assert isinstance(r1, float) and isinstance(r2, float), (r1, r2)
+    return {
+        "name": "pvPower",
+        "variable": "pvPower",
+        "unit": "kW",
+        "value": r1 + r2
+    }
+
+
+def batChargePower(registers: List[Dict[str, str | float]]) \
+        -> Dict[str, str | float]:
+    r8 = registers[8]["value"]
+    assert isinstance(r8, float), r8
+    return {
+        "unit": "kW",
+        "name": "Charge Power",
+        "variable": "batChargePower",
+        "value": r8 if r8 > 0 else 0
+    }
+
+
+def batDischargePower(registers: List[Dict[str, str | float]]) \
+        -> Dict[str, str | float]:
+    r8 = registers[8]["value"]
+    assert isinstance(r8, float), r8
+    return {
+        "unit": "kW",
+        "name": "Discharge Power",
+        "variable": "batDischargePower",
+        "value": abs(r8) if r8 < 0 else 0
+    }
+
+
+def gridConsumptionPower(registers: List[Dict[str, str | float]]) \
+        -> Dict[str, str | float]:
+    r21, r22 = registers[21]["value"], registers[22]["value"]
+    assert isinstance(r21, float) and isinstance(r22, float), (r21, r22)
+    return {
+        "name": "GridConsumption Power",
+        "variable": "gridConsumptionPower",
+        "unit": "kW",
+        "value": r21 + r22 if (r21 + r22) > 0 else 0
+    }
+
+
+def feedinPower(registers: List[Dict[str, str | float]]) \
+        -> Dict[str, str | float]:
+    r21, r22 = registers[21]["value"], registers[22]["value"]
+    assert isinstance(r21, float) and isinstance(r22, float), (r21, r22)
+    return {
+        "name": "Feed In Power",
+        "variable": "feedinPower",
+        "unit": "kW",
+        "value": abs(r21 + r22) if (r21 + r22) < 0 else 0
+    }
+
+
 class FoxESSH1(Device):
     REGISTER_GROUPS: List[RegisterGroup] = [
         RegisterGroup(11000, [
@@ -141,6 +200,11 @@ class FoxESSH1(Device):
                      ModbusTcpClient.DATATYPE.INT16,
                      lambda v: v/1000.0,
                      "kW"),
+            Register("Load Power",
+                     "loadsPower",
+                     ModbusTcpClient.DATATYPE.INT16,
+                     lambda v: v/10.0,
+                     "℃"),
             Register("InvTemperation",
                      "invTemperation",
                      ModbusTcpClient.DATATYPE.INT16,
@@ -151,7 +215,12 @@ class FoxESSH1(Device):
                      ModbusTcpClient.DATATYPE.INT16,
                      lambda v: v/10.0,
                      "℃")
-        ]),
+        ], [pvPower,
+            batChargePower,
+            batDischargePower,
+            gridConsumptionPower,
+            feedinPower
+            ]),
         RegisterGroup(11034, [
             Register("BatVolt",
                      "batVolt",

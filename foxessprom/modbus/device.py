@@ -15,11 +15,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
-from typing import List
+from typing import List, Tuple
 
 from pymodbus.client import ModbusTcpClient
 
-from .device_metrics import DeviceMetrics
+from ..custom_metrics import CustomMetrics
+from .modbus_device_metrics import ModbusDeviceMetrics
 from .register_group import RegisterGroup
 from ..utils import utcnow
 
@@ -34,6 +35,7 @@ class Device:
     def __init__(self, args: argparse.Namespace):
         self.client = ModbusTcpClient(args.modbus)
         self.client.connect()  # type: ignore
+        self.custom = CustomMetrics()
 
         if not self.verify():
             raise InvalidDeviceType()
@@ -46,7 +48,7 @@ class Device:
     def get_sn(self) -> str:
         raise NotImplementedError()
 
-    def get_metrics(self) -> DeviceMetrics:
+    def get_metrics(self) -> Tuple[ModbusDeviceMetrics, CustomMetrics]:
         start = utcnow()
 
         metrics = []
@@ -56,4 +58,6 @@ class Device:
                                                  slave=247)
             metrics.extend(register_group.convert(r.registers))
         print(f"Loaded modbus metrics in {utcnow() - start}")
-        return DeviceMetrics(start, metrics)
+        dm = ModbusDeviceMetrics(start, metrics)
+        self.custom.update(dm)
+        return dm, self.custom

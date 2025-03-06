@@ -22,17 +22,17 @@ import unittest
 import requests_mock
 
 from foxessprom.custom_metrics import CustomMetrics
-from foxessprom.cloud.device_metrics import DeviceMetrics
+from foxessprom.cloud.cloud_device_metrics import CloudDeviceMetrics
 
 
 class TestCustomMetrics(unittest.TestCase):
     def test_device_list(self) -> None:
         data = json.load(open("tests/device_real_query_response.json", "r"))
 
-        first_metrics = DeviceMetrics(datetime(2024, 1, 1, 18, 0),
-                                      data["result"][0]["datas"])
-        second_metrics = DeviceMetrics(datetime(2024, 1, 1, 18, 2),
-                                       data["result"][0]["datas"])
+        first_metrics = CloudDeviceMetrics(datetime(2024, 1, 1, 18, 0),
+                                           data["result"][0]["datas"])
+        second_metrics = CloudDeviceMetrics(datetime(2024, 1, 1, 18, 2),
+                                            data["result"][0]["datas"])
 
         custom = CustomMetrics()
         custom.update(first_metrics)
