@@ -46,7 +46,6 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     scripts=["bin/foxessprom"],
     classifiers=[
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
@@ -54,6 +53,6 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8',
+    python_requires='>=3.9',
     install_requires=requirements,
 )
