@@ -109,7 +109,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
             else self.server.modbus.get_metrics()
         seen: Set[str] = set()
         for sn in set(clouddevices.keys() | set(modbusdevices.keys())):
-            combined = CombinedMetrics(clouddevices[sn], modbusdevices[sn])
+            combined = CombinedMetrics(clouddevices.get(sn),
+                                       modbusdevices.get(sn))
             for metric, value, is_counter in combined.get_prometheus_metrics():
                 if metric not in seen:
                     metrics_text.append(
