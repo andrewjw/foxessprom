@@ -1,6 +1,22 @@
 # CHANGELOG
 
 
+## v1.0.1 (2025-03-07)
+
+### Bug Fixes
+
+- Fix serial number not being in both cloud and modbus data.
+  ([`34cb728`](https://github.com/andrewjw/foxessprom/commit/34cb728fd10b4916fe976bdb5ebf339228eb3efb))
+
+### Chores
+
+- **deps**: Update dependency mypy to v1.15.0
+  ([`1ad4fc7`](https://github.com/andrewjw/foxessprom/commit/1ad4fc7e46e37848a40fa644c8451b48527d261e))
+
+- **deps**: Update dependency types-requests to v2.32.0.20250306
+  ([`2ed8964`](https://github.com/andrewjw/foxessprom/commit/2ed8964a36e31b7db86865de0e0a1bff26290eea))
+
+
 ## v1.0.0 (2025-03-07)
 
 ### Chores
