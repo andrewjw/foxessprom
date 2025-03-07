@@ -15,13 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import os
 import sys
+
+import sentry_sdk  # type:ignore
 
 from foxessprom.arguments import get_arguments
 #from foxessprom.mqtt import mqtt_updates
 from foxessprom.server import serve
     
 if __name__ == '__main__':
+    sentry_sdk.init(
+        dsn=os.environ.get("SENTRY_DSN"),
+        traces_sample_rate=0.0,
+        profiles_sample_rate=0.0,
+    )
+
     args = get_arguments(sys.argv[1:])
 
     # mqtt_updates(args)
