@@ -204,7 +204,7 @@ class FoxESSH1(Device):
             Register("Load Power",
                      "loadsPower",
                      ModbusTcpClient.DATATYPE.INT16,
-                     lambda v: v/10.0,
+                     lambda v: v/1000.0,
                      "℃"),
             Register("InvTemperation",
                      "invTemperation",
