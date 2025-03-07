@@ -18,7 +18,7 @@ import datetime
 import traceback
 from typing import Callable
 
-from sentry_sdk import capture_exception  # type: ignore
+from sentry_sdk import capture_exception
 
 # TODO: Remove when Python 3.11 is the minimum version.
 if hasattr(datetime, "UTC"):
