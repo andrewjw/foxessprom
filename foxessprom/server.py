@@ -38,7 +38,7 @@ def handle_error(func: Callable[["Handler"], None]) \
         try:
             func(self)
         except Exception as e:
-            traceback.print_exception(e)
+            traceback.print_exc()
             capture_exception(e)
 
             self.send_response(500)
