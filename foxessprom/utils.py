@@ -34,6 +34,6 @@ def capture_errors(func: Callable[[], None]) -> Callable[[], None]:
         try:
             func()
         except Exception as e:
-            traceback.print_exception(e)
+            traceback.print_exc()
             capture_exception(e)
     return r
