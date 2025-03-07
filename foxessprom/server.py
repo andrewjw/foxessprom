@@ -21,7 +21,7 @@ import json
 import traceback
 from typing import Callable, List, Set
 
-from sentry_sdk import capture_exception  # type:ignore
+from sentry_sdk import capture_exception
 
 from .combined_metrics import CombinedMetrics
 from .cloud import CloudMetrics

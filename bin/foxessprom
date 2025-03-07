@@ -18,7 +18,7 @@
 import os
 import sys
 
-import sentry_sdk  # type:ignore
+import sentry_sdk
 
 from foxessprom.arguments import get_arguments
 #from foxessprom.mqtt import mqtt_updates
