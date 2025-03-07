@@ -22,6 +22,7 @@ import time
 import paho.mqtt.publish as publish
 
 from .cloud.devices import Devices
+from .utils import capture_errors
 
 
 def mqtt_updates(args: argparse.Namespace,
@@ -29,8 +30,13 @@ def mqtt_updates(args: argparse.Namespace,
     if args.mqtt is None:
         return
 
-    Thread(target=_mqtt_update_loop,
-           args=(args.mqtt, args.update_limit, devices)).start()
+    Thread(target=capture_errors(
+                     lambda:
+                     _mqtt_update_loop(
+                         args.mqtt,
+                         args.update_limit,
+                         devices)
+          )).start()
 
 
 def _mqtt_update_loop(host: str, delay: int, devices: Devices) -> None:

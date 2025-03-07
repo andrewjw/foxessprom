@@ -18,7 +18,10 @@ import argparse
 import http.server
 from itertools import chain
 import json
-from typing import List, Set
+import traceback
+from typing import Callable, List, Set
+
+from sentry_sdk import capture_exception  # type:ignore
 
 from .combined_metrics import CombinedMetrics
 from .cloud import CloudMetrics
@@ -27,6 +30,23 @@ from .modbus import ModbusMetrics
 PREFIX = "foxess_"
 CLOUD = PREFIX + "cloud_"
 MODBUS = PREFIX + "modbus_"
+
+
+def handle_error(func: Callable[["Handler"], None]) \
+        -> Callable[["Handler"], None]:
+    def r(self: "Handler") -> None:
+        try:
+            func(self)
+        except Exception as e:
+            traceback.print_exception(e)
+            capture_exception(e)
+
+            self.send_response(500)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+
+            self.wfile.write(f"Exception Occurred.\n".encode("utf8"))
+    return r
 
 
 class Server(http.server.HTTPServer):
@@ -41,6 +61,7 @@ class Server(http.server.HTTPServer):
 class Handler(http.server.BaseHTTPRequestHandler):
     server: "Server"
 
+    @handle_error
     def do_GET(self) -> None:
         if self.path == "/":
             self.send_index()

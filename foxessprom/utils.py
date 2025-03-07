@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
+import traceback
+from typing import Callable
+
+from sentry_sdk import capture_exception  # type: ignore
 
 # TODO: Remove when Python 3.11 is the minimum version.
 if hasattr(datetime, "UTC"):
@@ -23,3 +27,13 @@ if hasattr(datetime, "UTC"):
 else:
     def utcnow() -> datetime.datetime:
         return datetime.datetime.utcnow()
+
+
+def capture_errors(func: Callable[[], None]) -> Callable[[], None]:
+    def r() -> None:
+        try:
+            func()
+        except Exception as e:
+            traceback.print_exception(e)
+            capture_exception(e)
+    return r

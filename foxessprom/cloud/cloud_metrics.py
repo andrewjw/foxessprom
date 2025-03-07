@@ -22,6 +22,7 @@ from typing import Dict, Tuple, Union
 from .cloud_device_metrics import CloudDeviceMetrics
 from ..custom_metrics import CustomMetrics
 from .devices import Devices
+from ..utils import capture_errors
 
 
 class CloudMetrics:
@@ -31,7 +32,7 @@ class CloudMetrics:
         self._lock = threading.Lock()
 
         if args.mqtt is not None:
-            threading.Thread(target=self._update_loop).start()
+            threading.Thread(target=capture_errors(self._update_loop)).start()
 
     def get_metrics(self) -> Dict[str, Union[Tuple[CloudDeviceMetrics,
                                              CustomMetrics], None]]:
