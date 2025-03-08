@@ -26,6 +26,7 @@ from sentry_sdk import capture_exception
 from .combined_metrics import CombinedMetrics
 from .cloud import CloudMetrics
 from .modbus import ModbusMetrics
+from .mqtt import mqtt_updates
 
 PREFIX = "foxess_"
 CLOUD = PREFIX + "cloud_"
@@ -56,6 +57,8 @@ class Server(http.server.HTTPServer):
         self.cloud = CloudMetrics(args) \
             if args.cloud_api_key is not None else None
         self.modbus = ModbusMetrics(args) if args.modbus is not None else None
+
+        mqtt_updates(args, self.cloud, self.modbus)
 
 
 class Handler(http.server.BaseHTTPRequestHandler):

@@ -15,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
-from typing import List, Tuple
+from datetime import datetime
+import threading
+from typing import List, Optional, Tuple
 
 from pymodbus.client import ModbusTcpClient
 
@@ -35,7 +37,11 @@ class Device:
     def __init__(self, args: argparse.Namespace):
         self.client = ModbusTcpClient(args.modbus)
         self.client.connect()  # type: ignore
+        self.metrics: Optional[ModbusDeviceMetrics] = None
+        self.last_update: Optional[datetime] = None
         self.custom = CustomMetrics()
+        self._lock = threading.Lock()
+        self._update_frequency = args.modbus_update_freq
 
         if not self.verify():
             raise InvalidDeviceType()
@@ -49,15 +55,21 @@ class Device:
         raise NotImplementedError()
 
     def get_metrics(self) -> Tuple[ModbusDeviceMetrics, CustomMetrics]:
-        start = utcnow()
+        with self._lock:
+            start = utcnow()
+            if self.metrics is not None and self.last_update is not None and \
+               (start - self.last_update).seconds < self._update_frequency:
+                return self.metrics, self.custom
 
-        metrics = []
-        for register_group in self.REGISTER_GROUPS:
-            r = self.client.read_input_registers(register_group.base_register,
-                                                 register_group.get_size(),
-                                                 slave=247)
-            metrics.extend(register_group.convert(r.registers))
-        print(f"Loaded modbus metrics in {utcnow() - start}")
-        dm = ModbusDeviceMetrics(start, metrics)
-        self.custom.update(dm)
-        return dm, self.custom
+            metrics = []
+            for register_group in self.REGISTER_GROUPS:
+                r = self.client.read_input_registers(
+                        register_group.base_register,
+                        register_group.get_size(),
+                        slave=247)
+                metrics.extend(register_group.convert(r.registers))
+            print(f"Loaded modbus metrics in {utcnow() - start}")
+            self.metrics = ModbusDeviceMetrics(start, metrics)
+            self.custom.update(self.metrics)
+            self.last_update = start
+            return self.metrics, self.custom

@@ -21,7 +21,6 @@ import sys
 import sentry_sdk
 
 from foxessprom.arguments import get_arguments
-#from foxessprom.mqtt import mqtt_updates
 from foxessprom.server import serve
     
 if __name__ == '__main__':
@@ -33,5 +32,4 @@ if __name__ == '__main__':
 
     args = get_arguments(sys.argv[1:])
 
-    # mqtt_updates(args)
     serve(args)

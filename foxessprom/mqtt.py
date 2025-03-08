@@ -18,37 +18,53 @@ import argparse
 from threading import Thread
 import json
 import time
+from typing import Optional
 
 import paho.mqtt.publish as publish
 
-from .cloud.devices import Devices
+from .combined_metrics import CombinedMetrics
+from .cloud import CloudMetrics
+from .modbus import ModbusMetrics
 from .utils import capture_errors
 
 
 def mqtt_updates(args: argparse.Namespace,
-                 devices: Devices) -> None:  # pragma: no cover
+                 cloud: Optional[CloudMetrics],
+                 modbus: Optional[ModbusMetrics]) -> None:  # pragma: no cover
     if args.mqtt is None:
         return
+
+    if modbus is not None:
+        delay = args.modbus_update_freq
+    elif cloud is not None:
+        delay = args.cloud_update_freq
+    else:
+        delay = args.max_update_gap
 
     Thread(target=capture_errors(
                      lambda:
                      _mqtt_update_loop(
                          args.mqtt,
-                         args.update_limit,
-                         devices)
+                         delay,
+                         cloud,
+                         modbus)
           )).start()
 
 
-def _mqtt_update_loop(host: str, delay: int, devices: Devices) -> None:
+def _mqtt_update_loop(host: str,
+                      delay: int,
+                      cloud: Optional[CloudMetrics],
+                      modbus: Optional[ModbusMetrics]) -> None:
     while True:
-        for device in devices:
-            metrics = device.get_metrics(block=True)
+        clouddevices = {} if cloud is None else cloud.get_metrics()
+        modbusdevices = {} if modbus is None else modbus.get_metrics()
 
-            publish.single(f"foxess/{device.deviceSN}",
-                           json.dumps(
-                               metrics[0].to_json() if metrics is not None
-                               else None
-                            ),
+        for sn in set(clouddevices.keys() | set(modbusdevices.keys())):
+            combined = CombinedMetrics(clouddevices.get(sn),
+                                       modbusdevices.get(sn))
+
+            publish.single(f"foxess/{sn}",
+                           json.dumps(combined.to_json()),
                            hostname=host)
 
         time.sleep(delay)

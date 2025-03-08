@@ -80,10 +80,9 @@ class CombinedMetrics:
             yield metric, value, counter
 
     def to_json(self) -> Dict[str, Union[str, float]]:
-        # TODO: Add support for custom metrics
         if self.modbus is not None and self.modbus[0].is_valid():
-            return self.modbus[0].to_json()
+            return self.modbus[0].to_json() | self.modbus[1].to_json()
         elif self.cloud is not None and self.cloud[0].is_valid():
-            return self.cloud[0].to_json()
+            return self.cloud[0].to_json() | self.cloud[1].to_json()
         else:
             return {}

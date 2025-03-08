@@ -22,7 +22,7 @@ from typing import Dict, Tuple, Union
 from .cloud_device_metrics import CloudDeviceMetrics
 from ..custom_metrics import CustomMetrics
 from .devices import Devices
-from ..utils import capture_errors
+from ..utils import capture_errors, utcnow
 
 
 class CloudMetrics:
@@ -31,8 +31,7 @@ class CloudMetrics:
         self.devices = Devices(args)
         self._lock = threading.Lock()
 
-        if args.mqtt is not None:
-            threading.Thread(target=capture_errors(self._update_loop)).start()
+        threading.Thread(target=capture_errors(self._update_loop)).start()
 
     def get_metrics(self) -> Dict[str, Union[Tuple[CloudDeviceMetrics,
                                              CustomMetrics], None]]:
@@ -40,9 +39,15 @@ class CloudMetrics:
             metrics: Dict[str, Union[Tuple[CloudDeviceMetrics,
                                      CustomMetrics], None]] = {}
             for device in self.devices:
-                metrics[device.deviceSN] = device.get_metrics(block=True)
+                dm = device.get_metrics(block=True)
+                if dm is not None and \
+                        (utcnow() - dm[0].update_time).seconds \
+                        <= self.args.max_update_gap:
+                    metrics[device.deviceSN] = dm
             return metrics
 
     def _update_loop(self) -> None:
         while True:
+            self.get_metrics()
+
             time.sleep(self.args.cloud_update_freq)
