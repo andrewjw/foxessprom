@@ -1,6 +1,37 @@
 # CHANGELOG
 
 
+## v1.1.0 (2025-03-08)
+
+### Bug Fixes
+
+- Fix computed modbus variables.
+  ([`ca505c6`](https://github.com/andrewjw/foxessprom/commit/ca505c6571a67d3ef093dfe3dec06ce25785f2b8))
+
+- Fix scaling for modbus loads value.
+  ([`7dddce1`](https://github.com/andrewjw/foxessprom/commit/7dddce14db7cccdfe26b94c5454be197b7df6306))
+
+### Chores
+
+- **deps**: Update dependency sentry-sdk to v2.22.0
+  ([#92](https://github.com/andrewjw/foxessprom/pull/92),
+  [`61016b8`](https://github.com/andrewjw/foxessprom/commit/61016b86228081334cfd815b1b116fd427a65f01))
+
+Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
+
+- **deps**: Update dependency setuptools to v75.8.2
+  ([#72](https://github.com/andrewjw/foxessprom/pull/72),
+  [`6604ea5`](https://github.com/andrewjw/foxessprom/commit/6604ea5da7efab89f5dedf629a1edcf10f3b4833))
+
+Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
+
+### Features
+
+- Restore mqtt publishing, and enable regular updates to allow custom metrics to be updated without
+  web requests.
+  ([`ecce4a8`](https://github.com/andrewjw/foxessprom/commit/ecce4a8b96bd201952f8c31fb2a56f3c8b1ce9a7))
+
+
 ## v1.0.1 (2025-03-07)
 
 ### Bug Fixes
