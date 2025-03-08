@@ -43,7 +43,7 @@ def batChargePower(registers: List[Dict[str, Union[str, float]]]) \
         "unit": "kW",
         "name": "Charge Power",
         "variable": "batChargePower",
-        "value": r8 if r8 > 0 else 0
+        "value": abs(r8) if r8 < 0 else 0
     }
 
 
@@ -55,7 +55,7 @@ def batDischargePower(registers: List[Dict[str, Union[str, float]]]) \
         "unit": "kW",
         "name": "Discharge Power",
         "variable": "batDischargePower",
-        "value": abs(r8) if r8 < 0 else 0
+        "value": r8 if r8 > 0 else 0
     }
 
 
@@ -67,7 +67,7 @@ def gridConsumptionPower(registers: List[Dict[str, Union[str, float]]]) \
         "name": "GridConsumption Power",
         "variable": "gridConsumptionPower",
         "unit": "kW",
-        "value": r21 + r22 if (r21 + r22) > 0 else 0
+        "value": abs(r21 + r22) if (r21 + r22) < 0 else 0
     }
 
 
@@ -79,7 +79,7 @@ def feedinPower(registers: List[Dict[str, Union[str, float]]]) \
         "name": "Feed In Power",
         "variable": "feedinPower",
         "unit": "kW",
-        "value": abs(r21 + r22) if (r21 + r22) < 0 else 0
+        "value": r21 + r22 if (r21 + r22) > 0 else 0
     }
 
 
