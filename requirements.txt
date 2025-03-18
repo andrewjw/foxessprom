@@ -7,7 +7,7 @@ twine==5.1.1
 requests==2.32.3
 requests-mock==1.12.1
 types-requests==2.32.0.20250306
-setuptools==75.9.1
+setuptools==76.1.0
 mypy==1.15.0
 paho-mqtt==2.1.0
 pymodbus==3.7.1
