@@ -2,7 +2,7 @@ pycodestyle==2.13.0
 coveralls==4.0.1
 python-semantic-release==9.21.0
 packaging==24.2
-wheel==0.45.1
+wheel==0.46.1
 twine==5.1.1
 requests==2.32.3
 requests-mock==1.12.1
