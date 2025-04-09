@@ -3,7 +3,7 @@ coveralls==4.0.1
 python-semantic-release==9.21.0
 packaging==24.2
 wheel==0.46.1
-twine==5.1.1
+twine==6.1.0
 requests==2.32.3
 requests-mock==1.12.1
 types-requests==2.32.0.20250328
