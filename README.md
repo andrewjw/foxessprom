@@ -330,3 +330,4 @@ foxess_totalLoadEnergy {device="ABCDEFG01234567"} 5062.5
 # TYPE foxess_todayLoadEnergy gauge
 foxess_todayLoadEnergy {device="ABCDEFG01234567"} 13.2
 ```
+
