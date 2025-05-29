@@ -65,7 +65,7 @@ class Device:
             for register_group in self.REGISTER_GROUPS:
                 r = self.client.read_input_registers(
                         register_group.base_register,
-                        register_group.get_size(),
+                        count=register_group.get_size(),
                         slave=247)
                 metrics.extend(register_group.convert(r.registers))
             print(f"Loaded modbus metrics in {utcnow() - start}")
