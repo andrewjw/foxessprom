@@ -40,8 +40,11 @@ class Register:
         register_value = \
             ModbusTcpClient.convert_from_registers(value,
                                                    data_type=self.data_type)
-        assert not isinstance(register_value, list), \
-            "List registers are not supported yet."
+        if isinstance(register_value, list):
+            raise ValueError(
+                f"Register {self.name} ({self.variable}) returned a list, "
+                "which is not supported by this implementation. "
+                f"{value} -> {register_value}")
         return {
             "unit": self.unit,
             "name": self.name,
