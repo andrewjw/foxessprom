@@ -16,6 +16,7 @@
 
 import argparse
 from datetime import datetime
+import time
 import threading
 from typing import List, Optional, Tuple
 
@@ -67,9 +68,25 @@ class Device:
                         register_group.base_register,
                         count=register_group.get_size(),
                         slave=247)
+                if r.isError():
+                    self.reset()
+                    raise RuntimeError("Failed to read registers for "
+                                       f"{register_group.base_register}: {r}")
+                if len(r.registers) < register_group.get_size():
+                    self.reset()
+                    raise RuntimeError("Unexpected number of registers "
+                                       f"for {register_group.base_register}: "
+                                       f"{len(r.registers)} "
+                                       f"expected {register_group.get_size()}")
                 metrics.extend(register_group.convert(r.registers))
             print(f"Loaded modbus metrics in {utcnow() - start}")
             self.metrics = ModbusDeviceMetrics(start, metrics)
             self.custom.update(self.metrics)
             self.last_update = start
             return self.metrics, self.custom
+
+    def reset(self) -> None:
+        if self.client.is_socket_open():
+            self.client.close()  # type: ignore
+        time.sleep(30)
+        self.client.connect()  # type: ignore
