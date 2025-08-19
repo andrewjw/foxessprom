@@ -341,11 +341,11 @@ class FoxESSH1(Device):
     ]
 
     def verify(self) -> bool:
-        r = self.client.read_input_registers(10000, count=8, slave=247)
+        r = self.client.read_input_registers(10000, count=8, device_id=247)
         return self._parse_string(r.registers) == "H1-3.7-E"
 
     def get_sn(self) -> str:
-        r = self.client.read_input_registers(10008, count=8, slave=247)
+        r = self.client.read_input_registers(10008, count=8, device_id=247)
         return self._parse_string(r.registers)
 
     def _parse_string(self, registers: List[int]) -> str:

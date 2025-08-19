@@ -67,7 +67,7 @@ class Device:
                 r = self.client.read_input_registers(
                         register_group.base_register,
                         count=register_group.get_size(),
-                        slave=247)
+                        device_id=247)
                 if r.isError():
                     self.reset()
                     raise RuntimeError("Failed to read registers for "
