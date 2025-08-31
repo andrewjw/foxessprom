@@ -1,5 +1,5 @@
 pycodestyle==2.14.0
-coverage==7.10.5
+coverage==7.10.6
 python-semantic-release==10.3.1
 packaging==25.0
 wheel==0.46.1
