@@ -25,7 +25,7 @@ options:
                         will be sent.
   --cloud-api-key [CLOUD_API_KEY]
                         The FoxESS Cloud API key to use.
-  ---cloud-update-freq [CLOUD_UPDATE_FREQ]
+  --cloud-update-freq [CLOUD_UPDATE_FREQ]
                         (seconds) Limit on how frequently we can request updates. If --mqtt is set
                         updates will be sent this often.
   --modbus [MODBUS]     The ModBus address to connect to.
@@ -37,7 +37,7 @@ options:
 ## Cloud API
 
 To connect via the Cloud API visit https://www.foxesscloud.com/user/center and generate the API key.
-Either store the key in the `CLOUD_API_KEY` environment variable, or pass it to `foxessprom` as 
+Either store the key in the `CLOUD_API_KEY` environment variable, or pass it to `foxessprom` as
 `--cloud-api-key APIKEY`.
 
 ## Connecting To Modbus
@@ -330,4 +330,3 @@ foxess_totalLoadEnergy {device="ABCDEFG01234567"} 5062.5
 # TYPE foxess_todayLoadEnergy gauge
 foxess_todayLoadEnergy {device="ABCDEFG01234567"} 13.2
 ```
-
