@@ -34,7 +34,7 @@ parser.add_argument('--max-update-gap', type=int, nargs='?', default=600,
                          + "and a null MQTT message will be sent.")
 parser.add_argument('--cloud-api-key', type=str, nargs='?', default=None,
                     help="The FoxESS Cloud API key to use.")
-parser.add_argument('---cloud-update-freq', type=int, nargs='?', default=120,
+parser.add_argument('--cloud-update-freq', type=int, nargs='?', default=120,
                     help="(seconds) Limit on how frequently we can request "
                          + "updates. If --mqtt is set updates will be sent "
                          + "this often.")
