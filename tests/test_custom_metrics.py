@@ -29,10 +29,12 @@ class TestCustomMetrics(unittest.TestCase):
     def test_device_list(self) -> None:
         data = json.load(open("tests/device_real_query_response.json", "r"))
 
-        first_metrics = CloudDeviceMetrics(datetime(2024, 1, 1, 18, 0),
-                                           data["result"][0]["datas"])
-        second_metrics = CloudDeviceMetrics(datetime(2024, 1, 1, 18, 2),
-                                            data["result"][0]["datas"])
+        first_metrics = CloudDeviceMetrics(
+            datetime(2024, 1, 1, 18, 0), data["result"][0]["datas"]
+        )
+        second_metrics = CloudDeviceMetrics(
+            datetime(2024, 1, 1, 18, 2), data["result"][0]["datas"]
+        )
 
         custom = CustomMetrics()
         custom.update(first_metrics)
@@ -42,9 +44,6 @@ class TestCustomMetrics(unittest.TestCase):
 
         self.assertAlmostEqual(metrics["pv_generation_total"], 0.0)
         self.assertAlmostEqual(metrics["battery_charge_total"], 0.0)
-        self.assertAlmostEqual(metrics["battery_discharge_total"],
-                               0.015766666666666665)
-        self.assertAlmostEqual(metrics["grid_usage_total"],
-                               0.0003666666666666666)
-        self.assertAlmostEqual(metrics["feed_in_total"],
-                               0.0)
+        self.assertAlmostEqual(metrics["battery_discharge_total"], 0.015766666666666665)
+        self.assertAlmostEqual(metrics["grid_usage_total"], 0.0003666666666666666)
+        self.assertAlmostEqual(metrics["feed_in_total"], 0.0)

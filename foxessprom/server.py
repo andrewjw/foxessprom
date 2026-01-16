@@ -33,8 +33,7 @@ CLOUD = PREFIX + "cloud_"
 MODBUS = PREFIX + "modbus_"
 
 
-def handle_error(func: Callable[["Handler"], None]) \
-        -> Callable[["Handler"], None]:
+def handle_error(func: Callable[["Handler"], None]) -> Callable[["Handler"], None]:
     def r(self: "Handler") -> None:
         try:
             func(self)
@@ -47,6 +46,7 @@ def handle_error(func: Callable[["Handler"], None]) \
             self.end_headers()
 
             self.wfile.write(f"Exception Occurred.\n".encode("utf8"))
+
     return r
 
 
@@ -54,8 +54,7 @@ class Server(http.server.HTTPServer):
     def __init__(self, args: argparse.Namespace):
         super().__init__(args.bind, Handler)
         self.args = args
-        self.cloud = CloudMetrics(args) \
-            if args.cloud_api_key is not None else None
+        self.cloud = CloudMetrics(args) if args.cloud_api_key is not None else None
         self.modbus = ModbusMetrics(args) if args.modbus is not None else None
 
         mqtt_updates(args, self.cloud, self.modbus)
@@ -79,8 +78,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             else:
                 devices = []
 
-            self.wfile.write(json.dumps(devices)
-                             .encode("utf8"))
+            self.wfile.write(json.dumps(devices).encode("utf8"))
         elif self.path == "/metrics":
             self.send_metrics()
         else:
@@ -89,14 +87,18 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def send_index(self) -> None:
         self.send_response(200)
         self.end_headers()
-        self.wfile.write("""
+        self.wfile.write(
+            """
 <html>
 <head><title>Fox ESS Prometheus</title></head>
 <body>
 <h1>Fox ESS Prometheus</h1>
 <p><a href="/metrics">Metrics</a></p>
 </body>
-</html>""".encode("utf8"))
+</html>""".encode(
+                "utf8"
+            )
+        )
 
     def send_metrics(self) -> None:
         metrics_text: List[str] = []
@@ -104,26 +106,25 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.get_cloud_metrics(metrics_text)
         self.get_modbus_metrics(metrics_text)
 
-        clouddevices = \
-            {} if self.server.cloud is None \
-            else self.server.cloud.get_metrics()
-        modbusdevices = \
-            {} if self.server.modbus is None \
-            else self.server.modbus.get_metrics()
+        clouddevices = (
+            {} if self.server.cloud is None else self.server.cloud.get_metrics()
+        )
+        modbusdevices = (
+            {} if self.server.modbus is None else self.server.modbus.get_metrics()
+        )
         seen: Set[str] = set()
         for sn in set(clouddevices.keys() | set(modbusdevices.keys())):
-            combined = CombinedMetrics(clouddevices.get(sn),
-                                       modbusdevices.get(sn))
+            combined = CombinedMetrics(clouddevices.get(sn), modbusdevices.get(sn))
             for metric, value, is_counter in combined.get_prometheus_metrics():
                 if metric not in seen:
                     metrics_text.append(
                         f"# TYPE {PREFIX + metric} "
-                        f"{'counter' if is_counter else 'gauge'}")
+                        f"{'counter' if is_counter else 'gauge'}"
+                    )
                     seen.add(metric)
                 metrics_text.append(
-                    f"{PREFIX}{metric} "
-                    f"{{device=\"{sn}\"}} "
-                    f"{value}")
+                    f"{PREFIX}{metric} " f'{{device="{sn}"}} ' f"{value}"
+                )
 
         if len(metrics_text) == 0:
             self.send_error(404)
@@ -140,19 +141,21 @@ class Handler(http.server.BaseHTTPRequestHandler):
         for device, cmetrics in self.server.cloud.get_metrics().items():
             if cmetrics is None:
                 continue
-            chained = chain(cmetrics[0].get_prometheus_metrics(),
-                            cmetrics[1].get_prometheus_metrics())
+            chained = chain(
+                cmetrics[0].get_prometheus_metrics(),
+                cmetrics[1].get_prometheus_metrics(),
+            )
             for metric, value, counter in chained:
                 if metric not in seen:
                     metrics_text.append(
                         f"# TYPE {CLOUD + metric} "
-                        f"{'counter' if counter else 'gauge'}")
+                        f"{'counter' if counter else 'gauge'}"
+                    )
                     seen.add(metric)
 
                 metrics_text.append(
-                    f"{CLOUD}{metric}"
-                    f"{{device=\"{device}\"}} "
-                    f"{value}")
+                    f"{CLOUD}{metric}" f'{{device="{device}"}} ' f"{value}"
+                )
 
     def get_modbus_metrics(self, metrics_text: List[str]) -> None:
         if self.server.modbus is None:
@@ -162,19 +165,21 @@ class Handler(http.server.BaseHTTPRequestHandler):
         for device, mmetrics in self.server.modbus.get_metrics().items():
             if mmetrics is None:
                 continue
-            chained = chain(mmetrics[0].get_prometheus_metrics(),
-                            mmetrics[1].get_prometheus_metrics())
+            chained = chain(
+                mmetrics[0].get_prometheus_metrics(),
+                mmetrics[1].get_prometheus_metrics(),
+            )
             for metric, value, is_counter in chained:
                 if metric not in seen:
                     metrics_text.append(
                         f"# TYPE {MODBUS + metric} "
-                        f"{'counter' if is_counter else 'gauge'}")
+                        f"{'counter' if is_counter else 'gauge'}"
+                    )
                     seen.add(metric)
 
                 metrics_text.append(
-                    f"{MODBUS}{metric}"
-                    f"{{device=\"{device}\"}} "
-                    f"{value}")
+                    f"{MODBUS}{metric}" f'{{device="{device}"}} ' f"{value}"
+                )
 
 
 def serve(args: argparse.Namespace) -> None:  # pragma: no cover

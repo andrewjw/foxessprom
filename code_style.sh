@@ -6,4 +6,4 @@ mypy --strict bin/*
 
 mypy --strict -p foxessprom -p tests
 
-pycodestyle bin/ foxessprom/ tests/
+black bin/ foxessprom/ tests/

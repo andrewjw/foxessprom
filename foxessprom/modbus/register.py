@@ -20,12 +20,14 @@ from pymodbus.client import ModbusTcpClient
 
 
 class Register:
-    def __init__(self,
-                 name: str,
-                 variable: str,
-                 data_type: ModbusTcpClient.DATATYPE,
-                 convert: Callable[[Union[int, float]], Union[int, float]],
-                 unit: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        variable: str,
+        data_type: ModbusTcpClient.DATATYPE,
+        convert: Callable[[Union[int, float]], Union[int, float]],
+        unit: str,
+    ) -> None:
         self.name = name
         self.variable = variable
         self.data_type = data_type
@@ -35,20 +37,23 @@ class Register:
     def size(self) -> int:
         return self.data_type.value[1]
 
-    def convert(self,
-                value: List[int]) -> Dict[str, Union[str, int, float]]:
-        register_value = \
-            ModbusTcpClient.convert_from_registers(value,
-                                                   data_type=self.data_type)
+    def convert(self, value: List[int]) -> Dict[str, Union[str, int, float]]:
+        register_value = ModbusTcpClient.convert_from_registers(
+            value, data_type=self.data_type
+        )
         if isinstance(register_value, list):
             raise ValueError(
                 f"Register {self.name} ({self.variable}) returned a list, "
                 "which is not supported by this implementation. "
-                f"{value} -> {register_value}")
+                f"{value} -> {register_value}"
+            )
         return {
             "unit": self.unit,
             "name": self.name,
             "variable": self.variable,
-            "value": register_value if isinstance(register_value, str)
-            else self.convert_func(register_value)
+            "value": (
+                register_value
+                if isinstance(register_value, str)
+                else self.convert_func(register_value)
+            ),
         }

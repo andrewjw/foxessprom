@@ -23,15 +23,20 @@ from foxessprom.modbus.register import Register
 
 class TestModbusRegister(unittest.TestCase):
     def test_register(self) -> None:
-        register = Register(name="RegisterName",
-                            variable="RegisterVariable",
-                            data_type=ModbusTcpClient.DATATYPE.INT32,
-                            convert=lambda x: x / 10.0,
-                            unit="RegisterUnit")
+        register = Register(
+            name="RegisterName",
+            variable="RegisterVariable",
+            data_type=ModbusTcpClient.DATATYPE.INT32,
+            convert=lambda x: x / 10.0,
+            unit="RegisterUnit",
+        )
 
-        self.assertEqual({
-            "name": "RegisterName",
-            "variable": "RegisterVariable",
-            "unit": "RegisterUnit",
-            "value": 65537.5
-        }, register.convert([10, 15]))
+        self.assertEqual(
+            {
+                "name": "RegisterName",
+                "variable": "RegisterVariable",
+                "unit": "RegisterUnit",
+                "value": 65537.5,
+            },
+            register.convert([10, 15]),
+        )

@@ -24,8 +24,7 @@ from .fox_device import FoxDevice
 class Devices:
     def __init__(self, args: argparse.Namespace) -> None:
         self.devices: List[Device] = [
-            Device(fox_device, args) for fox_device
-            in FoxDevice.device_list(args)
+            Device(fox_device, args) for fox_device in FoxDevice.device_list(args)
         ]
 
     def __iter__(self) -> Iterator[Device]:

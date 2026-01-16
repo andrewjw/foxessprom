@@ -26,9 +26,7 @@ from ..utils import utcnow
 
 
 class Device:
-    def __init__(self,
-                 fox_device: FoxDevice,
-                 args: argparse.Namespace) -> None:
+    def __init__(self, fox_device: FoxDevice, args: argparse.Namespace) -> None:
         self.fox_device = fox_device
 
         self._args = args
@@ -38,10 +36,13 @@ class Device:
         self.loading = False
         self.lock = Lock()
 
-    def get_metrics(self, block: bool = False) \
-            -> Optional[Tuple[CloudDeviceMetrics, CustomMetrics]]:
-        if self.last_update is None or \
-           (utcnow() - self.last_update).total_seconds() >= 120:
+    def get_metrics(
+        self, block: bool = False
+    ) -> Optional[Tuple[CloudDeviceMetrics, CustomMetrics]]:
+        if (
+            self.last_update is None
+            or (utcnow() - self.last_update).total_seconds() >= 120
+        ):
             with self.lock:
                 thread: Optional[Thread] = None
                 if not self.loading:
@@ -52,8 +53,10 @@ class Device:
             if block and thread is not None:
                 thread.join()
 
-            if self.last_update is not None and \
-               (utcnow() - self.last_update).total_seconds() > 600:
+            if (
+                self.last_update is not None
+                and (utcnow() - self.last_update).total_seconds() > 600
+            ):
                 return None
         assert self.metrics is not None
         return self.metrics, self.custom
@@ -62,9 +65,9 @@ class Device:
         try:
             start = utcnow()
 
-            self.metrics = \
-                CloudDeviceMetrics(start,
-                                   self.fox_device.real_query(self._args))
+            self.metrics = CloudDeviceMetrics(
+                start, self.fox_device.real_query(self._args)
+            )
             self.custom.update(self.metrics)
 
             self.last_update = start

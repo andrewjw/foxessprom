@@ -33,12 +33,12 @@ class ModbusMetrics:
 
         threading.Thread(target=capture_errors(self._update_loop)).start()
 
-    def get_metrics(self) -> \
-            Dict[str, Optional[Tuple[ModbusDeviceMetrics, CustomMetrics]]]:
+    def get_metrics(
+        self,
+    ) -> Dict[str, Optional[Tuple[ModbusDeviceMetrics, CustomMetrics]]]:
         metrics = self.device.get_metrics()
 
-        if (utcnow() - metrics[0].update_time).seconds \
-                > self.args.max_update_gap:
+        if (utcnow() - metrics[0].update_time).seconds > self.args.max_update_gap:
             return {}
 
         return {self.device.sn: metrics}

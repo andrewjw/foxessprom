@@ -18,15 +18,18 @@ from typing import Callable, Dict, Optional, List, Union
 
 from .register import Register
 
-CustomMetricFunc = List[Callable[[List[Dict[str, Union[str, float]]]],
-                                 Dict[str, Union[str, float]]]]
+CustomMetricFunc = List[
+    Callable[[List[Dict[str, Union[str, float]]]], Dict[str, Union[str, float]]]
+]
 
 
 class RegisterGroup:
-    def __init__(self,
-                 base_register: int,
-                 registers: List[Register],
-                 custom_metrics: Optional[CustomMetricFunc] = None) -> None:
+    def __init__(
+        self,
+        base_register: int,
+        registers: List[Register],
+        custom_metrics: Optional[CustomMetricFunc] = None,
+    ) -> None:
         self.base_register = base_register
         self.registers = registers
         self.custom_metrics = custom_metrics
@@ -37,12 +40,11 @@ class RegisterGroup:
             r += register.size()
         return r
 
-    def convert(self,
-                registers: List[int]) -> List[Dict[str, Union[str, float]]]:
+    def convert(self, registers: List[int]) -> List[Dict[str, Union[str, float]]]:
         r: List[Dict[str, Union[str, float]]] = []
         i = 0
         for register in self.registers:
-            r.append(register.convert(registers[i:i+register.size()]))
+            r.append(register.convert(registers[i : i + register.size()]))
             i += register.size()
 
         if self.custom_metrics is not None:

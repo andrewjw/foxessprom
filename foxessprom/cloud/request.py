@@ -20,26 +20,24 @@ from typing import Any, Literal, Optional
 
 from ..auth import GetAuth
 
-DOMAIN = 'https://www.foxesscloud.com'
+DOMAIN = "https://www.foxesscloud.com"
 
 REQUEST_TYPES = Literal["get", "post"]
 
 
-def make_request(args: argparse.Namespace,
-                 method: REQUEST_TYPES,
-                 path: str,
-                 param: Optional[Any] = None) -> requests.Response:
+def make_request(
+    args: argparse.Namespace,
+    method: REQUEST_TYPES,
+    path: str,
+    param: Optional[Any] = None,
+) -> requests.Response:
     url = DOMAIN + path
     headers = GetAuth().get_signature(token=args.cloud_api_key, path=path)
 
-    if method == 'get':
-        return requests.get(url=url,
-                            params=param,
-                            headers=headers)
+    if method == "get":
+        return requests.get(url=url, params=param, headers=headers)
 
-    elif method == 'post':
-        return requests.post(url=url,
-                             json=param,
-                             headers=headers)
+    elif method == "post":
+        return requests.post(url=url, json=param, headers=headers)
     else:
-        raise ValueError('Unsupported request method')
+        raise ValueError("Unsupported request method")

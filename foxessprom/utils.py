@@ -22,9 +22,12 @@ from sentry_sdk import capture_exception
 
 # TODO: Remove when Python 3.11 is the minimum version.
 if hasattr(datetime, "UTC"):
+
     def utcnow() -> datetime.datetime:
         return datetime.datetime.now(getattr(datetime, "UTC"))
+
 else:
+
     def utcnow() -> datetime.datetime:
         return datetime.datetime.utcnow()
 
@@ -36,4 +39,5 @@ def capture_errors(func: Callable[[], None]) -> Callable[[], None]:
         except Exception as e:
             traceback.print_exc()
             capture_exception(e)
+
     return r
