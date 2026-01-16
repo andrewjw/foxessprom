@@ -42,38 +42,31 @@ class CustomMetrics:
             self.last = metrics
             return
 
-        self._update_metric("pvPower",
-                            "pv_generation",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("pv1Power",
-                            "pv1_generation",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("pv2Power",
-                            "pv2_generation",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("batChargePower",
-                            "battery_charge",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("batDischargePower",
-                            "battery_discharge",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("gridConsumptionPower",
-                            "grid_usage",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("loadsPower",
-                            "load",
-                            metrics,
-                            time_since.total_seconds())
-        self._update_metric("feedinPower",
-                            "feed_in",
-                            metrics,
-                            time_since.total_seconds())
+        self._update_metric(
+            "pvPower", "pv_generation", metrics, time_since.total_seconds()
+        )
+        self._update_metric(
+            "pv1Power", "pv1_generation", metrics, time_since.total_seconds()
+        )
+        self._update_metric(
+            "pv2Power", "pv2_generation", metrics, time_since.total_seconds()
+        )
+        self._update_metric(
+            "batChargePower", "battery_charge", metrics, time_since.total_seconds()
+        )
+        self._update_metric(
+            "batDischargePower",
+            "battery_discharge",
+            metrics,
+            time_since.total_seconds(),
+        )
+        self._update_metric(
+            "gridConsumptionPower", "grid_usage", metrics, time_since.total_seconds()
+        )
+        self._update_metric("loadsPower", "load", metrics, time_since.total_seconds())
+        self._update_metric(
+            "feedinPower", "feed_in", metrics, time_since.total_seconds()
+        )
 
         self.last = metrics
 
@@ -96,23 +89,21 @@ class CustomMetrics:
             "battery_discharge_total": self.battery_discharge,
             "grid_usage_total": self.grid_usage,
             "load_total": self.load,
-            "feed_in_total": self.feed_in
+            "feed_in_total": self.feed_in,
         }
 
-    def _update_metric(self,
-                       foxmetric: str,
-                       custom: str,
-                       metrics: DeviceMetrics,
-                       time_since: float) -> None:
+    def _update_metric(
+        self, foxmetric: str, custom: str, metrics: DeviceMetrics, time_since: float
+    ) -> None:
         assert self.last is not None
         current_power = metrics[foxmetric]
         last_power = self.last[foxmetric]
-        assert (isinstance(current_power, float)
-                or isinstance(current_power, int)) \
-               and (isinstance(last_power, float)
-                    or isinstance(last_power, int))
-        setattr(self,
-                custom,
-                getattr(self, custom)
-                + ((max(0, current_power) + max(0, last_power)) / 2
-                   * time_since / 3600))
+        assert (
+            isinstance(current_power, float) or isinstance(current_power, int)
+        ) and (isinstance(last_power, float) or isinstance(last_power, int))
+        setattr(
+            self,
+            custom,
+            getattr(self, custom)
+            + ((max(0, current_power) + max(0, last_power)) / 2 * time_since / 3600),
+        )

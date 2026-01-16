@@ -58,26 +58,34 @@ class Device:
     def get_metrics(self) -> Tuple[ModbusDeviceMetrics, CustomMetrics]:
         with self._lock:
             start = utcnow()
-            if self.metrics is not None and self.last_update is not None and \
-               (start - self.last_update).seconds < self._update_frequency:
+            if (
+                self.metrics is not None
+                and self.last_update is not None
+                and (start - self.last_update).seconds < self._update_frequency
+            ):
                 return self.metrics, self.custom
 
             metrics = []
             for register_group in self.REGISTER_GROUPS:
                 r = self.client.read_input_registers(
-                        register_group.base_register,
-                        count=register_group.get_size(),
-                        device_id=247)
+                    register_group.base_register,
+                    count=register_group.get_size(),
+                    device_id=247,
+                )
                 if r.isError():
                     self.reset()
-                    raise RuntimeError("Failed to read registers for "
-                                       f"{register_group.base_register}: {r}")
+                    raise RuntimeError(
+                        "Failed to read registers for "
+                        f"{register_group.base_register}: {r}"
+                    )
                 if len(r.registers) < register_group.get_size():
                     self.reset()
-                    raise RuntimeError("Unexpected number of registers "
-                                       f"for {register_group.base_register}: "
-                                       f"{len(r.registers)} "
-                                       f"expected {register_group.get_size()}")
+                    raise RuntimeError(
+                        "Unexpected number of registers "
+                        f"for {register_group.base_register}: "
+                        f"{len(r.registers)} "
+                        f"expected {register_group.get_size()}"
+                    )
                 metrics.extend(register_group.convert(r.registers))
             print(f"Loaded modbus metrics in {utcnow() - start}")
             self.metrics = ModbusDeviceMetrics(start, metrics)

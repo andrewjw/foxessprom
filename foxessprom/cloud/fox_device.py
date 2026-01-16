@@ -33,19 +33,19 @@ class FoxDevice:
         self.status = data["status"]
 
     def real_query(self, args: argparse.Namespace) -> Any:
-        path = '/op/v0/device/real/query'
-        request_param = {'sn': self.deviceSN, 'variables': []}
-        response = make_request(args, 'post', path, request_param)
+        path = "/op/v0/device/real/query"
+        request_param = {"sn": self.deviceSN, "variables": []}
+        response = make_request(args, "post", path, request_param)
         response.raise_for_status()
         return response.json()["result"][0]["datas"]
 
     @staticmethod
     def device_list(args: argparse.Namespace) -> List["FoxDevice"]:
-        path = '/op/v0/device/list'
+        path = "/op/v0/device/list"
 
-        request_param = {'currentPage': 1, 'pageSize': 500}
+        request_param = {"currentPage": 1, "pageSize": 500}
 
-        response = make_request(args, 'post', path, request_param)
+        response = make_request(args, "post", path, request_param)
         response.raise_for_status()
 
         return [FoxDevice(data) for data in response.json()["result"]["data"]]

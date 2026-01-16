@@ -4,6 +4,7 @@
 [![Docker Image Version (latest semver)](https://img.shields.io/docker/v/andrewjw/foxessprom)](https://hub.docker.com/r/andrewjw/foxessprom)
 [![Docker Pulls](https://img.shields.io/docker/pulls/andrewjw/foxessprom)](https://hub.docker.com/r/andrewjw/foxessprom)
 [![Coverage Status](https://coveralls.io/repos/github/andrewjw/foxessprom/badge.svg?branch=main)](https://coveralls.io/github/andrewjw/foxessprom?branch=main)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Prometheus exporter for Fox ESS Inverters (using the Fox Cloud API)
 

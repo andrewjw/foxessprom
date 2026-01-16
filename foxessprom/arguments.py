@@ -19,31 +19,64 @@ import os
 from typing import Sequence
 
 parser = argparse.ArgumentParser(
-    description='Reads data from a Fox ESS inverter and PV system, and '
-    + 'exposes it as prometheus metrics and MQTT messages.')
-parser.add_argument('-q', '--quiet', action="store_true",
-                    help="don't log HTTP requests")
-parser.add_argument('--bind', type=str, nargs='?', default="0.0.0.0:9100",
-                    help='the ip address and port to bind to. Default: *:9100')
-parser.add_argument('--mqtt', type=str, nargs='?', default=None,
-                    help="the mqtt host to connect to.")
-parser.add_argument('--max-update-gap', type=int, nargs='?', default=600,
-                    help="(seconds) Limit on how long the gap between "
-                         + "successful updates can be. If it is more than "
-                         + "this the Prometheus metrics are not exposed and "
-                         + "and a null MQTT message will be sent.")
-parser.add_argument('--cloud-api-key', type=str, nargs='?', default=None,
-                    help="The FoxESS Cloud API key to use.")
-parser.add_argument('--cloud-update-freq', type=int, nargs='?', default=120,
-                    help="(seconds) Limit on how frequently we can request "
-                         + "updates. If --mqtt is set updates will be sent "
-                         + "this often.")
-parser.add_argument('--modbus', type=str, nargs='?', default=None,
-                    help="The ModBus address to connect to.")
-parser.add_argument('--modbus-update-freq', type=int, nargs='?', default=30,
-                    help="(seconds) Limit on how frequently we can request "
-                         + "updates. If --mqtt is set updates will be sent "
-                         + "this often.")
+    description="Reads data from a Fox ESS inverter and PV system, and "
+    + "exposes it as prometheus metrics and MQTT messages."
+)
+parser.add_argument(
+    "-q", "--quiet", action="store_true", help="don't log HTTP requests"
+)
+parser.add_argument(
+    "--bind",
+    type=str,
+    nargs="?",
+    default="0.0.0.0:9100",
+    help="the ip address and port to bind to. Default: *:9100",
+)
+parser.add_argument(
+    "--mqtt", type=str, nargs="?", default=None, help="the mqtt host to connect to."
+)
+parser.add_argument(
+    "--max-update-gap",
+    type=int,
+    nargs="?",
+    default=600,
+    help="(seconds) Limit on how long the gap between "
+    + "successful updates can be. If it is more than "
+    + "this the Prometheus metrics are not exposed and "
+    + "and a null MQTT message will be sent.",
+)
+parser.add_argument(
+    "--cloud-api-key",
+    type=str,
+    nargs="?",
+    default=None,
+    help="The FoxESS Cloud API key to use.",
+)
+parser.add_argument(
+    "--cloud-update-freq",
+    type=int,
+    nargs="?",
+    default=120,
+    help="(seconds) Limit on how frequently we can request "
+    + "updates. If --mqtt is set updates will be sent "
+    + "this often.",
+)
+parser.add_argument(
+    "--modbus",
+    type=str,
+    nargs="?",
+    default=None,
+    help="The ModBus address to connect to.",
+)
+parser.add_argument(
+    "--modbus-update-freq",
+    type=int,
+    nargs="?",
+    default=30,
+    help="(seconds) Limit on how frequently we can request "
+    + "updates. If --mqtt is set updates will be sent "
+    + "this often.",
+)
 
 
 def get_arguments(args: Sequence[str]) -> argparse.Namespace:
@@ -57,7 +90,9 @@ def get_arguments(args: Sequence[str]) -> argparse.Namespace:
     if ":" not in parsed_args.bind:
         parsed_args.bind = (parsed_args.bind, 9100)
     else:
-        parsed_args.bind = (parsed_args.bind.split(":")[0],
-                            int(parsed_args.bind.split(":")[1]))
+        parsed_args.bind = (
+            parsed_args.bind.split(":")[0],
+            int(parsed_args.bind.split(":")[1]),
+        )
 
     return parsed_args

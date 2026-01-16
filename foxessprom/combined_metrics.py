@@ -54,10 +54,11 @@ COMBINED_METRIC_NAMES = [
 
 
 class CombinedMetrics:
-    def __init__(self,
-                 cloud: Optional[Tuple[CloudDeviceMetrics, CustomMetrics]],
-                 modbus: Optional[Tuple[ModbusDeviceMetrics,
-                                        CustomMetrics]]) -> None:
+    def __init__(
+        self,
+        cloud: Optional[Tuple[CloudDeviceMetrics, CustomMetrics]],
+        modbus: Optional[Tuple[ModbusDeviceMetrics, CustomMetrics]],
+    ) -> None:
         self.cloud = cloud
         self.modbus = modbus
 
@@ -65,11 +66,15 @@ class CombinedMetrics:
 
     def get_prometheus_metrics(self) -> Iterator[Tuple[str, float, bool]]:
         if self.modbus is not None and self.modbus[0].is_valid():
-            metrics = chain(self.modbus[0].get_prometheus_metrics(),
-                            self.modbus[1].get_prometheus_metrics())
+            metrics = chain(
+                self.modbus[0].get_prometheus_metrics(),
+                self.modbus[1].get_prometheus_metrics(),
+            )
         elif self.cloud is not None and self.cloud[0].is_valid():
-            metrics = chain(self.cloud[0].get_prometheus_metrics(),
-                            self.cloud[1].get_prometheus_metrics())
+            metrics = chain(
+                self.cloud[0].get_prometheus_metrics(),
+                self.cloud[1].get_prometheus_metrics(),
+            )
 
         for metric, value, counter in metrics:
             if counter:

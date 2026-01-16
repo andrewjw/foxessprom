@@ -33,16 +33,20 @@ class CloudMetrics:
 
         threading.Thread(target=capture_errors(self._update_loop)).start()
 
-    def get_metrics(self) -> Dict[str, Union[Tuple[CloudDeviceMetrics,
-                                             CustomMetrics], None]]:
+    def get_metrics(
+        self,
+    ) -> Dict[str, Union[Tuple[CloudDeviceMetrics, CustomMetrics], None]]:
         with self._lock:
-            metrics: Dict[str, Union[Tuple[CloudDeviceMetrics,
-                                     CustomMetrics], None]] = {}
+            metrics: Dict[
+                str, Union[Tuple[CloudDeviceMetrics, CustomMetrics], None]
+            ] = {}
             for device in self.devices:
                 dm = device.get_metrics(block=True)
-                if dm is not None and \
-                        (utcnow() - dm[0].update_time).seconds \
-                        <= self.args.max_update_gap:
+                if (
+                    dm is not None
+                    and (utcnow() - dm[0].update_time).seconds
+                    <= self.args.max_update_gap
+                ):
                     metrics[device.deviceSN] = dm
             return metrics
 

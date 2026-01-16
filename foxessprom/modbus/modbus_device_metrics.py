@@ -30,17 +30,16 @@ class Metric:
     # {'unit': 'kW', 'name': 'PVPower',
     #  'variable': 'pvPower', 'value': -0.002}
     def __init__(self, data: Dict[str, Union[str, float]]) -> None:
-        self.unit: Optional[str] = cast(str, data["unit"]) \
-                                   if "unit" in data else None
+        self.unit: Optional[str] = cast(str, data["unit"]) if "unit" in data else None
         self.name: str = cast(str, data["name"])
         self.variable: str = cast(str, data["variable"])
         self.value: Union[str, float] = data["value"]
 
 
 class ModbusDeviceMetrics(DeviceMetrics):
-    def __init__(self,
-                 update_time: datetime,
-                 data: List[Dict[str, Union[str, float]]]) -> None:
+    def __init__(
+        self, update_time: datetime, data: List[Dict[str, Union[str, float]]]
+    ) -> None:
         DeviceMetrics.__init__(self, update_time)
         self.data: List[Metric] = [Metric(d) for d in data]
 
@@ -57,9 +56,7 @@ class ModbusDeviceMetrics(DeviceMetrics):
         yield ("last_update", self.update_time.timestamp(), True)
         for metric in self.data:
             if isinstance(metric.value, (int, float)):
-                yield (metric.variable,
-                       metric.value,
-                       metric.variable in COUNTER_DATA)
+                yield (metric.variable, metric.value, metric.variable in COUNTER_DATA)
 
     def to_json(self) -> Dict[str, Union[str, float]]:
         return {m.variable: m.value for m in self.data}

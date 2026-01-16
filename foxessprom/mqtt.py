@@ -28,9 +28,11 @@ from .modbus import ModbusMetrics
 from .utils import capture_errors
 
 
-def mqtt_updates(args: argparse.Namespace,
-                 cloud: Optional[CloudMetrics],
-                 modbus: Optional[ModbusMetrics]) -> None:  # pragma: no cover
+def mqtt_updates(
+    args: argparse.Namespace,
+    cloud: Optional[CloudMetrics],
+    modbus: Optional[ModbusMetrics],
+) -> None:  # pragma: no cover
     if args.mqtt is None:
         return
 
@@ -41,30 +43,28 @@ def mqtt_updates(args: argparse.Namespace,
     else:
         delay = args.max_update_gap
 
-    Thread(target=capture_errors(
-                     lambda:
-                     _mqtt_update_loop(
-                         args.mqtt,
-                         delay,
-                         cloud,
-                         modbus)
-          )).start()
+    Thread(
+        target=capture_errors(
+            lambda: _mqtt_update_loop(args.mqtt, delay, cloud, modbus)
+        )
+    ).start()
 
 
-def _mqtt_update_loop(host: str,
-                      delay: int,
-                      cloud: Optional[CloudMetrics],
-                      modbus: Optional[ModbusMetrics]) -> None:
+def _mqtt_update_loop(
+    host: str,
+    delay: int,
+    cloud: Optional[CloudMetrics],
+    modbus: Optional[ModbusMetrics],
+) -> None:
     while True:
         clouddevices = {} if cloud is None else cloud.get_metrics()
         modbusdevices = {} if modbus is None else modbus.get_metrics()
 
         for sn in set(clouddevices.keys() | set(modbusdevices.keys())):
-            combined = CombinedMetrics(clouddevices.get(sn),
-                                       modbusdevices.get(sn))
+            combined = CombinedMetrics(clouddevices.get(sn), modbusdevices.get(sn))
 
-            publish.single(f"foxess/{sn}",
-                           json.dumps(combined.to_json()),
-                           hostname=host)
+            publish.single(
+                f"foxess/{sn}", json.dumps(combined.to_json()), hostname=host
+            )
 
         time.sleep(delay)
