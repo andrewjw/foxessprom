@@ -1,5 +1,77 @@
 # CHANGELOG
 
+<!-- version list -->
+
+## v2.1.0 (2026-01-16)
+
+### Features
+
+- Add support for Python 3.14.
+  ([`d91621c`](https://github.com/andrewjw/foxessprom/commit/d91621ca95f27460cf9855f8cd3e4ac8a591791d))
+
+
+## v2.0.4 (2025-12-11)
+
+### Bug Fixes
+
+- Trim overlong dash prefix of ---cloud-update-frequency flag.
+  ([`eac8697`](https://github.com/andrewjw/foxessprom/commit/eac8697366a3a040a04b9685bd22792813160ce5))
+
+### Chores
+
+- Allow submitting coverage data to fail.
+  ([`d1ce80a`](https://github.com/andrewjw/foxessprom/commit/d1ce80a384a43900617d44157c9b288a7e647afb))
+
+- Support parallel code coverage submission across Python versions.
+  ([`a15366a`](https://github.com/andrewjw/foxessprom/commit/a15366ada54645efb77273c0937ae97d270af81c))
+
+- Update GitHub workflow and PyPI spec to support Python 3.13.
+  ([`8169121`](https://github.com/andrewjw/foxessprom/commit/8169121639a3bf8886b44ed5db74b27315c70db4))
+
+- Update parameter names for PyModBus 3.10.0
+  ([`638507d`](https://github.com/andrewjw/foxessprom/commit/638507d907cc695d8ea29a9ea767a8e300ab3aee))
+
+
+## v2.0.3 (2025-06-21)
+
+### Bug Fixes
+
+- Detect if there was an error talking to the modbus device and reconnect.
+  ([`0579ab8`](https://github.com/andrewjw/foxessprom/commit/0579ab8c0f565dcdef20ac45a7da42f62474717a))
+
+
+## v2.0.2 (2025-06-18)
+
+### Bug Fixes
+
+- Fix exception type and show more details when failing to convert a modbus register.
+  ([`835ba64`](https://github.com/andrewjw/foxessprom/commit/835ba64e19a60e37a6ec3b581685cbee12b88687))
+
+
+## v2.0.1 (2025-05-29)
+
+### Bug Fixes
+
+- Fake commit to trigger tag with new pymodbus version.
+  ([`87d1d9f`](https://github.com/andrewjw/foxessprom/commit/87d1d9f196022b74374615aaaa4616482514950c))
+
+### Chores
+
+- Update to follow pymodbus api changes.
+  ([`3ffa99f`](https://github.com/andrewjw/foxessprom/commit/3ffa99f309c9a282e8902073d6491dd719825dc0))
+
+
+## v2.0.0 (2025-05-29)
+
+### Features
+
+- Drop support for Python 3.9 as pymodbus has already dropped support.
+  ([`59a21c5`](https://github.com/andrewjw/foxessprom/commit/59a21c53a5ba6f9e8bdae9bfc51d662c7a44d623))
+
+### Breaking Changes
+
+- Dropped support for Python 3.9
+
 
 ## v1.1.0 (2025-03-08)
 
@@ -10,20 +82,6 @@
 
 - Fix scaling for modbus loads value.
   ([`7dddce1`](https://github.com/andrewjw/foxessprom/commit/7dddce14db7cccdfe26b94c5454be197b7df6306))
-
-### Chores
-
-- **deps**: Update dependency sentry-sdk to v2.22.0
-  ([#92](https://github.com/andrewjw/foxessprom/pull/92),
-  [`61016b8`](https://github.com/andrewjw/foxessprom/commit/61016b86228081334cfd815b1b116fd427a65f01))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency setuptools to v75.8.2
-  ([#72](https://github.com/andrewjw/foxessprom/pull/72),
-  [`6604ea5`](https://github.com/andrewjw/foxessprom/commit/6604ea5da7efab89f5dedf629a1edcf10f3b4833))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
 
 ### Features
 
@@ -39,14 +97,6 @@ Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
 - Fix serial number not being in both cloud and modbus data.
   ([`34cb728`](https://github.com/andrewjw/foxessprom/commit/34cb728fd10b4916fe976bdb5ebf339228eb3efb))
 
-### Chores
-
-- **deps**: Update dependency mypy to v1.15.0
-  ([`1ad4fc7`](https://github.com/andrewjw/foxessprom/commit/1ad4fc7e46e37848a40fa644c8451b48527d261e))
-
-- **deps**: Update dependency types-requests to v2.32.0.20250306
-  ([`2ed8964`](https://github.com/andrewjw/foxessprom/commit/2ed8964a36e31b7db86865de0e0a1bff26290eea))
-
 
 ## v1.0.0 (2025-03-07)
 
@@ -61,148 +111,10 @@ Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
 - Remove type ignore comment.
   ([`5d3acfc`](https://github.com/andrewjw/foxessprom/commit/5d3acfc99dcecec5c946c3fee14092d11fc923c0))
 
-- **deps**: Update dependency mypy to v1.12.0
-  ([`07903f1`](https://github.com/andrewjw/foxessprom/commit/07903f11187654370f1e92814b900fc12978b0ff))
-
-- **deps**: Update dependency mypy to v1.13.0
-  ([`8645d69`](https://github.com/andrewjw/foxessprom/commit/8645d69cb8e94dcfa2bab80aaf4cf3d217c7120c))
-
-- **deps**: Update dependency mypy to v1.14.0
-  ([#78](https://github.com/andrewjw/foxessprom/pull/78),
-  [`8b80583`](https://github.com/andrewjw/foxessprom/commit/8b80583bcc808ed422aaaaa4944ff0719ae4fa87))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency mypy to v1.14.1
-  ([#79](https://github.com/andrewjw/foxessprom/pull/79),
-  [`fb6d8fe`](https://github.com/andrewjw/foxessprom/commit/fb6d8fecc294b858a50152685cea5055d681f29a))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency packaging to v24.2
-  ([#68](https://github.com/andrewjw/foxessprom/pull/68),
-  [`2e27aae`](https://github.com/andrewjw/foxessprom/commit/2e27aae79e2ba2e392073eab351e99fc18b85358))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.11.1
-  ([`f73c649`](https://github.com/andrewjw/foxessprom/commit/f73c6493e9810941336fa859db67e771663418a9))
-
-- **deps**: Update dependency python-semantic-release to v9.12.0
-  ([`81b23b1`](https://github.com/andrewjw/foxessprom/commit/81b23b1a354253cf03a62b79309952fe45a8175c))
-
-- **deps**: Update dependency python-semantic-release to v9.12.1
-  ([`8a1cd9f`](https://github.com/andrewjw/foxessprom/commit/8a1cd9fb619c697d55bf18efdf3e62aa3a6af1ee))
-
-- **deps**: Update dependency python-semantic-release to v9.12.2
-  ([`0d48247`](https://github.com/andrewjw/foxessprom/commit/0d48247ecd2da80fd269fc665fa07688399bbc1a))
-
-- **deps**: Update dependency python-semantic-release to v9.13.0
-  ([#70](https://github.com/andrewjw/foxessprom/pull/70),
-  [`53f72db`](https://github.com/andrewjw/foxessprom/commit/53f72db28ef9913d0fed2d3112781ffa8251fdb2))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.14.0
-  ([#71](https://github.com/andrewjw/foxessprom/pull/71),
-  [`52d7c5e`](https://github.com/andrewjw/foxessprom/commit/52d7c5e79f71a01785cebfca13f091a3ef69a755))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.15.0
-  ([#75](https://github.com/andrewjw/foxessprom/pull/75),
-  [`e9700f6`](https://github.com/andrewjw/foxessprom/commit/e9700f6e8f5389a8bbea52e55bef6e39cf449f10))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.15.1
-  ([#76](https://github.com/andrewjw/foxessprom/pull/76),
-  [`96de0ac`](https://github.com/andrewjw/foxessprom/commit/96de0acdf27865082ce2dc6052ee1795843713cd))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.15.2
-  ([#77](https://github.com/andrewjw/foxessprom/pull/77),
-  [`6375aae`](https://github.com/andrewjw/foxessprom/commit/6375aae77355d5edc1bb4c0a2e3a857ea816ba5d))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.16.0
-  ([#80](https://github.com/andrewjw/foxessprom/pull/80),
-  [`508bd13`](https://github.com/andrewjw/foxessprom/commit/508bd130d3df506fa2373a1d68917dea3b83b2ee))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.16.1
-  ([#81](https://github.com/andrewjw/foxessprom/pull/81),
-  [`abcade4`](https://github.com/andrewjw/foxessprom/commit/abcade4a755abc3e6a87d7a49a575ea01c5f1abd))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.17.0
-  ([#82](https://github.com/andrewjw/foxessprom/pull/82),
-  [`8348502`](https://github.com/andrewjw/foxessprom/commit/834850244e6653fb8154543b1ddbac0cda40d6ac))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.18.0
-  ([#84](https://github.com/andrewjw/foxessprom/pull/84),
-  [`8f2b942`](https://github.com/andrewjw/foxessprom/commit/8f2b94269c219c796bc12e4c72e11649e7fa55de))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.18.1
-  ([#85](https://github.com/andrewjw/foxessprom/pull/85),
-  [`ae99b2e`](https://github.com/andrewjw/foxessprom/commit/ae99b2e87f000d8efae56276c52f0b942f2d6ab5))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.19.1
-  ([#86](https://github.com/andrewjw/foxessprom/pull/86),
-  [`8dfb996`](https://github.com/andrewjw/foxessprom/commit/8dfb99675a278e651990662174dba433c611adaa))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.20.0
-  ([#87](https://github.com/andrewjw/foxessprom/pull/87),
-  [`ec69815`](https://github.com/andrewjw/foxessprom/commit/ec698152159e24e58be8d605cce45bef90f79d75))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency python-semantic-release to v9.21.0
-  ([#88](https://github.com/andrewjw/foxessprom/pull/88),
-  [`994fd02`](https://github.com/andrewjw/foxessprom/commit/994fd0297e9443717c7c3885bd7584c6ab7b524c))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency setuptools to v75.2.0
-  ([`d38bc8b`](https://github.com/andrewjw/foxessprom/commit/d38bc8b8a8e1fe103a79eaae95af62d3c8f194f0))
-
-- **deps**: Update dependency setuptools to v75.3.0
-  ([`f71dbdf`](https://github.com/andrewjw/foxessprom/commit/f71dbdff7f4c810baf7320ae6c34207a7b510a43))
-
-- **deps**: Update dependency types-requests to v2.32.0.20241016
-  ([`883a73d`](https://github.com/andrewjw/foxessprom/commit/883a73d71991d886bfab0f85c0b5f2cf2061c604))
-
-- **deps**: Update dependency wheel to v0.45.0
-  ([#69](https://github.com/andrewjw/foxessprom/pull/69),
-  [`a1aec0e`](https://github.com/andrewjw/foxessprom/commit/a1aec0e62ac05468420f430cd66b3fcba43a2152))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
-- **deps**: Update dependency wheel to v0.45.1
-  ([#73](https://github.com/andrewjw/foxessprom/pull/73),
-  [`ee2d5f7`](https://github.com/andrewjw/foxessprom/commit/ee2d5f73a173c31b16f287a6dd3a007b9ee36c07))
-
-Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
-
 ### Features
 
 - Add basic support for getting data from modbus
   ([`04b4616`](https://github.com/andrewjw/foxessprom/commit/04b46165b559f709bcb18f4266c2ba7f88eee849))
-
-BREAKING CHANGE: This removes some metrics that aren't available from both modbus and the cloud.
-  Full metrics for both are available with the foxess_cloud and foxess_modbus prefixes.
 
 - Add support for combining modbus and cloud metrics.
   ([`08b337f`](https://github.com/andrewjw/foxessprom/commit/08b337f5243f0c162a4a895bd9762863a2236cae))
@@ -213,8 +125,6 @@ BREAKING CHANGE: This removes some metrics that aren't available from both modbu
 - Drop support for Python 3.8 as it's end of life.
   ([`6e9d463`](https://github.com/andrewjw/foxessprom/commit/6e9d46317db68d4c80e42ad47b3dbcfbf4e2f568))
 
-BREAKING CHANGE: Python 3.8 dropped.
-
 
 ## v0.4.3 (2024-10-14)
 
@@ -222,32 +132,6 @@ BREAKING CHANGE: Python 3.8 dropped.
 
 - Raise error if we get a bad status from the API.
   ([`2064af2`](https://github.com/andrewjw/foxessprom/commit/2064af2af83bc7ba31dba4ee67935b9c9a867d2e))
-
-### Chores
-
-- **deps**: Update dependency python-semantic-release to v9.10.0
-  ([`6260a36`](https://github.com/andrewjw/foxessprom/commit/6260a36842dd9b8583b306b9adb34c89e5c4067f))
-
-- **deps**: Update dependency python-semantic-release to v9.10.1
-  ([`12761a5`](https://github.com/andrewjw/foxessprom/commit/12761a51cfa3ced32c77d8cc0e0f55f726400eb4))
-
-- **deps**: Update dependency python-semantic-release to v9.11.0
-  ([`c5a3959`](https://github.com/andrewjw/foxessprom/commit/c5a3959224d2903cc96dd9c2ec83baec2a8a1a33))
-
-- **deps**: Update dependency python-semantic-release to v9.8.9
-  ([`6741110`](https://github.com/andrewjw/foxessprom/commit/67411105b6cec61ab475bb69eb672c7269dc7ff2))
-
-- **deps**: Update dependency python-semantic-release to v9.9.0
-  ([`61a7064`](https://github.com/andrewjw/foxessprom/commit/61a706419f9dbfbc4e9617cc64d39e2a9559246d))
-
-- **deps**: Update dependency setuptools to v74.1.3
-  ([`437d497`](https://github.com/andrewjw/foxessprom/commit/437d497d243f9d48fd8bff1735974769663af1ac))
-
-- **deps**: Update dependency setuptools to v75
-  ([`ee415e4`](https://github.com/andrewjw/foxessprom/commit/ee415e4d3f83de5eb987660b72f7386e1ebd9825))
-
-- **deps**: Update dependency types-requests to v2.32.0.20240914
-  ([`f339739`](https://github.com/andrewjw/foxessprom/commit/f339739a9834ee1113760e3cfc5ca57e60352f54))
 
 
 ## v0.4.2 (2024-09-12)
@@ -280,15 +164,6 @@ BREAKING CHANGE: Python 3.8 dropped.
 
 - Remove dictionary union to restore Python 3.8 compatibility.
   ([`fccd5b1`](https://github.com/andrewjw/foxessprom/commit/fccd5b18fac3d7f8aefaeff10088dcf1016b8105))
-
-- **deps**: Update dependency mypy to v1.11.2
-  ([`70d3579`](https://github.com/andrewjw/foxessprom/commit/70d3579d028be333b33f1fd06380d4ef5c7d8b76))
-
-- **deps**: Update dependency types-requests to v2.32.0.20240905
-  ([`781260a`](https://github.com/andrewjw/foxessprom/commit/781260ab3d37b9aae471d670b46676eda5c8812b))
-
-- **deps**: Update dependency types-requests to v2.32.0.20240907
-  ([`5544bb1`](https://github.com/andrewjw/foxessprom/commit/5544bb1be235d7db9cbfcee3c406351f6294fc85))
 
 ### Features
 
@@ -338,21 +213,6 @@ BREAKING CHANGE: Python 3.8 dropped.
 - Test on Python 3.12.
   ([`1757319`](https://github.com/andrewjw/foxessprom/commit/1757319aec485ec26936535052af0dae7f9d53ad))
 
-- **deps**: Update dependency pycodestyle to v2.12.1
-  ([`8645709`](https://github.com/andrewjw/foxessprom/commit/8645709975b7664635d393103722803f2621dd8f))
-
-- **deps**: Update dependency python-semantic-release to v9.8.7
-  ([`5282268`](https://github.com/andrewjw/foxessprom/commit/52822686edb28f83dbed502ff18b3d85b404067f))
-
-- **deps**: Update dependency python-semantic-release to v9.8.8
-  ([`309da64`](https://github.com/andrewjw/foxessprom/commit/309da64ab42fd4872b439a53610e3623cb85fbec))
-
-- **deps**: Update dependency setuptools to v74
-  ([`7b6ac31`](https://github.com/andrewjw/foxessprom/commit/7b6ac31d0ad96e8859a3e1c0bd7edf8e55141172))
-
-- **deps**: Update dependency wheel to v0.44.0
-  ([`95bebb5`](https://github.com/andrewjw/foxessprom/commit/95bebb5ecd2cbb6691785da77e0f104fcbdf1402))
-
 
 ## v0.3.0 (2024-08-01)
 
@@ -363,18 +223,6 @@ BREAKING CHANGE: Python 3.8 dropped.
 
 - More badges.
   ([`c7f3a15`](https://github.com/andrewjw/foxessprom/commit/c7f3a153d29ec984a9964755c4252352931c6099))
-
-- **deps**: Update dependency python-semantic-release to v9.8.4
-  ([`e0fd722`](https://github.com/andrewjw/foxessprom/commit/e0fd722ffc947f30e1842a87016435ba0a6a8a32))
-
-- **deps**: Update dependency python-semantic-release to v9.8.5
-  ([`987a1e1`](https://github.com/andrewjw/foxessprom/commit/987a1e1da10305ac719e70a29f261d7e8c6774ec))
-
-- **deps**: Update dependency python-semantic-release to v9.8.6
-  ([`cf7f93f`](https://github.com/andrewjw/foxessprom/commit/cf7f93f2de2111a5fd98885ac3371efda7f1a90f))
-
-- **deps**: Update dependency twine to v5.1.1
-  ([`ab0e8be`](https://github.com/andrewjw/foxessprom/commit/ab0e8be981e1337bbee6e3ac4c9b09301048bdb9))
 
 ### Features
 
@@ -405,53 +253,6 @@ BREAKING CHANGE: Python 3.8 dropped.
 - Add debug line to track time taken to update metrics.
   ([`0ecaa42`](https://github.com/andrewjw/foxessprom/commit/0ecaa4240e84192cbd48ae17fa0f4aa30658c334))
 
-### Chores
-
-- **deps**: Update dependency coveralls to v4
-  ([`aefc78b`](https://github.com/andrewjw/foxessprom/commit/aefc78b719345f5ba105d276c784e645d4c8b024))
-
-- **deps**: Update dependency packaging to v24
-  ([`b77fc33`](https://github.com/andrewjw/foxessprom/commit/b77fc330205279c46a3ac251ea8b4036351d9b54))
-
-- **deps**: Update dependency pycodestyle to v2.12.0
-  ([`9e0f26b`](https://github.com/andrewjw/foxessprom/commit/9e0f26b7b5a46077752cccaca4eeaf197e85fbe5))
-
-- **deps**: Update dependency python-semantic-release to v9.6.0
-  ([`698100c`](https://github.com/andrewjw/foxessprom/commit/698100c680952f6058d6644f8caf2d14a012e8f9))
-
-- **deps**: Update dependency python-semantic-release to v9.7.0
-  ([`79797af`](https://github.com/andrewjw/foxessprom/commit/79797afc72c6f3565435cc636ba5a9b21c22c02a))
-
-- **deps**: Update dependency python-semantic-release to v9.7.1
-  ([`2f1ead1`](https://github.com/andrewjw/foxessprom/commit/2f1ead1fbabf5a958a971bba5eb06f6bb627e0c4))
-
-- **deps**: Update dependency python-semantic-release to v9.7.2
-  ([`56f88ae`](https://github.com/andrewjw/foxessprom/commit/56f88aeefb0bbb961a1f81bd58c6cf3375ab0e73))
-
-- **deps**: Update dependency python-semantic-release to v9.7.3
-  ([`ac7dbc9`](https://github.com/andrewjw/foxessprom/commit/ac7dbc90ec4ba0e2c71aed731c58c71f9e0bda16))
-
-- **deps**: Update dependency python-semantic-release to v9.8.0
-  ([`1edafb0`](https://github.com/andrewjw/foxessprom/commit/1edafb04d6ae9b37a2bf1ceacbda6b8edfac5206))
-
-- **deps**: Update dependency python-semantic-release to v9.8.1
-  ([`bafb0c2`](https://github.com/andrewjw/foxessprom/commit/bafb0c26bf16852b94b507ca6035660260f288a4))
-
-- **deps**: Update dependency python-semantic-release to v9.8.2
-  ([`78df2ca`](https://github.com/andrewjw/foxessprom/commit/78df2ca27cc0f6c4bec292d523972067203e758f))
-
-- **deps**: Update dependency python-semantic-release to v9.8.3
-  ([`b63ce17`](https://github.com/andrewjw/foxessprom/commit/b63ce17b01b0fd6d30e2be3120742ef758ba625c))
-
-- **deps**: Update dependency requests to v2.32.2
-  ([`2721ebd`](https://github.com/andrewjw/foxessprom/commit/2721ebd59d8d615937f9e457bdcb51ce6dd06b39))
-
-- **deps**: Update dependency requests to v2.32.3
-  ([`215ad32`](https://github.com/andrewjw/foxessprom/commit/215ad32b4fa7d9a0446e24b5347dd5f5ab9be6fd))
-
-- **deps**: Update dependency twine to v5.1.0
-  ([`4971664`](https://github.com/andrewjw/foxessprom/commit/49716646ae536ea6d618a72946efc315d8e89830))
-
 
 ## v0.1.1 (2024-04-24)
 
@@ -467,36 +268,6 @@ BREAKING CHANGE: Python 3.8 dropped.
 
 - Copy and paste error.
   ([`607f3f0`](https://github.com/andrewjw/foxessprom/commit/607f3f0c1d8d73f5a96ccf6f083b62606ee06fb7))
-
-- **deps**: Update actions/checkout action to v4
-  ([`1994c0e`](https://github.com/andrewjw/foxessprom/commit/1994c0ead0a529dcc935574865d4375d2a3c6483))
-
-- **deps**: Update actions/setup-python action to v5
-  ([`99d8d2f`](https://github.com/andrewjw/foxessprom/commit/99d8d2fb3d9e14d05c9af6f9b100f7928e28d431))
-
-- **deps**: Update dependency packaging to v23.2
-  ([`c2683ef`](https://github.com/andrewjw/foxessprom/commit/c2683ef999d9c432977bb4978d6cb120d3aebba4))
-
-- **deps**: Update dependency pycodestyle to v2.11.1
-  ([`2b5e548`](https://github.com/andrewjw/foxessprom/commit/2b5e5486534a9f92ac984425aa2886f9a1d1e02a))
-
-- **deps**: Update dependency python-semantic-release to v8.7.0
-  ([`a230128`](https://github.com/andrewjw/foxessprom/commit/a230128649c7850b53e27538d4f4378304884cf9))
-
-- **deps**: Update dependency python-semantic-release to v9
-  ([`552eac5`](https://github.com/andrewjw/foxessprom/commit/552eac5ea2db123eafaf75661b97e186cc6b99ef))
-
-- **deps**: Update dependency python-semantic-release to v9.5.0
-  ([`9560950`](https://github.com/andrewjw/foxessprom/commit/956095088282554c29c20e2348de5add393b29b3))
-
-- **deps**: Update dependency twine to v5
-  ([`9b40638`](https://github.com/andrewjw/foxessprom/commit/9b40638946ce9a7ca9e10178ce03406ff65432c0))
-
-- **deps**: Update dependency wheel to v0.43.0
-  ([`0990890`](https://github.com/andrewjw/foxessprom/commit/0990890a1a3c463423faf15d092b50f9148094df))
-
-- **deps**: Update python docker tag to v3.12
-  ([`9ae7a18`](https://github.com/andrewjw/foxessprom/commit/9ae7a186e89c1102f6e41744f6c9b765ce0735de))
 
 
 ## v0.1.0 (2024-04-13)
@@ -525,10 +296,4 @@ BREAKING CHANGE: Python 3.8 dropped.
 
 ## v0.0.0 (2024-04-12)
 
-### Chores
-
-- Blank repo setup.
-  ([`3f65d45`](https://github.com/andrewjw/foxessprom/commit/3f65d4505fe138d32491d3a61f3b582b7e685c24))
-
-- Fix running release step.
-  ([`da195e2`](https://github.com/andrewjw/foxessprom/commit/da195e281fe9bde2bf93f3711c673edeecafe6ed))
+- Initial Release
