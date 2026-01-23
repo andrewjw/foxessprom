@@ -87,18 +87,14 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def send_index(self) -> None:
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(
-            """
+        self.wfile.write("""
 <html>
 <head><title>Fox ESS Prometheus</title></head>
 <body>
 <h1>Fox ESS Prometheus</h1>
 <p><a href="/metrics">Metrics</a></p>
 </body>
-</html>""".encode(
-                "utf8"
-            )
-        )
+</html>""".encode("utf8"))
 
     def send_metrics(self) -> None:
         metrics_text: List[str] = []
