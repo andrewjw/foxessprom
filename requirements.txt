@@ -8,7 +8,7 @@ requests==2.33.1
 requests-mock==1.12.1
 types-requests==2.33.0.20260408
 setuptools==82.0.1
-mypy==1.20.0
+mypy==1.20.1
 paho-mqtt==2.1.0
 pymodbus==3.13.0
 sentry-sdk==2.57.0
