@@ -4,7 +4,7 @@ python-semantic-release==10.5.3
 packaging==26.2
 wheel==0.47.0
 twine==6.2.0
-requests==2.34.1
+requests==2.34.2
 requests-mock==1.12.1
 types-requests==2.33.0.20260513
 setuptools==82.0.1
