@@ -20,6 +20,16 @@ from typing import Any, List
 from .request import make_request
 
 
+class FoxError(Exception):
+    pass
+
+
+def raise_for_fox_error(response):
+    if "errno" in response and response["errno"] != 0:
+        raise FoxError(f"FoxESS error ({response["errno"]}): {response["msg"]}")
+    return response["result"]
+
+
 class FoxDevice:
     def __init__(self, data: Any) -> None:
         self.deviceType = data["deviceType"]
@@ -37,18 +47,21 @@ class FoxDevice:
         request_param = {"sn": self.deviceSN, "variables": []}
         response = make_request(args, "post", path, request_param)
         response.raise_for_status()
-        return response.json()["result"][0]["datas"]
+        result = raise_for_fox_error(response.json())
+        return result[0]["datas"]
 
     @staticmethod
     def device_list(args: argparse.Namespace) -> List["FoxDevice"]:
         path = "/op/v0/device/list"
 
-        request_param = {"currentPage": 1, "pageSize": 500}
+        request_param = {"currentPage": 1, "pageSize": 100}
 
         response = make_request(args, "post", path, request_param)
         response.raise_for_status()
 
-        return [FoxDevice(data) for data in response.json()["result"]["data"]]
+        result = raise_for_fox_error(response.json())
+
+        return [FoxDevice(data) for data in result["data"]]
 
     # @staticmethod
     # def device_detail(sn: str):
