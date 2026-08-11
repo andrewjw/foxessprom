@@ -26,7 +26,7 @@ class FoxError(Exception):
 
 def raise_for_fox_error(response):
     if "errno" in response and response["errno"] != 0:
-        raise FoxError(f"FoxESS error ({response["errno"]}): {response["msg"]}")
+        raise FoxError("FoxESS error (i): %s" % (response["errno"], response["msg"]))
     return response["result"]
 
 
