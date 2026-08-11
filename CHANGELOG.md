@@ -2,6 +2,26 @@
 
 <!-- version list -->
 
+## v2.1.1 (2026-08-11)
+
+### Bug Fixes
+
+- Fox API now requires a smaller page size when listing devices. Also make logging of Fox API errors
+  better.
+  ([`396c4c4`](https://github.com/andrewjw/foxessprom/commit/396c4c4a5f298b7bace2bfbdc9271c2313b999f3))
+
+- Restore support for Python 3.10.
+  ([`157f9ae`](https://github.com/andrewjw/foxessprom/commit/157f9ae0c394bfedcddf850a8b9b0543b95a419c))
+
+### Chores
+
+- Fix updating of changelog in the repo.
+  ([`bd6de6d`](https://github.com/andrewjw/foxessprom/commit/bd6de6d601261e6659e3c1487b90e707cd34680d))
+
+- Switch to black for code style.
+  ([`6108cf1`](https://github.com/andrewjw/foxessprom/commit/6108cf16a536377778a6afb2ee36dafc40eb4344))
+
+
 ## v2.1.0 (2026-01-16)
 
 ### Features
