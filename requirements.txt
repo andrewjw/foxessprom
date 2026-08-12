@@ -2,7 +2,7 @@ black==26.5.1
 coverage==7.15.4
 python-semantic-release==10.6.1
 packaging==26.3
-wheel==0.47.0
+wheel==0.48.0
 twine==7.0.0
 requests==2.34.2
 requests-mock==1.12.1
