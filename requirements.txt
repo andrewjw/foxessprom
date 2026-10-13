@@ -11,4 +11,4 @@ setuptools==82.0.1
 mypy==2.4.0
 paho-mqtt==2.1.0
 pymodbus==3.16.1
-sentry-sdk==2.71.0
+sentry-sdk==2.72.0
