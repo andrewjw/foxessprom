@@ -49,15 +49,15 @@ setuptools.setup(
     url="https://github.com/andrewjw/foxessprom",
     packages=setuptools.find_packages(),
     scripts=["bin/foxessprom"],
+    license="GPL-3.0-or-later",
     classifiers=[
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3.14",
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Programming Language :: Python :: 3.15",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.10",
+    python_requires=">=3.11",
     install_requires=requirements,
 )
