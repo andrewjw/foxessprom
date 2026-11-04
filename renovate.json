@@ -16,6 +16,12 @@
       ],
       "matchUpdateTypes": ["minor"],
       "automerge": false
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchDepNames": ["python"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": false
     }
   ]
 }
