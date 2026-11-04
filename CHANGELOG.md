@@ -2,6 +2,30 @@
 
 <!-- version list -->
 
+## v3.0.0 (2026-11-04)
+
+### Chores
+
+- Don't automerge Python version changes.
+  ([`4d2bebb`](https://github.com/andrewjw/foxessprom/commit/4d2bebbf504b0cd49d8c20933f1a72d8d8988a82))
+
+- Don't automerge Python version changes.
+  ([`fccc4f7`](https://github.com/andrewjw/foxessprom/commit/fccc4f7ca5115ca48a7a6c00a812158771ec5d1e))
+
+- Fix typo. ([#295](https://github.com/andrewjw/foxessprom/pull/295),
+  [`77b78d5`](https://github.com/andrewjw/foxessprom/commit/77b78d5e248180178dfaf91c3475f4badbe8bec7))
+
+### Features
+
+- Add support for Python 3.15 and drop 3.10.
+  ([#295](https://github.com/andrewjw/foxessprom/pull/295),
+  [`77b78d5`](https://github.com/andrewjw/foxessprom/commit/77b78d5e248180178dfaf91c3475f4badbe8bec7))
+
+### Breaking Changes
+
+- Drop support for Python 3.10.
+
+
 ## v2.1.1 (2026-08-11)
 
 ### Bug Fixes
