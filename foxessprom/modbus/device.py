@@ -67,11 +67,18 @@ class Device:
 
             metrics = []
             for register_group in self.REGISTER_GROUPS:
-                r = self.client.read_input_registers(
-                    register_group.base_register,
-                    count=register_group.get_size(),
-                    device_id=247,
-                )
+                try:
+                    r = self.client.read_input_registers(
+                        register_group.base_register,
+                        count=register_group.get_size(),
+                        device_id=247,
+                    )
+                except ConnectionError as e:
+                    self.reset()
+                    raise RuntimeError(
+                        f"{type(e).__name__} when reading registers for "
+                        f"{register_group.base_register}: {r}"
+                    )
                 if r.isError():
                     self.reset()
                     raise RuntimeError(
