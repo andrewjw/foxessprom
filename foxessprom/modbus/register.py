@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Callable, Dict, List, Union
+from typing import Callable, Dict, List, Sequence, Union
 
 from pymodbus.client import ModbusTcpClient
 
@@ -37,7 +37,7 @@ class Register:
     def size(self) -> int:
         return self.data_type.value[1]
 
-    def convert(self, value: List[int]) -> Dict[str, Union[str, int, float]]:
+    def convert(self, value: Sequence[int]) -> Dict[str, Union[str, int, float]]:
         register_value = ModbusTcpClient.convert_from_registers(
             value, data_type=self.data_type
         )
