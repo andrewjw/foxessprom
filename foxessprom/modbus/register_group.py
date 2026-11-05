@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Callable, Dict, Optional, List, Union
+from typing import Callable, Dict, Optional, List, Sequence, Union
 
 from .register import Register
 
@@ -40,7 +40,7 @@ class RegisterGroup:
             r += register.size()
         return r
 
-    def convert(self, registers: List[int]) -> List[Dict[str, Union[str, float]]]:
+    def convert(self, registers: Sequence[int]) -> List[Dict[str, Union[str, float]]]:
         r: List[Dict[str, Union[str, float]]] = []
         i = 0
         for register in self.registers:
