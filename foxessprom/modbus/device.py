@@ -18,7 +18,7 @@ import argparse
 from datetime import datetime
 import time
 import threading
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 from pymodbus.client import ModbusTcpClient
 
@@ -65,7 +65,7 @@ class Device:
             ):
                 return self.metrics, self.custom
 
-            metrics = []
+            metrics: List[Dict[str, Union[str, float]]] = []
             for register_group in self.REGISTER_GROUPS:
                 r = self.client.read_input_registers(
                     register_group.base_register,

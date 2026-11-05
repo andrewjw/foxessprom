@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Dict, List, Union
+from typing import Dict, List, Sequence, Union
 
 from pymodbus.client import ModbusTcpClient
 
@@ -454,7 +454,7 @@ class FoxESSH1(Device):
         r = self.client.read_input_registers(10008, count=8, device_id=247)
         return self._parse_string(r.registers)
 
-    def _parse_string(self, registers: List[int]) -> str:
+    def _parse_string(self, registers: Sequence[int]) -> str:
         r = []
         for reg in registers:
             if reg >> 8 != 0:
