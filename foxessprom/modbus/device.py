@@ -77,7 +77,7 @@ class Device:
                     self.reset()
                     raise RuntimeError(
                         f"{type(e).__name__} when reading registers for "
-                        f"{register_group.base_register}: {r}"
+                        f"{register_group.base_register}"
                     )
                 if r.isError():
                     self.reset()
