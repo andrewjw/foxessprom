@@ -2,6 +2,21 @@
 
 <!-- version list -->
 
+## v3.0.1 (2026-11-11)
+
+### Bug Fixes
+
+- Handle connection errors when reading modbus registeres.
+  ([#296](https://github.com/andrewjw/foxessprom/pull/296),
+  [`47a8a05`](https://github.com/andrewjw/foxessprom/commit/47a8a05b3be167dccccefa9bd1dbd6a774fdeb75))
+
+### Chores
+
+- Run type checking on GitHub actions and fix errors.
+  ([#298](https://github.com/andrewjw/foxessprom/pull/298),
+  [`b1af131`](https://github.com/andrewjw/foxessprom/commit/b1af131c2060a9ea718734ad96f1547c50f7d40a))
+
+
 ## v3.0.0 (2026-11-04)
 
 ### Chores
