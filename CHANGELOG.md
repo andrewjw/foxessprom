@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v3.0.2 (2026-11-27)
+
+### Bug Fixes
+
+- Send correct content type for metrics.
+  ([`4dbbc7c`](https://github.com/andrewjw/foxessprom/commit/4dbbc7cc2667de361f066a07099c73e2af38c59f))
+
+
 ## v3.0.1 (2026-11-11)
 
 ### Bug Fixes
